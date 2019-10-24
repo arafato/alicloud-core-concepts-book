@@ -1,3 +1,9 @@
-chapter1.txt
-chapter2.txt
-chapter3.txt
+introduction.md
+core_concepts.md
+interacting_alicloud.md
+securing_your_system.md
+automation.md
+architecting_highavailability.md
+observability.md
+crossborder_integration.md
+migration_paths.md

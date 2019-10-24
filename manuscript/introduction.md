@@ -18,4 +18,12 @@ If you are an architect, a consultant, an administrator, or really anyone who ju
 
 ## How To Read This Book
 Here is a glance at what's in each chapter:
-- **Chapter 1: Core Concepts** 
+- **Chapter 1: Introduction** is where you are right now. 
+- **Chapter 2: Governance** focuses on the fundamental aspects of Account Management, User and Permission Management, Billing Management, our geography-based data center architecture, and our Service Level Agreements (SLAs).
+- **Chapter 3: Interacting with Alibaba Cloud** dives into the various means on how programmatically manage and debug our service portfolio. We will discuss the general API model of Alibaba Cloud and tools that support you in your daily work.
+- **Chapter 4: Securing Your System** discusses proven best-practices and methodologies to secure your account, and networking environment. Additionally, we will also look at how to audit your system to quickly analyze who has done what at which point in time. 
+- **Chapter 5: Automation** explores different ways, technologies, and tools to automate the configuration of your services such as *Elastic Compute Service* (ECS), to setup build and deployment pipelines for container-based applications, and declarative tools such as Terraform to automate the management of your cloud resources lifecycle.
+- **Chapter 6: Architecting for High-Availability and Fault-Tolerance on Alibaba Cloud** looks in depth at proven practices and recommendations to make your system and application architecture robust and resilient against sudden unpredictable traffic spikes and service interruptions.
+- **Chapter 7: Observability** focuses on different scenarios and services that help you to understand the current state your application is in, and to troubleshoot unusual and non-expected behaviour of your system.
+- **Chapter 8: Global Cross-Border Integration** explores the various networking services Alibaba Cloud offers to implement and manage global and hybrid cross-border network integration projects.  
+- **Chapter 9: Migration Paths** gives an overview about our best-practices and dedicated service offerings and tools that help you to migrate workloads from your on-premises data center or public cloud providers such as Amazon Web Services to Alibaba Cloud.

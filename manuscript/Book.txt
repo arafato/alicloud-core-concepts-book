@@ -1,5 +1,5 @@
 introduction.md
-core_concepts.md
+governance.md
 interacting_alicloud.md
 securing_your_system.md
 automation.md

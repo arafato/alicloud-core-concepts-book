@@ -11,7 +11,7 @@ Over the past years we had the joy of working with many different kinds of custo
 ## Why Alibaba Cloud
 There are multiple strategic reasons to include Alibaba Cloud into your IT strategy three of which we will detail in the subsequent sections.
 
-## Fast-Paced Innovator that Supports World's Most Demanding E-Commerce Applications.
+### Fast-Paced Innovator that Supports World's Most Demanding E-Commerce Applications.
 Alibaba Cloud supports one of the highest demanding online events on earth reliably each year: Double 11, world's biggest shopping festival with a gross merchandized volume of more than 30 billion USD in 24 hours in 2018. To give you a better idea on the dimensions of this event let's drop some numbers on the resources and workloads that are exclusive to this event (2018):
 - 10 mio CPU cores provisioned and used
 - 325k business transactions per second during peak times
@@ -21,7 +21,7 @@ Alibaba Cloud supports one of the highest demanding online events on earth relia
 
 Alibaba Cloud is the technology backbone of Alibab Group and as such constantly pushing the limits of today's technologies to support our own core business. This fast-paced innovation and battle-proven technology is provided to our millions of customers which are often large enterprises by themselves with millions of end-customers. The constant stream of innovation is productized constantly and releaed frequently as new services and features to build upon and to reliably support business-critical application infrastructure by the milliions of our customers world-wide.  
 
-## Second to None Business and Technology Partner for China
+### Second to None Business and Technology Partner for China
 Alibaba Group and its cloud division is an international company with Chinese roots. As such we are second to none as a technology and business partner for your IT and innovation projects in South East Asia and China in particular. Alibaba Cloud is the clear market leader with almost 20% market-share in Asia Pacific well ahead any of its cloud competitors such as AWS, Microsoft Azure, or Google Cloud as depicted in below graphic which is the Market Share for IT Services report by Gartner from 2018.  
 ![](market_share.png)
 For Mainland China the market-share proportions are even more drastic. Alibaba Cloud took over 43% in the first half of 2018 which is larger than the next seven cloud competitors combined. Forrester Wave also recognizes Alibaba Coud as the leader in product offerings and market performance in its *Full-stack public cloud developments platforms  in China* report which is depicted below.  
@@ -33,7 +33,7 @@ In total, Alibaba Cloud has 20 regions world-wide which also includes North-Amer
 
 Note that all of these 20 regions can be managed from one single account. Many services also provide cross-region integration capabilities that let you easily replicate and copy data to and from any of our regions. We will look in depth at the different cross-regional services and features in chapter [Global Cross-Border Integration](#ch-cross-border).
 
-## Geo-Politically balanced multi-cloud strategy
+### Geo-Politically balanced multi-cloud strategy
 Below graphic shows the Gartner Magic Quadrant for IaaS Worldwide from 2019. If you compare it to the quadrants of previous years you will notice that both the number and geographic heterogenity has been drastically reduced. In total, there are only six players left, five of which are headquartered in the USA. This leaves Alibaba Cloud as the only hyperscaler which is not under American jurisdiction. A multi-cloud strategy that aims at minimizing geo-political risks and political mutual dependencies should mitigate by implementing a geo-politically balanced multi-cloud strategy. Alibaba Cloud is a reliable and trusted business and technology partner for implementing such a strategy.   
 ![](iaas_gartner2019.png)
 

@@ -23,19 +23,19 @@ Alibaba Cloud is the technology backbone of a Group and as such constantly pushi
 
 ### Second to None Business and Technology Partner for China
 Alibaba Group and its cloud division is an international company with Chinese roots. As such we are second to none as a technology and business partner for your IT and innovation projects in South East Asia and China in particular. Alibaba Cloud is the clear market leader with almost 20% market-share in Asia Pacific well ahead any of its cloud competitors such as AWS, Microsoft Azure, or Google Cloud as depicted in below graphic which is the Market Share for IT Services report by Gartner from 2018.  
-![](market_share.png)
+![](01/market_share.png)
 For Mainland China the market-share proportions are even more drastic. Alibaba Cloud took over 43% in the first half of 2018 which is larger than the next seven cloud competitors combined. Forrester Wave also recognizes Alibaba Cloud as the leader in product offerings and market performance in its *Full-stack public cloud developments platforms  in China* report which is depicted below.  
-![](fw_recognition.png)
+![](01/fw_recognition.png)
 
 With its strong presence in the Asia Pacific region with (as of this writing) 14 regions, 8 of which are in Mainland China, and one additional region in Hong Kong, Alibaba Cloud is the number one choice for global, scalable, and secure application platforms that empower your digital innovation strategy in the APAC regions.
 In total, Alibaba Cloud has 20 regions world-wide which also includes North-America (2) and Europe (2) which let's you also benefit from the innovation capabilities of Alibaba Cloud in your local regions while fully complying to the local law and regulation such as GDPR. Below figure gives you an overview about our global footprint of 20 region and 61 availability zones as of now. 
-![](regions.png)
+![](01/regions.png)
 
 Note that all of these 20 regions can be managed from one single account. Many services also provide cross-region integration capabilities that let you easily replicate and copy data to and from any of our regions. We will look in depth at the different cross-regional services and features in chapter [Global Cross-Border Integration](#ch-cross-border).
 
 ### Geo-Politically balanced multi-cloud strategy
 Below graphic shows the Gartner Magic Quadrant for IaaS Worldwide from 2019. If you compare it to the quadrants of previous years you will notice that both the number and geographic heterogeneity has been drastically reduced. In total, there are only six players left, five of which are headquartered in the USA. This leaves Alibaba Cloud as the only hyperscaler which is not under American jurisdiction. A multi-cloud strategy that aims at minimizing geo-political risks and political mutual dependencies should mitigate by implementing a geo-politically balanced multi-cloud strategy. Alibaba Cloud is a reliable and trusted business and technology partner for implementing such a strategy.   
-![Magic Quadrant for Cloud Infrastructure as a Service, Worldwide](iaas_gartner2019.png)
+![Magic Quadrant for Cloud Infrastructure as a Service, Worldwide](01/iaas_gartner2019.png)
 
 ## Who Should Read This Book
 This book is intended for anyone who wants to get a thorough understanding about the core concepts of Alibaba Cloud along with best-practices and migration strategies. If you have a basic knowledge, that will help but it’s not a requirement. We start off with a thorough discussion on the principles of Account Management, Authentication and Authorization, Billing Management, and our geography-based data center architecture. After that we will look at the different concepts and approaches for securing, auditing, and monitoring your accounts and workloads, as well as modern approaches on automating different aspects of your system ranging from service provisioning and configuration to build and deployment pipelines. We will then continue this book with a deep discussion on our best-practices to design for high-available and fault-tolerant systems on Alibaba Cloud. After that we will look at how to integrate geographically disperse applications. Finally, we will devote the last chapter to our recommended approaches and services to design and implement reliable migration paths for different kind of workloads from public cloud providers such as Amazon Web Services.

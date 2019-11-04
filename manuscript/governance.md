@@ -25,7 +25,7 @@ On this page you can easily change the login password and and your mobile phone 
 5) Activate [ActionTrail](https://www.alibabacloud.com/help/product/28802.htm) to fully audit your account. Please see section [Account Auditing](#ch_sec_audit) of chapter [Securing your System](#ch_sec) for details.    
 
 ## Notification Management
-The so-called *Message Center* which is available at [https://notifications-intl.console.aliyun.com](https://notifications-intl.console.aliyun.com) provides means to proactively notify you about important incidents and updates about the Alibaba Cloud platform. These notification messages are divided into five distinct groups:
+The so-called *Message Center* which is available at [https://notifications-intl.console.aliyun.com](https://notifications-intl.console.aliyun.com) provides means to get proactively notified about important incidents and updates on and about the Alibaba Cloud platform. These notification messages are divided into five distinct groups:
 - **Account Message:** This is about notifications about account expenses. For example, you can subscribe to notifications about overdue bills.
 - **Product Message:** This includes updates on product upgrades, configuration changes, price changes, new product launches, but also notifications when services are about to expire and need to be renewed.
 - **Fault Message:** Notifications in this group mostly deal with service interruptions, malfunctioning, and system maintenance windows. Really useful to get proactively notified about such kind of unplanned events.  
@@ -36,15 +36,15 @@ Each notification can be configured to be delivered either via email or as inter
 
 #### Best Practices
 While we believe that each notification is valuable for our customers we recommend to activate at least the following ones:
-- **Account Message** - Notifications of Account Expenses
-- **Product Message** - Alibaba Cloud DNS High Risk Notification
-- **Product Message** - Notifications of Product Expiration
-- **Product Message** - Product Overdue Payment, Suspension, and Imminent Release Notifications
-- **Product Message** - Notifications of Product Release
-- **Product Message** - Notifications about product upgrades, configuration changes, and price changes
-- **Product Message** - New Product Function Launch and Function Removal Notifications
-- **Product Message** - Security Notice
-- **Fault Message** - *Activate all notifications*
+- Account Message - *Notifications of Account Expenses*
+- *Product Message* - *Alibaba Cloud DNS High Risk Notification*
+- *Product Message* - *Notifications of Product Expiration*
+- *Product Message* - *Product Overdue Payment, Suspension, and Imminent Release Notifications*
+- *Product Message* - *Notifications of Product Release*
+- *Product Message* - *Notifications about product upgrades, configuration changes, and price changes*
+- *Product Message* - *New Product Function Launch and Function Removal Notifications*
+- *Product Message* - *Security Notice*
+- *Fault Message* - **Activate all notifications**
 
 {id: ch-governance-permission}
 ## User and Permission Management

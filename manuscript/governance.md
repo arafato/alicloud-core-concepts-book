@@ -13,7 +13,7 @@ If possible, we strongly recommend to choose an *Enterprise Account* since it us
 Now that we have discussed the two principal account types of Alibaba Cloud, let's look at the core concepts of managing a cloud account. Each cloud account has exactly one and only one root user. You are specifying the login name and password during initial cloud account creation. Each root user also has an associated mobile phone number which can be re-used across different root users and cloud account respectively at most six times. In section [User and Permission Management](#ch-governance-permission) we will look in detail at how to create additional users and define according permissions.
 Below screenshot shows the options of the *Security Settings* administration page which is only available for the root user and accessible directly via [https://account-intl.console.aliyun.com](https://account-intl.console.aliyun.com).
 
-[Account Management - Security Settings](02/am_security_settings.png)   
+![Account Management - Security Settings](02/am_security_settings.png)   
 
 On this page you can easily change the login password and your mobile phone number. The mobile number is important as it is used as a second authentication factor for changing the password, and also for setting up 2FA for your root user. Last but not least you can also define a login mask that lets you explicitly whitelist IP ranges from which (SSO) login is allowed. Per default, all IP ranges are allowed.
 
@@ -33,7 +33,7 @@ The so-called *Message Center* which is available at [https://notifications-intl
 
 Each notification can be configured to be delivered either via email or as internal message. While the email receivers can be freely configured, internal messages work just like an email inbox in your Alibaba Cloud web portal which is only accessible by the root user. Below screenshot shows an example of the internal message UI with a notification from the *Product Message* group which announces the general availability of our Serverless Kubernetes offering.
 
-[Message Center Notification](02/am_msg_center.png)
+![Message Center Notification](02/am_msg_center.png)
 
 #### Best Practices
 While we believe that each notification is valuable for our customers we recommend to activate at least the following ones:
@@ -49,13 +49,17 @@ While we believe that each notification is valuable for our customers we recomme
 
 {id: ch-governance-permission}
 ## User and Permission Management
-Resource Access Management (RAM) is the cloud service which provide means to create additional users (so-called RAM users), service accounts, and roles with according policies (sometimes also referred to as permissions) that define the access rights on Alibaba Cloud services and specific resources. The interface which is used to manage your cloud resources is usually referred to as OpenAPI which you can interactively explore with the OpenAPI Explorer at [https://api.aliyun.com/](https://api.aliyun.com/).
+Resource Access Management (RAM) is the cloud service which provide means to create additional users (so-called RAM users), and roles with according policies (sometimes also referred to as permissions) that define the access rights on Alibaba Cloud services and specific resources. The interface which is used to manage your cloud resources is usually referred to as OpenAPI which you can interactively explore with the OpenAPI Explorer at [https://api.aliyun.com/](https://api.aliyun.com/).
 
 Let's break down the different terms we just mentioned and explain what they exactly mean.
 - **RAM User:** Sometimes also referred to as *Sub-Account*. It is a user account that is used for web-based login to the Alibaba Cloud portal and/or programmatic access to the OpenAPI. All permissions need to be explicitly granted.
 There are two access modes you can define: *Console Password Logon* and *Programmatic Access*
 The first one is used for web-based login where each actions are being done from the Alibaba Cloud portal. In terms of account protection it follows the same recommended guidelines regarding password security and 2FA. The latter one is meant for being used in combination with our command line interface (CLI) tools such as `aliyun`[^aliyun] or `ossutil`[^ossutil] or with our various SDKs[^sdk]. As such it does not provide 2FA but relies on long-term credentials (Access Key ID and Access Key Secret) to programmatically sign requests to the CLI tools or the OpenAPI.
+- **Roles:**
 
+[^aliyun]: https://github.com/aliyun/aliyun-cli
+[^ossutil]: https://github.com/aliyun/ossutil
+[^sdk]: https://github.com/aliyun?q=sdk
 
 ## Billing Management
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
@@ -66,6 +70,3 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 ## Service Level Agreements
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
-[^aliyun]: https://github.com/aliyun/aliyun-cli
-[^ossutil]: https://github.com/aliyun/ossutil
-[^sdk]: https://github.com/aliyun?q=sdk

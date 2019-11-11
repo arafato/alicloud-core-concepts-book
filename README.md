@@ -1,5 +1,4 @@
-# This is the default new book content
+# Alibaba Cloud - Core Concepts, Best Practices, and Migration Paths
+This book will dive deep on the core concepts of Alibaba Cloud, and best practices that have stood the test of time and have been successfully applied at many customer project. You will learn how and why things are working the way they are, and how and why you should do things in a certain way when using the Alibaba Cloud platform. Once you got the hang of the underlying principles, and the "Ali-way" of doing things, building, testing, monitoring, and operating will become much more enjoyable. It will also help you reason about the behavior and limitations of our big portfolio of managed services in the area of Big Data, IoT, Analytics, Compute, Storage, and Network.
 
-Please note that the manuscript folder is actually something which needs to live in your repository.
-
-So, you **paste the manuscript folder itself** into your repository, not just the contents of the manuscript folder.
+Get your free copy here: https://leanpub.com/alicloudcoreconcepts

@@ -67,6 +67,7 @@ There are, however, some tasks only the root user can do:
 
 Most other things (such as whitelisting port 25 for an ECS instance, Reverse DNS entry for ECS) are usually requested by opening an according support ticket which is not restricted to the root user, though.
 
+{id: ch-gov-users-and-policies}
 ### RAM Users and Policies:
 Sometimes also referred to as *Sub-Account*. It is a user account that is used for web-based login to the Alibaba Cloud portal and/or programmatic access to the OpenAPI. They can't access anything in your account until you give them permission. All permissions need to be explicitly granted.
 You give permissions to a user by creating an identity-based policy, which is a policy that is attached to the user or a group to which the user belongs. The following example shows a JSON policy that allows the user to perform all TableStore actions (ots:*) on the Books table in the 123456789012 account within the eu-central-1 region.
@@ -89,12 +90,68 @@ There are two access modes you can define: *Console Password Logon* and *Program
 The first one is used for web-based login where each actions are being done from the Alibaba Cloud portal. In terms of account protection it follows the same recommended guidelines regarding password security and rotation,  and 2FA. The latter one is meant for being used in combination with our command line interface (CLI) tools such as `aliyun`[^aliyun] or `ossutil`[^ossutil] or with our various SDKs[^sdk]. As such it does not provide 2FA but relies on long-term credentials (Access Key ID and Access Key Secret) to programmatically sign requests to the CLI tools or the OpenAPI.
 
 ### Roles
+A RAM role is an RAM identity that you can create in your account that has specific permissions. An RAM role is similar to an RAM user, in that it is an Alibaba cloud identity with permission policies that determine what the identity can and cannot do in the cloud account. However, instead of being uniquely associated with one person, a role is intended to be assumable by anyone who needs it and is defined as an authorized principal to assume it. Also, a role does not have standard long-term credentials such as a password or access keys associated with it. Instead, when you assume a role, it provides you with temporary security credentials for your role session which consist of an *AccessKeySecret*, and *AccessKeyId*, and a *SecurityToken*. In thi case, the *AccessKeyId* is always prefixed with `STS.`.
+
+Below is an example role definition that allows *every* RAM user (yes, this is a little bit counter-intuitive since we specify `root`as the principal) to assume it who is allowed to invoke `sts:AssumeRole` and whose request originates from within a certain IP range. 
+```
+{
+    "Statement": [
+        {
+            "Action": "sts:AssumeRole",
+            "Effect": "Allow",
+            "Principal": {
+                "RAM": [
+                    "acs:ram::5509671837805201:root"
+                ]
+            }
+            "Condition": {
+                "StringEquals": {
+                    "acs:SourceIp": [
+                        "47.234.42.0/24"
+                    ]
+                }
+            }
+        }
+    ],
+    "Version": "1"
+}
+```
+For example the user can manually invoke `sts:AssumeRole` with the CLI just like that:
+
+`aliyun sts AssumeRole --RoleArn acs:ram::5509671837805201:role/myrole --RoleSessionName service` 
+
+As you can see you can also specify a role session name which is used as the caller id which is logged in ActionTrail for example.
+Usually, you should restrict access to a specific group of users. An individual user can be specified as `acs:ram::5509671837805201:user/myuser`.
+
+There are three principal types we currently support: 
+- RAM user from a trusted Alibaba Cloud account. This what we have just discussed. Note that you can also specify RAM users from other accounts by simply changing the account id accordingly. This enables you to implement cross-account access permissions.
+- Cloud services such as ECS, RDS, Function Compute, etc. This enables these services to automatically assume roles and thereby getting according permission when they are configured to access other cloud resources. 
+- Identities from other Identity Providers such as Active Directory that are being used in Single Sign-On scenarios.  
 
 ### Resources
+We have already briefly touched what a cloud resource is previously but let's recap: a cloud resource is any instance of a particular cloud service. For example, an ECS instance is a resource of the ECS service. Likewise, an OSS bucket and an OSS object is a resource of the OSS service.
+Each resource on Alibaba cloud has a unique identified that you can use to define very fine granular permissions. Instead of granting full access to each and every ECS instance in your account you can only grant access to a particular ECS instance. This is where the `Resource`field of a RAM policy comes into play as already shown section [RAM Users and Policies](#ch-gov-users-and-policies). The identifier of an Alibaba cloud resource is always structured like this:
+```
+acs:<service-name>:<region-id>:<account-id>:<resource-name>
+```
+You can also specify a wildcard (*) expression for the individual parts of a resource. For example, if you like to specify all ECS instances in all regions you would write
+```
+acs:ecs:*:<account-id>:*
+```
+If you like to specify a specific object (myfile.dat) in a specific bucket (mybucket) in eu-central-1, you would write:
+```
+acs:oss:eu-central-1:<account-id>:mybucket/myfile.dat
+```
+ Since a bucket is always bound to a particular region you can also omit the region like so
+```
+acs:oss::<account-id>:mybucket/myfile.dat
+```
 
 ### Best Practices
 
 
+## Links
+- The Official RAM documentation at https://www.alibabacloud.com/help/product/28625.htm which discusses many aspects of this chapter in more detail and also comes with a Tutorial section that focuses on many common scenarios by giving concrete examples.
 
 
 [^aliyun]: https://github.com/aliyun/aliyun-cli

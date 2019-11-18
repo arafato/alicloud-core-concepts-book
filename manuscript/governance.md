@@ -10,7 +10,9 @@ There are currently two different types (or *memberships*) of Alibaba Cloud acco
 If possible, we strongly recommend to choose an *Enterprise Account* since it usually provides higher discounts during promotion campaigns, and also has a stronger free-trial offering. As mentioned before, there is no difference in functionality otherwise.
 
 ### Security Settings
-Now that we have discussed the two principal account types of Alibaba Cloud, let's look at the core concepts of managing a cloud account. Each cloud account has exactly one and only one root user. You are specifying the login name and password during initial cloud account creation. Each root user also has an associated mobile phone number which can be re-used across different root users and cloud account respectively at most six times. In section [User and Permission Management](#ch-governance-permission) we will look in detail at how to create additional users and define according permissions.
+Now that we have discussed the two principal account types of Alibaba Cloud, let's look at the core concepts of managing a cloud account. Each cloud account has exactly one and only one root user. You are specifying the login name and password during initial cloud account creation. Each root user also has an associated mobile phone number which can be re-used across different root users and cloud account respectively at most six times. 
+
+In section [User and Permission Management](#ch-governance-permission) we will look in detail at how to create additional users and define according permissions.
 Below screenshot shows the options of the *Security Settings* administration page which is only available for the root user and accessible directly via [https://account-intl.console.aliyun.com](https://account-intl.console.aliyun.com).
 
 ![Account Management - Security Settings](02/am_security_settings.png)   
@@ -20,9 +22,10 @@ On this page you can easily change the login password and your mobile phone numb
 #### Best Practices
 1) Enable *Account Protection*, that is 2FA, which currently supports Time-based One-time Password (TOTP) and SMS verification
 2) Define a *Login Mask* that only allows login from a specific IP range, e.g. the outbound IP range of your corporate network, thus blocking illegal login attempts from unknown IP ranges.
-3) Choose a password that is sufficient in both complexity and length. Consult your security advisor on your company's password guidelines.
+3) Choose a password that is sufficient in both complexity and length, make sure to activate password rotation, and restrict session duration. Consult your security advisor on your company's password and security guidelines. 
 4) Never activate *Access Key ID* and *Access Key Secret* for your root user. You can check at [https://usercenter.console.aliyun.com](https://usercenter.console.aliyun.com) whether according keys have been defined. Deactivate them immediately since the root account is not recommended for any programmatic use. Think of it as the root user on Linux systems which has universal access rights to each and everything and whose rights cannot be restricted. For the day to day work the root account should never be used at all!
 5) Activate [ActionTrail](https://www.alibabacloud.com/help/product/28802.htm) to fully audit your account. Please see section [Account Auditing](#ch_sec_audit) of chapter [Securing your System](#ch_sec) for details.    
+
 ## Notification Management
 The so-called *Message Center* which is available at [https://notifications-intl.console.aliyun.com](https://notifications-intl.console.aliyun.com) provides means to get proactively notified about important incidents and updates on and about the Alibaba Cloud platform. These notification messages are divided into five distinct groups:
 - **Account Message:** This is about notifications about account expenses. For example, you can subscribe to notifications about overdue bills.
@@ -49,13 +52,50 @@ While we believe that each notification is valuable for our customers we recomme
 
 {id: ch-governance-permission}
 ## User and Permission Management
-Resource Access Management (RAM) is the cloud service which provide means to create additional users (so-called RAM users), and roles with according policies (sometimes also referred to as permissions) that define the access rights on Alibaba Cloud services and specific resources. The interface which is used to manage your cloud resources is usually referred to as OpenAPI which you can interactively explore with the OpenAPI Explorer at [https://api.aliyun.com/](https://api.aliyun.com/).
+Resource Access Management (RAM) is the cloud service which provide means to create additional users (so-called RAM users), and roles with according policies (sometimes also referred to as permissions) that define the access rights on Alibaba Cloud services and specific resources. The interface (i.e. the set of APIs) which is used to manage your cloud resources is usually referred to as OpenAPI which you can interactively explore with the OpenAPI Explorer at [https://api.aliyun.com/](https://api.aliyun.com/). 
 
 Let's break down the different terms we just mentioned and explain what they exactly mean.
-- **RAM User:** Sometimes also referred to as *Sub-Account*. It is a user account that is used for web-based login to the Alibaba Cloud portal and/or programmatic access to the OpenAPI. All permissions need to be explicitly granted.
+
+### Root User
+The initial single sign-in identity that has complete access to all Alibaba Cloud services and resources in the account. This identity is called the Alibaba cloud account root user and is accessed by signing in with the email address and password that you used to create the account. 
+Follow the best-practice and use it only to create your first RAM user. Never use it for day to day tasks, and never use it to access your Alibaba cloud resources. 
+
+There are, however, some tasks only the root user can do:
+- Modify root user details on the *Security Settings* administration page at [https://account-intl.console.aliyun.com](https://account-intl.console.aliyun.com)
+- Delete the Alibaba Cloud account which is accessible via *Security Settings* administration page
+- Initial activation of cloud services: most services are deactivated by default and need to be explicitly activated by the root user. This action is irreversible, meaning an activated service can never be deactivated again.    
+
+Most other things (such as whitelisting port 25 for an ECS instance, Reverse DNS entry for ECS) are usually requested by opening an according support ticket which is not restricted to the root user, though.
+
+### RAM Users and Policies:
+Sometimes also referred to as *Sub-Account*. It is a user account that is used for web-based login to the Alibaba Cloud portal and/or programmatic access to the OpenAPI. They can't access anything in your account until you give them permission. All permissions need to be explicitly granted.
+You give permissions to a user by creating an identity-based policy, which is a policy that is attached to the user or a group to which the user belongs. The following example shows a JSON policy that allows the user to perform all TableStore actions (ots:*) on the Books table in the 123456789012 account within the eu-central-1 region.
+```
+{
+  "Version": "1",
+  "Statement": {
+    "Effect": "Allow",
+    "Action": "ots:*",
+    "Resource": "acs:ots:eu-central-1:123456789012:table/Books"
+  }
+}
+```
+After you attach this policy to your RAM user, the user only has those TableStore permissions. Most users have multiple policies that together represent the permissions for that user. The evaluation policy is as follows:
+- By default, all requests are implicitly denied (except for requests by the root user)
+- An explicit *Allow* overrides this default
+- Any explicit *Deny* overrides any allows. 
+
 There are two access modes you can define: *Console Password Logon* and *Programmatic Access*
-The first one is used for web-based login where each actions are being done from the Alibaba Cloud portal. In terms of account protection it follows the same recommended guidelines regarding password security and 2FA. The latter one is meant for being used in combination with our command line interface (CLI) tools such as `aliyun`[^aliyun] or `ossutil`[^ossutil] or with our various SDKs[^sdk]. As such it does not provide 2FA but relies on long-term credentials (Access Key ID and Access Key Secret) to programmatically sign requests to the CLI tools or the OpenAPI.
-- **Roles:**
+The first one is used for web-based login where each actions are being done from the Alibaba Cloud portal. In terms of account protection it follows the same recommended guidelines regarding password security and rotation,  and 2FA. The latter one is meant for being used in combination with our command line interface (CLI) tools such as `aliyun`[^aliyun] or `ossutil`[^ossutil] or with our various SDKs[^sdk]. As such it does not provide 2FA but relies on long-term credentials (Access Key ID and Access Key Secret) to programmatically sign requests to the CLI tools or the OpenAPI.
+
+### Roles
+
+### Resources
+
+### Best Practices
+
+
+
 
 [^aliyun]: https://github.com/aliyun/aliyun-cli
 [^ossutil]: https://github.com/aliyun/ossutil

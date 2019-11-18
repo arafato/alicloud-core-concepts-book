@@ -24,7 +24,9 @@ On this page you can easily change the login password and your mobile phone numb
 2) Define a *Login Mask* that only allows login from a specific IP range, e.g. the outbound IP range of your corporate network, thus blocking illegal login attempts from unknown IP ranges.
 3) Choose a password that is sufficient in both complexity and length, make sure to activate password rotation, and restrict session duration. Consult your security advisor on your company's password and security guidelines. 
 4) Never activate *Access Key ID* and *Access Key Secret* for your root user. You can check at [https://usercenter.console.aliyun.com](https://usercenter.console.aliyun.com) whether according keys have been defined. Deactivate them immediately since the root account is not recommended for any programmatic use. Think of it as the root user on Linux systems which has universal access rights to each and everything and whose rights cannot be restricted. For the day to day work the root account should never be used at all!
-5) Activate [ActionTrail](https://www.alibabacloud.com/help/product/28802.htm) to fully audit your account. Please see section [Account Auditing](#ch_sec_audit) of chapter [Securing your System](#ch_sec) for details.    
+5) Activate [ActionTrail](https://www.alibabacloud.com/help/product/28802.htm) to fully audit your account. Please see section [Account Auditing](#ch_sec_audit) of chapter [Securing your System](#ch_sec) for details.
+
+In the [best-practices section of User and Permission Management](#ch-gov-users-and-policies-bp) we will look at more recommendations to keep your cloud resources secure. 
 
 ## Notification Management
 The so-called *Message Center* which is available at [https://notifications-intl.console.aliyun.com](https://notifications-intl.console.aliyun.com) provides means to get proactively notified about important incidents and updates on and about the Alibaba Cloud platform. These notification messages are divided into five distinct groups:
@@ -69,7 +71,7 @@ Most other things (such as whitelisting port 25 for an ECS instance, Reverse DNS
 
 {id: ch-gov-users-and-policies}
 ### RAM Users and Policies:
-Sometimes also referred to as *Sub-Account*. It is a user account that is used for web-based login to the Alibaba Cloud portal and/or programmatic access to the OpenAPI. They can't access anything in your account until you give them permission. All permissions need to be explicitly granted.
+A RAM user is sometimes also referred to as *Sub-Account*. It is a user account that is used for web-based login to the Alibaba Cloud portal and/or programmatic access to the OpenAPI. They can't access anything in your account until you give them permission. All permissions need to be explicitly granted.
 You give permissions to a user by creating an identity-based policy, which is a policy that is attached to the user or a group to which the user belongs. The following example shows a JSON policy that allows the user to perform all TableStore actions (ots:*) on the Books table in the 123456789012 account within the eu-central-1 region.
 ```
 {
@@ -92,7 +94,7 @@ The first one is used for web-based login where each actions are being done from
 ### Roles
 A RAM role is an RAM identity that you can create in your account that has specific permissions. An RAM role is similar to an RAM user, in that it is an Alibaba cloud identity with permission policies that determine what the identity can and cannot do in the cloud account. However, instead of being uniquely associated with one person, a role is intended to be assumable by anyone who needs it and is defined as an authorized principal to assume it. Also, a role does not have standard long-term credentials such as a password or access keys associated with it. Instead, when you assume a role, it provides you with temporary security credentials for your role session which consist of an *AccessKeySecret*, and *AccessKeyId*, and a *SecurityToken*. In thi case, the *AccessKeyId* is always prefixed with `STS.`.
 
-Below is an example role definition that allows *every* RAM user (yes, this is a little bit counter-intuitive since we specify `root`as the principal) to assume it who is allowed to invoke `sts:AssumeRole` and whose request originates from within a certain IP range. 
+Below is an example role definition that allows *every* RAM user (yes, this is a little bit counter-intuitive since we specify `root` as the principal) to assume it who is allowed to invoke `sts:AssumeRole` and whose request originates from within a certain IP range. 
 ```
 {
     "Statement": [
@@ -138,7 +140,7 @@ You can also specify a wildcard (*) expression for the individual parts of a res
 ```
 acs:ecs:*:<account-id>:*
 ```
-If you like to specify a specific object (myfile.dat) in a specific bucket (mybucket) in eu-central-1, you would write:
+If you like to specify a specific object such as `myfile.dat` in a specific bucket `mybucket` in `eu-central-1`, you would write:
 ```
 acs:oss:eu-central-1:<account-id>:mybucket/myfile.dat
 ```
@@ -146,9 +148,43 @@ acs:oss:eu-central-1:<account-id>:mybucket/myfile.dat
 ```
 acs:oss::<account-id>:mybucket/myfile.dat
 ```
-
+{id: ch-gov-users-and-policies-bp}
 ### Best Practices
+To help secure your Alibaba Cloud account follow these recommendations for Alibaba Cloud Resource Access Management:
+- **Lock Away Your Root Credentials:** 
+You use an access key (an access key ID and secret access key) to make programmatic requests to Alibaba Cloud. However, do not use your root user access key. The access key for your root user gives full access to all your resources for all Alibaba Cloud services, including your billing information. You cannot reduce the permissions associated with your Alibaba Cloud account root user access key.
 
+Therefore, protect your root user access key like you would your credit card numbers or any other sensitive secret. Unless you do not absolutely need a root access keys never create them in the first place. If you do have one, delete them. You can check at [https://usercenter.console.aliyun.com](https://usercenter.console.aliyun.com) whether according keys have been defined.
+
+- **Create Individual RAM Users:**
+Don't use your Alibaba Cloud account root user credentials to access any cloud service or resource, and don't give your credentials to anyone else. Instead, create individual users for anyone who needs access to your cloud account. Create a RAM user for yourself as well, give that user administrative permissions, and use that RAM user for all your work.<br>
+By creating individual RAM users for people accessing your account, you can give each RAM user a unique set of security credentials. You can also grant different permissions to each RAM user. If necessary, you can change or revoke a RAM user's permissions anytime. If you give out your root user credentials, it can be difficult to revoke them, and it is impossible to restrict their permissions.
+
+- **Use Groups to Assign Permissions to RAM Users:**
+Instead of defining permissions for individual RAM users, it's usually more convenient to create groups that relate to job functions (administrators, developers, accounting, etc.). Next, define the relevant permissions for each group. Finally, assign RAM users to those groups. All the users in an RAM group inherit the permissions assigned to the group. That way, you can make changes for everyone in a group in just one place. As people move around in your company, you can simply change what RAM group their RAM user belongs to.
+
+- **Grant Least Privilege:**
+When you create IAM policies, follow the standard security advice of granting least privilege, or granting only the permissions required to perform a task. Determine what users (and roles) need to do and then craft policies that allow them to perform only those tasks.
+Start with a minimum set of permissions and grant additional permissions as necessary. Doing so is more secure than starting with permissions that are too lenient and then trying to tighten them later.<br>
+Alibaba Cloud RAM service comes with a set of pre-defined policies which are called *System Policies*. You can find them in your cloud account portal here: https://ram.console.aliyun.com/policies<br>
+Usually, for each service there are two policies defined: One that gives full access, and one that only gives read access to any resource in any region. While this may work for some scenarios you might need more fine-granular access policies that are specific to certain resource, to a certain region, or to some specific actions. For these scenarios you can define a so-called *Custom Policy*.<br>
+Some built-in system policies you might want to consider (in potentially modified versions) for your account governance are: 
+    - *AliyunSupportFullAccess* which grants access to Support Center via Management Console which includes filing support tickets. 
+    - *AliyunBSSFullAccess* which grants full access to Billing System via Management Console.
+    - *AliyunBSSReadOnlyAccess* read-only access to Billing System via Management Console.
+    - *AliyunBSSOrderAccess* which grants permission to view, pay, and cancel orders on Billing System.
+    - *AliyunSTSAssumeRoleAccess* which grants access to the API AssumeRole of Security Token Service(STS).
+    - *AliyunRAMFullAccess* which grants full access to the RAM service which includes rights to create, modify and delete users, and specify account policies such as password policies. 
+    - *AliyunNotificationsFullAccess* which grants full access to Alibaba Message Center via Management Console.
+    - *AliyunMarketplaceFullAccess*  which grants full access to Alibaba Cloud Marketplace via Management Console.
+    - *AliyunBeianFullAccess* which grants full access to the Alibaba Cloud ICP Filing system at https://beian.aliyun.com
+
+- **Configure a Strong Password Policy for Your RAM-Users:**
+If you allow users to change their own passwords, require that they create strong passwords and that they rotate their passwords periodically. On RAM Settings page of the Alibaba Cloud portal at https://ram.console.aliyun.com/settings, you can create a password policy for your account. You can use the password policy to define password requirements, such as minimum length, whether it requires non-alphabetic characters, how frequently it must be rotated, password history checks, and so on.
+
+-**Enable MFA**
+For extra security, we recommend that you require multi-factor authentication (MFA) for all users in your account. With MFA, users have a device that generates a response to an authentication challenge. Both the user's credentials and the device-generated response are required to complete the sign-in process. If a user's password or access keys are compromised, your account resources are still secure because of the additional authentication requirement.<br>
+Please check https://www.alibabacloud.com/help/doc-detail/119555.htm for details.
 
 ## Links
 - The Official RAM documentation at https://www.alibabacloud.com/help/product/28625.htm which discusses many aspects of this chapter in more detail and also comes with a Tutorial section that focuses on many common scenarios by giving concrete examples.

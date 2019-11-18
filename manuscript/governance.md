@@ -186,9 +186,32 @@ If you allow users to change their own passwords, require that they create stron
 For extra security, we recommend that you require multi-factor authentication (MFA) for all users in your account. With MFA, users have a device that generates a response to an authentication challenge. Both the user's credentials and the device-generated response are required to complete the sign-in process. If a user's password or access keys are compromised, your account resources are still secure because of the additional authentication requirement.<br>
 Please check https://www.alibabacloud.com/help/doc-detail/119555.htm for details.
 
+-**Use Service-Roles for Applications That Run on Alibaba Cloud Services:**
+Applications that run on Alibaba Cloud services such as ECS instances or Function Compute need credentials in order to access other Alibaba Cloud services. To provide credentials to the application in a secure way, use RAM service-roles. A service-role is an entity that has its own set of permissions, but that isn't a user or group. Roles also don't have their own permanent set of credentials the way RAM users do. In the case of Function Compute for example, RAM dynamically provides temporary credentials to the Function Compute instance, and these credentials are automatically rotated for you.<br>
+When you launch an ECS instance, you can specify a role for the instance as a launch parameter. Applications that run on the ECS instance can use the role's credentials when they access other cloud resources through Secure Token Service (https://www.alibabacloud.com/help/doc-detail/28756.htm). The role's permissions determine what the application is allowed to do.
+
+-**Use Roles to Delegate Permissions:**
+Don't share security credentials between accounts to allow users from another Alibaba Cloud account to access resources in your cloud account. Instead, use RAM roles. You can define a role that specifies what permissions the RAM users in the other account are allowed. You can also designate which Alibaba Cloud accounts have the RAM users that are allowed to assume the role. <br>
+See https://www.alibabacloud.com/help/doc-detail/93745.htm for details on how to configure accordingly.
+
+-**Do Not Share Access Keys:**
+Access keys provide programmatic access to AWS. Do not embed access keys within unencrypted code or share these security credentials between users in your Alibaba Cloud account. For applications that need access to Alibaba Cloud, configure the program to retrieve temporary security credentials using a RAM role. To allow your users individual programmatic access, create a RAM user with personal access keys.
+
+-**Rotate Credentials Regularly:**
+Change your own passwords and access keys regularly, and make sure that all RAM users in your account do as well. That way, if a password or access key is compromised without your knowledge, you limit how long the credentials can be used to access your resources. You can apply a password policy to your account to require all your RAM users to rotate their passwords. You can also choose how often they must do so.
+
+-**Use Policy Conditions for Extra Security:**
+To the extent that it's practical, define the conditions under which your RAM policies allow access to a resource. For example, you can write conditions to specify a range of allowable IP addresses that a request must come from. You can also specify that a request is allowed only within a specified date range or time range. You can also set conditions that require the use of MFA (multi-factor authentication). For example, you can require that a user has authenticated with an MFA device in order to be allowed to terminate an ECS instance.
+Please see https://www.alibabacloud.com/help/doc-detail/100680.htm#h2-url-8 for details on the syntax of the `Condition` field of an according RAM policy.
+
+-**Enable ActionTrail:**
+You can use the Alibaba Cloud service *ActionTrail* to determine the actions users have taken in your account and the resources that were used. The log files show the time and date of actions, the source IP for an action, which actions failed due to inadequate permissions, and more. Keep in mind that these logs are exclusively from the OpenAPI, i.e., the management APIs of Alibaba Cloud. Application specific logs can be recorded and analyzed with *Log Service*, for example. 
+
+
 ## Links
 - The Official RAM documentation at https://www.alibabacloud.com/help/product/28625.htm which discusses many aspects of this chapter in more detail and also comes with a Tutorial section that focuses on many common scenarios by giving concrete examples.
-
+- The official ActionTrail documentation at https://www.alibabacloud.com/help/product/28802.htm which explores various scenarios such as security analysis, resource change tracking, and compliance audit. 
+- The official Log Service documentation at https://www.alibabacloud.com/help/product/28958.htm which discusses how to collect, store and analyze logs from your applications.
 
 [^aliyun]: https://github.com/aliyun/aliyun-cli
 [^ossutil]: https://github.com/aliyun/ossutil

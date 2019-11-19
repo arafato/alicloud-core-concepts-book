@@ -224,13 +224,14 @@ Alibaba Cloud Billing Management is the service that you use to pay your Alibaba
 Alibaba Cloud automatically charges the credit card you provided when you signed up for a new account with Alibaba Cloud. Charges appear on your credit card bill monthly. You can view or update credit card information, and designate a different credit card for Alibaba Cloud to charge, on the Payment Methods page in the Billing Management console.
 
 
-Depending on the region you choose during initial account creation you are contracting with a different legal identity of Alibaba Cloud. Outside of Mainland China we are providing the following legal entities for contracting:
+Depending on the region you choose during initial account creation, you are contracting with a different legal identity of Alibaba Cloud. Outside of Mainland China we are providing the following legal entities for contracting:
 - Alibaba.com (Europe) Limited
 - Alibaba Cloud (Singapore) Private Limited
 - Alibaba Cloud US LLC
 - Alibaba Cloud (India) LLP
 - Alibaba Cloud (Malaysia) Sdn. Bhd
 
+Be careful in choosing the region. It cannot be changed afterwards and your contracting legal entity depends on it.
 
 ![Billing Management - Billing Address](02/billing_address.png)   
 

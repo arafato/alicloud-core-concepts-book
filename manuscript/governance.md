@@ -66,6 +66,7 @@ There are, however, some tasks only the root user can do:
 - Modify root user details on the *Security Settings* administration page at [https://account-intl.console.aliyun.com](https://account-intl.console.aliyun.com)
 - Delete the Alibaba Cloud account which is accessible via *Security Settings* administration page
 - Initial activation of cloud services: most services are deactivated by default and need to be explicitly activated by the root user. This action is irreversible, meaning an activated service can never be deactivated again.    
+- Real-name verification of your account which is needed for creating any kind of resources in Mainland China regions which have a public IP and/or a public domain name.
 
 Most other things (such as whitelisting port 25 for an ECS instance, Reverse DNS entry for ECS) are usually requested by opening an according support ticket which is not restricted to the root user, though.
 
@@ -151,19 +152,19 @@ acs:oss::<account-id>:mybucket/myfile.dat
 {id: ch-gov-users-and-policies-bp}
 ### Best Practices
 To help secure your Alibaba Cloud account follow these recommendations for Alibaba Cloud Resource Access Management:
-- **Lock Away Your Root Credentials:** 
+- **Lock Away Your Root Credentials:** <br>
 You use an access key (an access key ID and secret access key) to make programmatic requests to Alibaba Cloud. However, do not use your root user access key. The access key for your root user gives full access to all your resources for all Alibaba Cloud services, including your billing information. You cannot reduce the permissions associated with your Alibaba Cloud account root user access key.
 
 Therefore, protect your root user access key like you would your credit card numbers or any other sensitive secret. Unless you do not absolutely need a root access keys never create them in the first place. If you do have one, delete them. You can check at [https://usercenter.console.aliyun.com](https://usercenter.console.aliyun.com) whether according keys have been defined.
 
-- **Create Individual RAM Users:**
+- **Create Individual RAM Users:**<br>
 Don't use your Alibaba Cloud account root user credentials to access any cloud service or resource, and don't give your credentials to anyone else. Instead, create individual users for anyone who needs access to your cloud account. Create a RAM user for yourself as well, give that user administrative permissions, and use that RAM user for all your work.<br>
 By creating individual RAM users for people accessing your account, you can give each RAM user a unique set of security credentials. You can also grant different permissions to each RAM user. If necessary, you can change or revoke a RAM user's permissions anytime. If you give out your root user credentials, it can be difficult to revoke them, and it is impossible to restrict their permissions.
 
-- **Use Groups to Assign Permissions to RAM Users:**
+- **Use Groups to Assign Permissions to RAM Users:**<br>
 Instead of defining permissions for individual RAM users, it's usually more convenient to create groups that relate to job functions (administrators, developers, accounting, etc.). Next, define the relevant permissions for each group. Finally, assign RAM users to those groups. All the users in an RAM group inherit the permissions assigned to the group. That way, you can make changes for everyone in a group in just one place. As people move around in your company, you can simply change what RAM group their RAM user belongs to.
 
-- **Grant Least Privilege:**
+- **Grant Least Privilege:**<br>
 When you create IAM policies, follow the standard security advice of granting least privilege, or granting only the permissions required to perform a task. Determine what users (and roles) need to do and then craft policies that allow them to perform only those tasks.
 Start with a minimum set of permissions and grant additional permissions as necessary. Doing so is more secure than starting with permissions that are too lenient and then trying to tighten them later.<br>
 Alibaba Cloud RAM service comes with a set of pre-defined policies which are called *System Policies*. You can find them in your cloud account portal here: https://ram.console.aliyun.com/policies<br>
@@ -179,32 +180,32 @@ Some built-in system policies you might want to consider (in potentially modifie
     - *AliyunMarketplaceFullAccess*  which grants full access to Alibaba Cloud Marketplace via Management Console.
     - *AliyunBeianFullAccess* which grants full access to the Alibaba Cloud ICP Filing system at https://beian.aliyun.com
 
-- **Configure a Strong Password Policy for Your RAM-Users:**
+- **Configure a Strong Password Policy for Your RAM-Users:**<br>
 If you allow users to change their own passwords, require that they create strong passwords and that they rotate their passwords periodically. On RAM Settings page of the Alibaba Cloud portal at https://ram.console.aliyun.com/settings, you can create a password policy for your account. You can use the password policy to define password requirements, such as minimum length, whether it requires non-alphabetic characters, how frequently it must be rotated, password history checks, and so on.
 
--**Enable MFA**
+- **Enable MFA**<br>
 For extra security, we recommend that you require multi-factor authentication (MFA) for all users in your account. With MFA, users have a device that generates a response to an authentication challenge. Both the user's credentials and the device-generated response are required to complete the sign-in process. If a user's password or access keys are compromised, your account resources are still secure because of the additional authentication requirement.<br>
 Please check https://www.alibabacloud.com/help/doc-detail/119555.htm for details.
 
--**Use Service-Roles for Applications That Run on Alibaba Cloud Services:**
+- **Use Service-Roles for Applications That Run on Alibaba Cloud Services:**<br>
 Applications that run on Alibaba Cloud services such as ECS instances or Function Compute need credentials in order to access other Alibaba Cloud services. To provide credentials to the application in a secure way, use RAM service-roles. A service-role is an entity that has its own set of permissions, but that isn't a user or group. Roles also don't have their own permanent set of credentials the way RAM users do. In the case of Function Compute for example, RAM dynamically provides temporary credentials to the Function Compute instance, and these credentials are automatically rotated for you.<br>
 When you launch an ECS instance, you can specify a role for the instance as a launch parameter. Applications that run on the ECS instance can use the role's credentials when they access other cloud resources through Secure Token Service (https://www.alibabacloud.com/help/doc-detail/28756.htm). The role's permissions determine what the application is allowed to do.
 
--**Use Roles to Delegate Permissions:**
+- **Use Roles to Delegate Permissions:**<br>
 Don't share security credentials between accounts to allow users from another Alibaba Cloud account to access resources in your cloud account. Instead, use RAM roles. You can define a role that specifies what permissions the RAM users in the other account are allowed. You can also designate which Alibaba Cloud accounts have the RAM users that are allowed to assume the role. <br>
 See https://www.alibabacloud.com/help/doc-detail/93745.htm for details on how to configure accordingly.
 
--**Do Not Share Access Keys:**
+- **Do Not Share Access Keys:**<br>
 Access keys provide programmatic access to AWS. Do not embed access keys within unencrypted code or share these security credentials between users in your Alibaba Cloud account. For applications that need access to Alibaba Cloud, configure the program to retrieve temporary security credentials using a RAM role. To allow your users individual programmatic access, create a RAM user with personal access keys.
 
--**Rotate Credentials Regularly:**
+- **Rotate Credentials Regularly:**<br>
 Change your own passwords and access keys regularly, and make sure that all RAM users in your account do as well. That way, if a password or access key is compromised without your knowledge, you limit how long the credentials can be used to access your resources. You can apply a password policy to your account to require all your RAM users to rotate their passwords. You can also choose how often they must do so.
 
--**Use Policy Conditions for Extra Security:**
+- **Use Policy Conditions for Extra Security:**<br>
 To the extent that it's practical, define the conditions under which your RAM policies allow access to a resource. For example, you can write conditions to specify a range of allowable IP addresses that a request must come from. You can also specify that a request is allowed only within a specified date range or time range. You can also set conditions that require the use of MFA (multi-factor authentication). For example, you can require that a user has authenticated with an MFA device in order to be allowed to terminate an ECS instance.
 Please see https://www.alibabacloud.com/help/doc-detail/100680.htm#h2-url-8 for details on the syntax of the `Condition` field of an according RAM policy.
 
--**Enable ActionTrail:**
+- **Enable ActionTrail:**<br>
 You can use the Alibaba Cloud service *ActionTrail* to determine the actions users have taken in your account and the resources that were used. The log files show the time and date of actions, the source IP for an action, which actions failed due to inadequate permissions, and more. Keep in mind that these logs are exclusively from the OpenAPI, i.e., the management APIs of Alibaba Cloud. Application specific logs can be recorded and analyzed with *Log Service*, for example. 
 
 
@@ -220,9 +221,4 @@ You can use the Alibaba Cloud service *ActionTrail* to determine the actions use
 ## Billing Management
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
-## Regions and Availability Zones
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-
-## Service Level Agreements
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 

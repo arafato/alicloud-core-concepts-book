@@ -223,7 +223,6 @@ Alibaba Cloud Billing Management is the service that you use to pay your Alibaba
 
 Alibaba Cloud automatically charges the credit card you provided when you signed up for a new account with Alibaba Cloud. Charges appear on your credit card bill monthly. You can view or update credit card information, and designate a different credit card for Alibaba Cloud to charge, on the Payment Methods page in the Billing Management console.
 
-
 Depending on the region you choose during initial account creation, you are contracting with a different legal identity of Alibaba Cloud. Outside of Mainland China we are providing the following legal entities for contracting:
 - Alibaba.com (Europe) Limited
 - Alibaba Cloud (Singapore) Private Limited
@@ -235,3 +234,10 @@ Be careful in choosing the region. It cannot be changed afterwards and your cont
 
 ![Billing Management - Billing Address](02/billing_address.png)   
 
+### Payment Methods
+If you choose U.S. Dollars as payment currency, we support payment by credit card, debit card, or PayPal. If you choose Indian Rupee as payment currency, we support payment by Paytm Wallet. If you choose Malaysian Ringgit as payment currency, we support payment by credit card or debit card. Each account may have multiple payment methods registered at the same time, but there can only be one default payment method to be used for all your payments. For example, if you have used a credit card to pay for a prepaid service, this credit card will be your default payment method and you can only use it to make other purchases. You can only use another registered payment method to make payments if you do not have any other existing products or services currently being billed to another payment method in effect.
+
+### Payment Failure
+If, for reasons attributed to you or your registered payment method, we cannot bill you or otherwise process your payment, we will notify you by email to your registered email address and request you to resolve the problem. In this case, you will be able to continue to use your products for another 15 days. After this 15-day period, if the issue has not been resolved and payment has not been made, Alibaba Cloud shall have the right, to suspend your service until payment has been processed or to terminate your services without any liability to you. Prior to any service suspension or termination, an email will be sent to your registered email address.
+
+After the termination of your services, Alibaba Cloud shall have the right, to release all your instances without any liability to you 15 days after the date of termination of your services.

@@ -196,7 +196,7 @@ Don't share security credentials between accounts to allow users from another Al
 See https://www.alibabacloud.com/help/doc-detail/93745.htm for details on how to configure accordingly.
 
 - **Do Not Share Access Keys:**<br>
-Access keys provide programmatic access to AWS. Do not embed access keys within unencrypted code or share these security credentials between users in your Alibaba Cloud account. For applications that need access to Alibaba Cloud, configure the program to retrieve temporary security credentials using a RAM role. To allow your users individual programmatic access, create a RAM user with personal access keys.
+Access keys provide programmatic access to Alibaba Cloud. Do not embed access keys within unencrypted code or share these security credentials between users in your Alibaba Cloud account. For applications that need access to Alibaba Cloud, configure the program to retrieve temporary security credentials using a RAM role. To allow your users individual programmatic access, create a RAM user with personal access keys.
 
 - **Rotate Credentials Regularly:**<br>
 Change your own passwords and access keys regularly, and make sure that all RAM users in your account do as well. That way, if a password or access key is compromised without your knowledge, you limit how long the credentials can be used to access your resources. You can apply a password policy to your account to require all your RAM users to rotate their passwords. You can also choose how often they must do so.
@@ -219,6 +219,18 @@ You can use the Alibaba Cloud service *ActionTrail* to determine the actions use
 [^sdk]: https://github.com/aliyun?q=sdk
 
 ## Billing Management
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+Alibaba Cloud Billing Management is the service that you use to pay your Alibaba Cloud bill, monitor your usage, and budget your costs.
 
+Alibaba Cloud automatically charges the credit card you provided when you signed up for a new account with Alibaba Cloud. Charges appear on your credit card bill monthly. You can view or update credit card information, and designate a different credit card for Alibaba Cloud to charge, on the Payment Methods page in the Billing Management console.
+
+
+Depending on the region you choose during initial account creation you are contracting with a different legal identity of Alibaba Cloud. Outside of Mainland China we are providing the following legal entities for contracting:
+- Alibaba.com (Europe) Limited
+- Alibaba Cloud (Singapore) Private Limited
+- Alibaba Cloud US LLC
+- Alibaba Cloud (India) LLP
+- Alibaba Cloud (Malaysia) Sdn. Bhd
+
+
+![Billing Management - Billing Address](02/billing_address.png)   
 

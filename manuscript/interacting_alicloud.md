@@ -38,7 +38,7 @@ Wikipedia defines Infrastructure as Code (IaC) as follows:
 ```
 Or to put it in simpler terms:
 ```
-Infrastructure as Code (IaC) means to manage the entire lifecycle and configuration of your IT infrastructure using declarative scripts.
+Infrastructure as Code (IaC) means to manage the entire lifecycle and configuration of your IT infrastructure using (declarative) configuration files.
 ```
 
 With IaC, your infrastructure’s configuration takes the form of a code file which uses a declarative description. *Declarative* means you are solely defining the desired state, not how to get to this state. This is usually taken care of by the IoC-Technology such as Terraform and thus much less error-prone and readable and understandable.
@@ -66,8 +66,19 @@ One of the main benefits of IaC is, without a doubt, lowering the costs of infra
 Every time you have smart, high-paid professionals performing tasks that you could automate, you’re wasting money. All of their focus should be on tasks that bring more value to the organization. And that’s where automation strategies—infrastructure as code among them—come in handy. By employing them, you free engineers from performing manual, slow, error-prone tasks so they can focus on what matters the most.
 
 ### Terraform
+Terraform is a tool for building, changing, and versioning infrastructure safely and efficiently. Terraform can manage existing and popular service providers as well as custom in-house solutions.
+It is hosted at https://www.terraform.io/
 
-### Resource Orchestration Service 
+Configuration files describe to Terraform the components needed to run a single application or your entire datacenter. Terraform generates an execution plan describing what it will do to reach the desired state, and then executes it to build the described infrastructure. As the configuration changes, Terraform is able to determine what changed and create incremental execution plans which can be applied.
+
+The infrastructure Terraform can manage includes low-level components such as compute instances, storage, and networking, as well as high-level components such as DNS entries, SaaS features, etc.
+
+Terraform is extensible and thus supports a wide range of different cloud vendors. The official Alibaba Cloud Terraform code-repository is hosted at https://github.com/terraform-providers/terraform-provider-alicloud. The complete documentation can be found at https://www.terraform.io/docs/providers/alicloud/.
+
+We highly recommend to look at the official examples provided at https://github.com/terraform-providers/terraform-provider-alicloud/tree/master/examples to get started easily.
+### Resource Orchestration Service
+Resource Orchestration Service (ROS) is Alibaba Cloud's native IoC offering. 
+
 
 ## Using the command-line interface
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.

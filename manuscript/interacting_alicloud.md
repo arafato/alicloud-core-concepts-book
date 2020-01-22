@@ -3,7 +3,8 @@ Alibaba Cloud provides different means to interact programmatically and to debug
 Before we look at more detail at the various options let's first discuss the general API model of Alibaba Cloud since this is the very fundament on which every supporting technology is based on.
 
 ## API Model
-Alibaba Cloud provides a web-based management API to manage the entire lifecycle and configuration of the various cloud resources available on our platform such as ECS and VPC.
+Alibaba Cloud provides a web-based management API to manage the entire lifecycle and configuration of the various cloud resources available on our platform such as ECS and VPC. These management APIs are refered to as **OpenAPI**. They are only routable with public internet access.
+In addition there is also the service specific endpoint which let you use the actual service's functionality such as executing a SQL query or writing data to an OSS bucket. This endpoint usually differs from the OpenAPI endpoint and is provided as an public endpoint routable from the public internet, and an internal endpoint which is only routable from a VPC. Please refer to the documentation of that particular service or look at the web-console of a provisioned service to get the endpoint schema.
 
 Alibaba Cloud performs authentication on each access request. Therefore, each request, whether being sent by HTTP or HTTPS, must contain signature information. Every service performs symmetric encryption using the `Access Key ID` and `Access Key Secret` to authenticate the client's request. Both keys are issued by the service *Resource Access Management Service (RAM)*. The `Access Key ID` indicates the identity of the client. The `Access Key Secret` is the secret key used to both encrypt and verify the signature string on the client side and on the server, respectively. 
 A detailed example based on RDS can be found here: https://www.alibabacloud.com/help/doc-detail/26225.htm
@@ -23,17 +24,79 @@ but there are some exceptions to that. For instance the Object Storage Service i
 
 For each service there is always a default endpoint `{service abbreviation}.aliyuncs.com`, and a region specific endpoint as described above. From a functional perspective it does not matter which one you are going to call, but network-latency wise it does. So make sure to always call the endpoint in the region which is closest to your system, and avoid calling the standard endpoint since this is usually located in Singapore region or in some rare cases in Chinese regions which come with high latency and an unreliable network connection.
 
-The endpoints we just discussed are exposed to the public internet. In many scenarios, however, communication happens from inside a Virtual Private Network (VPC) with no outbound (inbound) internet access for security and isolation reasons. Calling these public endpoints is thus not possible.
-Luckily, every management endpoint also provides an internal endpoint which is only routable from within a VPC.
-These endpoints usually take on the following schema (note the additional `internal` sub-domain):
-`{service abbreviation}.{regionId}.internal.aliyuncs.com`
+The endpoints we just discussed are exposed to the public internet. In many scenarios, however, communication happens from inside a Virtual Private Network (VPC) with no outbound (inbound) internet access for security and isolation reasons. Calling these public endpoints in such environments with no outbound internet access is thus not possible.
 
 Both HTTP and HTTPS are supported for all endpoints. We recommend to send requests over HTTPS for a higher level of security.
 
 Now that we have taken a look at how Alibaba Cloud Management APIs work let's discuss important technologies and methodologies that built upon that.
 
 ## Using the command-line interface
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+The Alibaba Cloud CLI is a tool to manage and use Alibaba Cloud resources through a command line interface. It is written in Go and built on the top of Alibaba Cloud OpenAPI. It is developed and hosted on Github at https://github.com/aliyun/aliyun-cli. CLI access the Alibaba Cloud services through OpenAPI (see previous section). Before using Alibaba Cloud CLI, make sure that you have activated the service (see chapter 2) to use and known how to use OpenAPI. Also make sure that your machine has public internet access (e.g. through a NAT-Gateway, Elastic IP/Instance-bound IP), otherwise OpenAPI cannot be called.
+
+Aliyun CLI provides an interactive configuration experience by running
+```
+$ aliyun configure
+Configuring profile 'default' ...
+Aliyun Access Key ID [None]: <Your AccessKey ID>
+Aliyun Access Key Secret [None]: <Your AccessKey Secret>
+Default Region Id [None]: eu-central-1
+Default output format [json]: json
+Default Language [en]: en
+```
+
+This command will create the file `$HOME/.aliyun/config.json` which you can also manually create, of course.
+It is structured like this:
+
+```
+{
+	"current": "default",
+	"profiles": [
+		{
+			"name": "default",
+			"mode": "AK",
+			"access_key_id": "LTAI4FxdfaoqTCJWKi******",
+			"access_key_secret": "Hv1PvFJHiYQKbES6wB8jrFIW******",
+			"sts_token": "",
+			"ram_role_name": "",
+			"ram_role_arn": "",
+			"ram_session_name": "",
+			"private_key": "",
+			"key_pair_name": "",
+			"expired_seconds": 0,
+			"verified": "",
+			"region_id": "eu-central-1",
+			"output_format": "json",
+			"language": "en",
+			"site": "",
+			"retry_timeout": 0,
+			"retry_count": 0
+		}],
+	"meta_path": ""
+}
+```
+
+You can add multiple profiles with different configurations. 
+Switching between profiles is as easy as
+```
+aliyun configure set --profile <profile-name>
+```
+Note that your credentials are stored in plain-text so make sure that access to this directory is properly secured. So especially when running on ECS instances we do not recommend to use the Access Key mode (AK) of Aliyun CLI. Instead, we recommend to use the mode `EcsRamRole` which instructs the Aliyun CLI to get an STS-token from the metadata service and thus assume the role that was assigned to that particular ECS instance.
+Assuming that the role named *ecs_role* is to be assumed you would configure the CLI interactively as follows:
+```
+$ aliyun configure --mode EcsRamRole --profile myprofile
+``` 
+See https://github.com/aliyun/aliyun-cli#configure-authentication-methods for details.
+
+Last but not least the Aliyun CLI command and usage structure is as follows:
+```
+$ aliyun <product> <api> [--parameter1 value1 --parameter2 value2 ...]
+```
+
+Putting `help` after either the *product* or *api* gives you detailed information about the available actions and required and optional parameters. A simple
+```
+$ aliyun help
+```
+will print out all available services.
 
 ## Infrastructure as Code
 Wikipedia defines Infrastructure as Code (IaC) as follows:
@@ -110,14 +173,30 @@ The following ROS script defines the desired state of a VPC with a certain netwo
         "CidrBlock": "192.168.0.0/16"
       }
     }
-  }
+  }‚
 }
 ```
 
-The *Aliyun CLI* lets you then manage the entire state and lifecycle of your resources and configurations which are described in your template code. You will find detailed information on how to use the *Aliyun CLI* here: https://www.alibabacloud.com/help/doc-detail/137399.htm
+The *Aliyun CLI* lets you then manage the entire state and lifecycle of your resources and configurations which are described in your template code. You will find detailed information on how to use the *Aliyun CLI* with ROS here: https://www.alibabacloud.com/help/doc-detail/137399.htm
 
 ## Debugging with API-Explorer
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+Sometimes you want to be able to call and explore the OpenAPI easily using a convenient graphical interface. This is where OpenAPI Explorere comes into play which you can find at https://api.aliyun.com.
+Make sure to have an active login session running in your browser since the OpenAPI Explorer will use the Access Key of the current user to temporarily access and operate on the user’s resources. This means that permission-wise you are of course restricted to your assigned permissions.
+Below figure gives you an idea on how OpenAPI Explorer looks like.
+![Interacting - OpenAPI Explorer](03/openapi_explorer.png) 
 
-## Programming with the SDK
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+As you can see you explore and search for specific actions and immediately get a graphical interface which lets you conveniently specify all parameters. It also gives you a nice graphical representation of the resulting request and response values, which of course is great for debugging and troubleshooting.
+What is also very practical is the *Example Code* section for different programming languages such as Java, NodeJS, Go, etc. that instantly generates the code that will create and submit the according action you have selected.
+
+One of the highlights is the Data Simulation feature. It lets you automatically create a Mock endpoint with mocked return values. As such it simulates the results of a real OpenAPI call, which you can use to replace the real OpenAPI request address in a development environment and lets you simulate different data scenarios of OpenAPI.
+
+The mock endpoints take the following form:
+```
+https://api.aliyun.com/mock/<service/<action>
+```
+
+So for mocking the `DescribeTasks` of ECS service you can simply call
+```
+https://api.aliyun.com/mock/Ecs/DescribeTasks
+```
+which returns according mock data. No authentication and signing of the request is needed for calling the mock API.

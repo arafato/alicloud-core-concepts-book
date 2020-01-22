@@ -31,6 +31,10 @@ These endpoints usually take on the following schema (note the additional `inter
 Both HTTP and HTTPS are supported for all endpoints. We recommend to send requests over HTTPS for a higher level of security.
 
 Now that we have taken a look at how Alibaba Cloud Management APIs work let's discuss important technologies and methodologies that built upon that.
+
+## Using the command-line interface
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
 ## Infrastructure as Code
 Wikipedia defines Infrastructure as Code (IaC) as follows:
 ```
@@ -73,15 +77,44 @@ Configuration files describe to Terraform the components needed to run a single 
 
 The infrastructure Terraform can manage includes low-level components such as compute instances, storage, and networking, as well as high-level components such as DNS entries, SaaS features, etc.
 
-Terraform is extensible and thus supports a wide range of different cloud vendors. The official Alibaba Cloud Terraform code-repository is hosted at https://github.com/terraform-providers/terraform-provider-alicloud. The complete documentation can be found at https://www.terraform.io/docs/providers/alicloud/.
+Terraform is extensible and thus supports a wide range of different cloud vendors. The official Alibaba Cloud Terraform code-repository is hosted at https://github.com/terraform-providers/terraform-provider-alicloud. The complete documentation can be found at https://www.terraform.io/docs/providers/alicloud/. So while you cannot re-use the same template code across different cloud providers you can re-use your general Terraform knowledge. 
 
 We highly recommend to look at the official examples provided at https://github.com/terraform-providers/terraform-provider-alicloud/tree/master/examples to get started easily.
+For example, the following script defines the desired state of a VPC with a certain network range you would like to create:
+```
+provider "alicloud" {
+}
+
+resource "alicloud_vpc" "main" {
+  name       = "my-vpc"
+  cidr_block = "192.168.0.0/16"
+}
+```
+The Terraform CLI then provides a huge set of options to manage the entire state and lifecycle of your resources and configurations which are described in your template code.
+
 ### Resource Orchestration Service
-Resource Orchestration Service (ROS) is Alibaba Cloud's native IoC offering. 
+Resource Orchestration Service (ROS) is Alibaba Cloud's native IoC offering. It provides support for the most important services and features of Alibaba Cloud and will extend support even further in the near future. 
+Just like with Terraform you build a template and use it to create all of the necessary resources, collectively known as a ROS stack. This model removes opportunities for manual error, increases efficiency, and ensures consistent configurations over time.
+You can either store check out your ROS Templates locally to your machine or upload them to Alibaba Cloud Object Storage Service (OSS) and then use ROS via the browser console, *Aliyun CLI*, or APIs to create a stack based on your template code.
+ROS aims to provide the best possible support for Alibaba Cloud services and features. Its application is, however, solely bound to Alibaba Cloud. Knowledge cannot be re-used across different cloud providers, albeit that it shares many concepts and its syntax with AWS Cloud Formation.
 
+The following ROS script defines the desired state of a VPC with a certain network range:
+```
+{
+  "ROSTemplateFormatVersion": "2015-09-01",
+  "Resources": {
+    "EcsVpc": {
+      "Type": "ALIYUN::ECS::VPC",
+      "Properties": {
+        "VpcName": "my-vpc",
+        "CidrBlock": "192.168.0.0/16"
+      }
+    }
+  }
+}
+```
 
-## Using the command-line interface
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+The *Aliyun CLI* lets you then manage the entire state and lifecycle of your resources and configurations which are described in your template code. You will find detailed information on how to use the *Aliyun CLI* here: https://www.alibabacloud.com/help/doc-detail/137399.htm
 
 ## Debugging with API-Explorer
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.

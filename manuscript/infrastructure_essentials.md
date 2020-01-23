@@ -1,11 +1,12 @@
 # Infrastructure Essentials
-This chapter
+This chapter gives a focused and very condensed rundown on the very essentials on the Alibaba Cloud Infrastructure services concepts such as Compute, Network, and Storage. Almost like a cheat-sheet.
+
 ## Elastic Compute Service
 
 ## Storage
 
 ## Network 
-### External Performance
+### ECS - External Performance
 INBOUND FROM INTERNET is at MINIMUM 100MBits. It will be AT MOST as high as EIP Bandwidth. 
 
 OUTBOUND TO INTERNET is capped by the EIP bandwidth. Bandwidths higher => 1Gbits can usually only be saturated by multiple threads.
@@ -16,4 +17,8 @@ In order to increase that you have to add your EIPs (no instance-bound public IP
 You can also create multiple bandwidth packages.
 
 
-### Internal Performance
+### ECS - Internal Performance
+
+### SLB Network Performance
+The outbound (SLB to Internet) network performance depends on the region the SLB is created. It ranges from 1Gbit/s up to 5 Gbit/s. You can get a detailed breakdown by region at https://www.alibabacloud.com/help/doc-detail/85966.htm
+For intranet network performance the limit is always 5 Gbit/s, independently from the regon the SLB is running in.

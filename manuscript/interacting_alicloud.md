@@ -98,6 +98,40 @@ $ aliyun help
 ```
 will print out all available services.
 
+## Using the OSSUtil CLI
+While `Aliyun CLI` gives you great control over a wide array of services for OSS Alibaba Cloud is providing a dedicated command line utility called `ossutil` which is hosted on Github at https://github.com/aliyun/ossutil.
+It provides *both* convenient access to the *OpenAPI* and fine-grained control to the *Service API* of OSS which allows you to generate signed URLs, disabling CRC64 during data transmission, etc.  
+
+The configuration file is stored in `$HOME/.ossutilconfig`. If you need to store in a different place you can so by using the `-c` option with which you can specify a custom configuration file path.
+A configuration file has the following structure: 
+```
+[Credentials]
+        language = EN
+        endpoint = oss.aliyuncs.com
+        accessKeyID = your_key_id
+        accessKeySecret = your_key_secret
+        stsToken = your_sts_token
+[Bucket-Endpoint]
+        bucket1 = endpoint1
+        bucket2 = endpoint2
+        ...
+[Bucket-Cname]
+        bucket1 = cname1
+        bucket2 = cname2
+        ...
+[AkService]
+        ecsAk=http://100.100.100.200/latest/meta-data/Ram/security-credentials/<your RAM role name>
+```
+
+Let's break down this structure:
+- The **Credentials** section define the default settings that should be used for every call unless otherwise specified (see below sections). The *endpoint* option overrides the default OSS endpoint. By default, the Internet address `oss.aliyuncs.com` directs to the Internet endpoint of China East 1 (Hangzhou), and the intranet address `oss-internal.aliyuncs.com` directs to the intranet endpoint of China East 1 (Hangzhou).
+- The **Bucket-Endpoint** section lets you define endpoints for specific buckets. This is needed if the location of your bucket differs from your default endpoint you have specified in the Credentials section (or from the default endpoint if you haven't specified an endpoint at all).
+- The **Bucket-Cname** section lets you define CNAMEs for your bucket endpoints. This is especially usefull and needed if you are exposing your buckets through a Content Delivery Network (CDN) service which you like to use in combination with `ossutil`, for example.
+- The **AkService** section is required if you need to use a RAM role bound to an ECS instance to perform operations on OSS. When you configure this option, you only need to set *ecsAK* to the RAM role bound to the ECS instance. After configuring the AkService option, you do not need to configure the accessKeyID, accessKeySecret, and stsToken options. If these options are configured, the configurations of these options instead of the AkService option take effect. 
+
+The priority of endpoint selection is defined as follows: `--endpoint > Bucket-Cname > Bucket-Endpoint > endpoint > default OSS endpoint``
+That is, CLI option takes precedence over Bucket-Cname takes precedence over Bucket-Endpoint, ...,  
+
 ## Infrastructure as Code
 Wikipedia defines Infrastructure as Code (IaC) as follows:
 ```

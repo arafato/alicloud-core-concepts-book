@@ -5,6 +5,9 @@ This chapter gives a focused and very condensed rundown on the very essentials o
 
 ## Storage
 
+### OSS
+Cross-region replication over internal network with no dedicated bandwdth, however.
+
 ## Network Performance 
 Let's quickly define *outbound* and *inbound* traffic:
 - Inbound refers to network traffic that is sent from the public internet to any Alibaba Cloud service (i.e. traffic flows *to* the cloud)
@@ -26,10 +29,13 @@ Both inbound and inbound bandwidth limits of an ECS instance are usually the sam
 
 For regular instance types they vary between 0.5 Gbits and 25 Gbits.
 
-The new generation of G6 instance types also provide burstable bandwidth capacity which allows the bandwidth to go up to 3 times as high as the base bandwidth for a short amount of time. See https://www.alibabacloud.com/help/doc-detail/108490.htm for details on the exact numbers. 
+The new generation of G6 instance types also provide burstable bandwidth capacity which allows the bandwidth to go up as three times as high as the base bandwidth for a short amount of time. See https://www.alibabacloud.com/help/doc-detail/108490.htm for details on the exact numbers. 
 
 Super Compute Cluster (SCC) types instances can achieve 2x25 Gbits via RDMA over Converged Ethernet (RoCE). 
 
-### SLB Network Performance
+### Service Loadbalancer (SLB) Network Performance
 The outbound (SLB to Internet) network performance depends on the region the SLB is created. It ranges from 1Gbit/s up to 5 Gbit/s. You can get a detailed breakdown by region at https://www.alibabacloud.com/help/doc-detail/85966.htm
-For intranet network performance the limit is always 5 Gbit/s, independently from the regon the SLB is running in.
+
+For intranet network performance the limit is always 5 Gbit/s, independently from the region the SLB is running in.
+
+### Object Storage Service (OSS)

@@ -2,6 +2,14 @@
 This chapter gives a focused and very condensed rundown on the very essentials on the Alibaba Cloud Infrastructure service concepts such as Compute, Network, and Storage. Almost like a cheat-sheet.
 
 ## Elastic Compute Service (ECS)
+ECS is the IaaS-service by Alibaba Cloud that provides customers compute power as virtual machines. The security and compliance is a shared responsibility between Alibaba Cloud and the customers.
+Alibaba Cloud is responsible for "Security of the Cloud". That is, it is responsible for protecting the infrastructure that runs all of the services offered in the Alibaba Cloud. This infrastructure is composed of the hardware, software, networking, and facilities that run Alibaba Cloud services. For ECS, Alibaba Cloud's responsibility includes everything up to the hypervisor of the host machines that powers the ECS service. Everything above is the customer's responsibility which includes the guest operating system and all security configuration tasks such as configuration of Alibaba Cloud provided firewall (called a security group) on each network interface of an ECS instance. 
+
+### Availability SLA
+ECS comes with a Monthly Single-Instance Availability SLA of 99,95%, and provides a Monthly Multi-Zone Availability SLa of 99,99% if your application is deployed on at least 2 ECS instances spread across two different Availability Zones.
+An ECS instance is considered *Unavavailable* if the disconnection between an ECS instance configured with access permitted rules and any IP address over TCP or UDP in the inbound and outbound directions lasts for more than one minute.  
+
+### Instance Families and Instance Types
 The ECS service is organized by so-called *instance families* which in turn consist of different *instance types*.
 An instance family describes the fundamental characteristics and use-cases for instances types of this family. Some are optimized for network-intense applications, others are desigend for memory or compute-intense workloads.
 As such they usually differ in terms of Core-to-RAM ratio, maximum persistent disk IOPS, network performance (as both in bandwidth and PPS), etc. Please consult the official documentation at https://www.alibabacloud.com/help/doc-detail/25378.htm for detailed numbers.
@@ -20,6 +28,10 @@ As of this writing there exist 12 different instance families on Alibaba Cloud:
 - Super Computing Cluster
 - Burstable
 
+### Maintenance
+Maintenance
+
+
 ## Storage
 
 ### OSS
@@ -27,7 +39,7 @@ Cross-region replication over internal network with no dedicated bandwdth, howev
 
 ## Network Performance 
 Let's quickly define *outbound* and *inbound* traffic:
-- Inbound refers to network traffic that is sent from the public internet to any Alibaba Cloud service (i.e. traffic flows *to* the cloud)
+- Inbound refers to network traffic that is sent from the public internet to any Alibaba Cloud service (i.e. traffic flows *into* the cloud)
 - Outbound refers to network traffic that is sent from any Alibaba Cloud service to the public internet (i.e. traffic *leaving* the cloud)
 ### ECS - External Performance
 Inbound traffic is at *minimum* 100MBits. It will be *at most* as high as EIP Bandwidth. 

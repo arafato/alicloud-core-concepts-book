@@ -5,16 +5,19 @@ This chapter gives a focused and very condensed rundown on the very essentials o
 ECS is the IaaS-service by Alibaba Cloud that provides customers compute power as virtual machines. The security and compliance is a shared responsibility between Alibaba Cloud and the customers.
 Alibaba Cloud is responsible for "Security of the Cloud". That is, it is responsible for protecting the infrastructure that runs all of the services offered in the Alibaba Cloud. This infrastructure is composed of the hardware, software, networking, and facilities that run Alibaba Cloud services. For ECS, Alibaba Cloud's responsibility includes everything up to the hypervisor of the host machines that powers the ECS service. Everything above is the customer's responsibility which includes the guest operating system and all security configuration tasks such as configuration of Alibaba Cloud provided firewall (called a security group) on each network interface of an ECS instance. 
 
-### Availability SLA
+### Availability Service Level Agreement (SLA)
 ECS comes with a Monthly Single-Instance Availability SLA of 99,95%, and provides a Monthly Multi-Zone Availability SLa of 99,99% if your application is deployed on at least 2 ECS instances spread across two different Availability Zones.
-An ECS instance is considered *Unavavailable* if the disconnection between an ECS instance configured with access permitted rules and any IP address over TCP or UDP in the inbound and outbound directions lasts for more than one minute.  
+
+An ECS instance is considered *Unavailable* if the disconnection between an ECS instance configured with access permitted rules and any IP address over TCP or UDP in the inbound and outbound directions lasts for more than one minute.  
 
 ### Instance Families and Instance Types
 The ECS service is organized by so-called *instance families* which in turn consist of different *instance types*.
 An instance family describes the fundamental characteristics and use-cases for instances types of this family. Some are optimized for network-intense applications, others are desigend for memory or compute-intense workloads.
 As such they usually differ in terms of Core-to-RAM ratio, maximum persistent disk IOPS, network performance (as both in bandwidth and PPS), etc. Please consult the official documentation at https://www.alibabacloud.com/help/doc-detail/25378.htm for detailed numbers.
 
-As of this writing there exist 12 different instance families on Alibaba Cloud:
+Note that ECS configurations and types can be updated, however, not arbitrarily. For instance family and type changes only certain types are supported (see below documentation link). 
+
+As of this writing there exist 12 different instance families on Alibaba Cloud (please consult documentation at https://www.alibabacloud.com/help/doc-detail/108490.htm for details):
 - General Purpose
 - Compute Optimized
 - Memory Optimized
@@ -27,6 +30,20 @@ As of this writing there exist 12 different instance families on Alibaba Cloud:
 - Bare Metal
 - Super Computing Cluster
 - Burstable
+
+The new generations of Alibaba Cloud x86-based ECS instances are equipped 2.5 GHz Intel ® Xeon ® Platinum 8269CY (Cascade Lake) processors with Turbo Boost up to 3.2 GHz. The newest generation of the General Purpose G family now also support burstable network bandwidth.
+
+For our GPU-based instance types, we currently provide the NVIDIA® Tesla® P4 with the 1/8, 1/4, 1/2, and 1/1 computing capacity support, and the NVIDIA T4 GPU with 16 GB memory capacity (320 GB/s bandwidth),
+2,560 CUDA Cores, up to 320 Turing Tensor Cores, and mixed-precision Tensor Cores support for 65 FP16 TFLOPS, 130 INT8 TOPS, and 260 INT4 TOPS. 
+
+Deployment Sets (https://www.alibabacloud.com/help/doc-detail/91258.htm) gives you control on the distribution strategy. You can use a deployment set to distribute your ECS instances to different physical servers to guarantee high availability and set up underlying disaster discovery. When you create ECS instances in a deployment set, Alibaba Cloud will start the instances on different physical servers within the specified region based on your configured deployment strategy. Right now, Alibaba Cloud only provides "High Availability" strategy. As an effect all the ECS instances within your deployment set are strictly distributed across different physical servers within the specified region. The high availability strategy applies to application architectures where several ECS instances need to be isolated from each other. The strategy significantly reduces the chances of services becoming unavailable.
+
+### Dedicated Hosts (DDH)
+ECS instances as discussed in the previous section share the underlying physical servers with different tenants. For scenarios that require strict isolation of the underlying resources DDH is a specialized solution for enterprise customers. DDH provides a dedicated hosting environment for a single tenant based on the virtualization technology of Alibaba Cloud. It offers flexible and scalable services that enable you to enjoy exclusive use of all resources provided by a physical server. 
+
+A very useful feature for cost-efficiency is the ability to over-provision a DDH. This is only possible with certain DDH instance types such as the `ddh.v5`. It allows you to provision 336 vCPUS on a 48 core machine. This way you can fully utilize your compute capacity in case your workloads have a lot of idle time. See https://www.alibabacloud.com/help/doc-detail/68564.htm for a complete list of all DDH instance types and their respective specifications.
+
+In case the physical machine is malfunctioning failover to a healthy instance is managed automatically by Alibaba Cloud. A new healthy DDH will be assigned automatically from the shared pool to the your account, and after the migration is done, the crashed DDH will be removed from your account. The DDH ID will remain the same after the migration, the machine ID will be different, though. Note that automatic failover is not supported for DDHs with local storage (i.e. `ddh.i2`).
 
 ### Maintenance
 Maintenance

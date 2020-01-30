@@ -62,9 +62,14 @@ For example, to view the all *unsettled events* (i.e. scheduled events that have
 aliyun ecs DescribeInstancesFullStatus --RegionId <TheRegionId> --InstanceId.1 <YourInstanceId> --output cols=EventId,EventTypeName
 ```
 ## Storage
+This section will give a short overview about the fundamental aspects of storage on Alibaba Cloud. In particular, we will focus on storage services that you can use in combination with ECS, and Object Storage.
+
+### ECS Mountable Storage
+- Cloud Disks (both persistent and ephemeral), also focus on shared Cloud Disks, and NAS, and oss-fuse
 
 ### OSS
-Cross-region replication over internal network with no dedicated bandwdth, however.
+- Cross-region replication over internal network with no dedicated bandwidth, however.
+- OSS (also focus on migration scenarios -> ossimport)
 
 ## Network Performance 
 Let's quickly define *outbound* and *inbound* traffic:

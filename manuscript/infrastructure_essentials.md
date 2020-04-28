@@ -69,7 +69,7 @@ This section will give a short overview about the fundamental aspects of storage
 
 ### OSS
 - Cross-region replication over internal network with no dedicated bandwidth, however.
-- OSS (also focus on migration scenarios -> ossimport)
+- OSS (also focus on migration scenarios -> ossimport and https://www.alibabacloud.com/help/product/94157.htm)
 
 ## Network Performance 
 Let's quickly define *outbound* and *inbound* traffic:

@@ -234,3 +234,25 @@ So for mocking the `DescribeTasks` of ECS service you can simply call
 https://api.aliyun.com/mock/Ecs/DescribeTasks
 ```
 which returns according mock data. No authentication and signing of the request is needed for calling the mock API.
+
+## Alicloud-Vault
+Alicloud-Vault is another handy tool for many development scenarios. It is open-source and developed at https://github.com/arafato/alicloud-vault.
+Its is a vault for securely storing and accessing Alibaba Cloud credentials in development environments and takes many inspirations from https://github.com/99designs/aws-vault. 
+
+Alicloud-Vault stores RAM credentials in your operating system's secure keystore and then generates temporary credentials from those to expose to your shell and applications. It's designed to be complementary to the Aliyun CLI tools, and is aware of your config file and profiles in `~/.aliyun/config`.
+
+It uses Alibaba Cloud's STS service to generate temporary credentials via the AssumeRole API call. These expire in a short period of time, so the risk of leaking credentials is reduced. Note that not all services support STS. You can find the currently supported services here: https://www.alibabacloud.com/help/doc-detail/135527.htm
+
+Alicloud-Vault then exposes the temporary credentials to the sub-process through environment variables in the following way
+
+```
+$ alicloud-vault exec jonsmith -- env | grep ALICLOUD
+ALICLOUD_VAULT=jonsmith
+ALICLOUD_REGION=us-east-1
+ALICLOUD_ACCESS_KEY=%%%
+ALICLOUD_SECRET_KEY=%%%
+ALICLOUD_STS_TOKEN=%%%
+ALICLOUD_SESSION_EXPIRATION=2020-03-06T10:02:33Z
+```
+
+Please refer to the official site at https://github.com/arafato/alicloud-vault for detailed information on how to use it and configure it properly.

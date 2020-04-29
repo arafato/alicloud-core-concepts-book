@@ -6,9 +6,41 @@ There are currently two different types (or *memberships*) of Alibaba Cloud acco
 - **Real-Name Verification:** Each account needs to be verified with a real identity if you want to create cloud resources in Mainland China. This is a strict requirement. Resources include OSS buckets and ECS instances for example. Basically, all resources that either expose a public IP address or a public domain name. The verification differs from what kind of identity proof needs to be submitted for each account type. For *Individual Account* you need to submit a proof of your personal identity which could be a copy of your passport. For *Enterprise Account* you need to submit an excerpt from the commercial register. This process is completely supported by the Web Portal and usually takes 3-4 business days to complete.
 - **Free-Tier Offering:** Based on the account type the free trial offering differs in terms of how many free credits you get and what kind of products you are eligible for. Please see [https://www.alibabacloud.com/campaign/free-trial](https://www.alibabacloud.com/campaign/free-trial) for details. The *Enterprise Account* has a much bigger free product range and also more free credits.
 - **Discount Eligibility:** Throughout the year Alibaba Cloud often has special promotion campaigns which include discounts on certain products. These discounts often differ depending on the cloud account type. Usually, *Enterprise Accounts* are eligible for higher discounts.
-- **Resource Directory Integration** For Multi-Account management, Alibaba Cloud is providing a service called Resource Directory. It allows to manage multiple accounts under one master account and to aggregate metrics, logs, RAM users, and billing data for example. As of this writing it has not been released in the INTL Portal yet. One it has been released you can programmatically (i.e. API-based) add new accounts or add existing *Enterprise Accounts*. Personal Accounts are not supported.
+- **Resource Management Integration** For Multi-Account management, Alibaba Cloud is providing a service called Resource Management. It allows to manage multiple accounts under one master account and to aggregate metrics, logs, RAM users, and billing data for example. Please refer to next section to get an overview about Alibaba Cloud Resource Management Service.
 
-If possible, we strongly recommend to choose an *Enterprise Account* since it usually provides higher discounts during promotion campaigns, and also has a stronger free-trial offering. As mentioned before, there is no difference in functionality otherwise.
+If possible, we strongly recommend to choose an *Enterprise Account* since it usually provides higher discounts during promotion campaigns, and also has a stronger free-trial offering. As mentioned before, there is no difference in functionality otherwise other than Resource Management support.
+
+### Multi-Account and Resource Management
+Managing resources in large-scale settings is very complex and needs to take into account the following questions:
+- How can enterprise decision makers have a top-down overview of the use of all resources?
+- How can enterprises align the resource structure with the business management structure to match different management strategies?
+- How can enterprises enable their different branches or departments to implement different procurement, usage, and regulatory requirements in the cloud?
+- How can enterprises organize scattered cloud accounts according to the business structure for effective management?
+
+Alibaba Cloud Resource Management Service (https://www.alibabacloud.com/help/product/94362.htm) enables you to build an organizational structure for resources based on your business needs. It is comprised of different services that let's you hierarchically organize and manage accounts, billing and settlements, users and permissions, and resources and thus provides solutions to before mentioned questions. In particular, it consists of: 
+- **Resource Directory** Enables you to quickly build a business structure according to the needs of the enterprise and to carry out overall management of resources on it.
+- **Resource Group** Helps you to group related services across different regions and assign dedicated permisions. Also allows you to view billing statements by resource group. 
+- **Resource Sharing** Allows you to share the resources under your account with other accounts. 
+
+Below picture puts all of these three services in perspective and context:
+![Resource Management](02/resource_management.png)
+
+In principal there are two types of cloud accounts in such a settings: The Master or Root account, and so-called Member accounts. 
+
+The *Master or Root Account* is a regular Enterprise Account and should be solely used to initially activate and configure Resource Management. It should not be used for any LoB or project workloads. It is highly advised to use string passwords and MFA to secure this account and highly limit administrator access. It is the root node in your Resource Directory structure.
+
+Member accounts exist in two flavors: *Cloud Accounts* and *Resource Accounts*.
+While *Cloud Accounts* have all the characteristics of a regular Alibaba Cloud account such as a dedicated RAM-based user management and a root user, *Resource Accounts* can be thought of as container-like entities for managing cloud services without dedicated RAM-users and root account. Thus they are safer and more covenient but they fully depend on Resource Directory. They can be programmatically created via the API `CreateResourceAccount` (https://www.alibabacloud.com/help/doc-detail/159392.htm). They can be antime "promoted" to a regular cloud account which is not dependent on Resource Directory. We recommend to work with *Resource Accounts* if possible.
+
+It should be noted that you can also invite existing Alibaba Cloud accounts. As of this writing, the invited accounts need to have the same legal business entity as the master account. Support for inviting accounts with different legal entities is coming soon. The master of account has full control over the invited accounts.
+
+Billing Settlement is quite flexibel. For any member account you can choose between three options:
+1) Master Account: Consolidate bill to the master account
+2) Other Account: Consolidate bill to another account within the resource Directory
+3) Self-Pay: Account pays by itself with the payment method configured in this account 
+
+This enables you to configure any settlement structure that can be expressed in a hierarchical tree.
+
 
 ### Security Settings
 Now that we have discussed the two principal account types of Alibaba Cloud, let's look at the core concepts of managing a cloud account. Each cloud account has exactly one and only one root user. You are specifying the login name and password during initial cloud account creation. Each root user also has an associated mobile phone number which can be re-used across different root users and cloud account respectively at most six times. 

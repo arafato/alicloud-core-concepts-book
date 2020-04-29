@@ -34,16 +34,21 @@ While *Cloud Accounts* have all the characteristics of a regular Alibaba Cloud a
 
 It should be noted that you can also invite existing Alibaba Cloud accounts. As of this writing, the invited accounts need to have the same legal business entity as the master account. Support for inviting accounts with different legal entities is coming soon. The master of account has full control over the invited accounts.
 
-Billing Settlement is quite flexibel. For any member account you can choose between three options:
+**Billing Settlement** is quite flexibel. For any member account you can choose between three options:
 1) Master Account: Consolidate bill to the master account
 2) Other Account: Consolidate bill to another account within the resource Directory
 3) Self-Pay: Account pays by itself with the payment method configured in this account 
 
-This enables you to configure any settlement structure that can be expressed in a hierarchical tree.
+This enables you to configure any settlement structure that can be expressed in a hierarchical tree with any node working as a billing account.
+
+Moreover, for any multi-account management approach it is vital to have an aggregated view and consolidated management access to auditing, configuration, and security. Alibaba Cloud Resource Management integrated with other cloud services to account for that. In particular it integrates with
+- [ActionTrail](https://www.alibabacloud.com/help/product/28802.htm) to give you an aggegated view on all audit logs and events across all member accounts
+- [Cloud Config](https://www.alibabacloud.com/help/product/127306.htm)  to enable you to track and record configuration changes for resources
+- [Security Center](https://www.alibabacloud.com/help/product/28498.htm) to help you protecting all your member accounts and workloads from a unified security solution
 
 
 ### Security Settings
-Now that we have discussed the two principal account types of Alibaba Cloud, let's look at the core concepts of managing a cloud account. Each cloud account has exactly one and only one root user. You are specifying the login name and password during initial cloud account creation. Each root user also has an associated mobile phone number which can be re-used across different root users and cloud account respectively at most six times. 
+Now that we have discussed the two principal account types of Alibaba Cloud and discussed multi-account management, let's look at the core concepts of managing a cloud account. Each cloud account has exactly one and only one root user. You are specifying the login name and password during initial cloud account creation. Each root user also has an associated mobile phone number which can be re-used across different root users and cloud account respectively at most six times. 
 
 In section [User and Permission Management](#ch-governance-permission) we will look in detail at how to create additional users and define according permissions.
 Below screenshot shows the options of the *Security Settings* administration page which is only available for the root user and accessible directly via [https://account-intl.console.aliyun.com](https://account-intl.console.aliyun.com).

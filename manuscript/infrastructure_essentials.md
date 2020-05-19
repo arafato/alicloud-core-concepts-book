@@ -32,7 +32,7 @@ As of this writing there exist 13 different instance families on Alibaba Cloud (
 - Burstable (t)
 - Dedicated Hosts (ddh)
 
-The new generations of Alibaba Cloud x86-based ECS instances are equipped 2.5 GHz Intel ® Xeon ® Platinum 8269CY (Cascade Lake) processors with Turbo Boost up to 3.2 GHz. The newest generation of the General Purpose G family now also support burstable network bandwidth.
+The new generations of Alibaba Cloud x86-based ECS instances are equipped 2.5 GHz Intel ® Xeon ® Platinum 8269CY (Cascade Lake) processors with Turbo Boost up to 3.2 GHz. The newest generation of the General Purpose G family now also support burstable network bandwidth. Also note that the 6th generations of g, c, r families are now running on Alibaba Cloud X-Dragon hypervisor architecture which provides predictable and consistent high performance and reduces virtualization overheads.
 
 For our GPU-based instance types, we currently provide the NVIDIA® Tesla® P4 with the 1/8, 1/4, 1/2, and 1/1 computing capacity support, and the NVIDIA T4 GPU with 16 GB memory capacity (320 GB/s bandwidth),
 2,560 CUDA Cores, up to 320 Turing Tensor Cores, and mixed-precision Tensor Cores support for 65 FP16 TFLOPS, 130 INT8 TOPS, and 260 INT4 TOPS. 

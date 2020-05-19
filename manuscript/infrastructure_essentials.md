@@ -13,24 +13,24 @@ An ECS instance is considered *Unavailable* if the disconnection between an ECS 
 ### Instance Families and Instance Types
 The ECS service is organized by so-called *instance families* which in turn consist of different *instance types*.
 An instance family describes the fundamental characteristics and use-cases for instances types of this family. Some are optimized for network-intense applications, others are desigend for memory or compute-intense workloads.
-As such they usually differ in terms of Core-to-RAM ratio, maximum persistent disk IOPS, network performance (as both in bandwidth and PPS), etc. Please consult the official documentation at https://www.alibabacloud.com/help/doc-detail/25378.htm for detailed numbers.
+As such they usually differ in terms of Core-to-RAM ratio, maximum persistent disk IOPS, network performance (as both in bandwidth and PPS), and the type of disks they support. Please consult the official documentation at https://www.alibabacloud.com/help/doc-detail/25378.htm for detailed numbers.
 
-Note that ECS configurations and types can be updated, however, not arbitrarily. For instance family and type changes only certain types are supported (see below documentation link). 
+Note that ECS configurations and types can be updated, however, not arbitrarily. For instance family and type changes only certain types are supported (see below documentation link). As a rule of thumb, you can always change instance families between g6, c6, and r6. 
 
-As of this writing there exist 13 different instance families on Alibaba Cloud (please consult documentation at https://www.alibabacloud.com/help/doc-detail/108490.htm for details):
-- General Purpose
-- Compute Optimized
-- Memory Optimized
-- Big Data
-- Local SSDs
-- High-Clock Speed
-- Compute Optimized with GPU
-- Visualization Compute with GPU
-- Compute Optimized with FPGA
-- Bare Metal
-- Super Computing Cluster
-- Burstable
-- Dedicated Hosts (see next section)
+As of this writing there exist 13 different instance families on Alibaba Cloud (please consult documentation at https://www.alibabacloud.com/help/doc-detail/108490.htm for details). The character in brackets denotes the abbreviation of the instance family.
+- General Purpose (g)
+- Compute Optimized (c)
+- Memory Optimized (r)
+- Big Data (d)
+- Local SSDs (i)
+- High-Clock Speed (hfc)
+- Compute Optimized with GPU (gn, vgn)
+- Visualization Compute with GPU (ga)
+- Compute Optimized with FPGA (f)
+- Bare Metal  (ebmg)
+- Super Computing Cluster (scc)
+- Burstable (t)
+- Dedicated Hosts (ddh)
 
 The new generations of Alibaba Cloud x86-based ECS instances are equipped 2.5 GHz Intel ® Xeon ® Platinum 8269CY (Cascade Lake) processors with Turbo Boost up to 3.2 GHz. The newest generation of the General Purpose G family now also support burstable network bandwidth.
 

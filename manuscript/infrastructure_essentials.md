@@ -81,11 +81,16 @@ The disks come in three tiers: *Enhanced SSD*, *Standard SSD*, and *Ultra Disk*.
 
 Each piece of data is also replicated three times across the block storage cluster in the same availability zone to ensure a data reliability of 99.9999999% during read and write operations. Thus, any extra redundancy mechanism such as RAID 1 is not recommended.
 
+Cloud Disk also supports encryption based on the industry standard AES-256 and directly integrates with Alibaba Cloud Key Management Service (KMS). Both system and data disks are supported. The key management infrastructure of Alibaba Cloud conforms to the recommendations in (NIST) 800-57 and uses cryptographic algorithms that comply with the (FIPS) 140-2 standard. When encryption is enabled every snapshot you take is also encrypted. Please note that currently, key rotation is not natively supported.
+
 **Shared Cloud Disk**
+Shared Block Storage is a block-level data storage service that features high concurrency, high performance, and high reliability. It supports concurrent reads and writes on multiple ECS instances, and provides data reliability of up to 99.9999999%.
+In a traditional cluster architecture, multiple computing nodes access the same copy of data to provide services. To prevent service disruptions due to single point of failures, you can use Shared Block Storage to ensure access to the data, achieving high availability. We recommend that you store business data in Shared Block Storage devices and use a cluster file system such as Google File System (GFS) and General Parallel File System (GPFS) to manage these devices. Data consistency can be guaranteed between multiple front-end computing nodes during concurrent read/write operations.
 
+Note that a single Shared Block Storage device can be attached to a maximum of eight ECS instances in the same zone and region at the same time. Cross-AZ Shared Cloud Disks are not supported.
 
+**Network Attached Storage (NAS)**
 
-- Cloud Disks (both persistent and ephemeral), also focus on shared Cloud Disks, and NAS, and oss-fuse
 
 ### OSS
 - Cross-region replication over internal network with no dedicated bandwidth, however.

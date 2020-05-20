@@ -104,8 +104,15 @@ Local disks are disks that are attached to the same physical machine that hosts 
 Note that local disks are only available with certain instance families. These include `i2, i2g, i2ne, i2gne, gn5`, and `ga1`. Please consult https://www.alibabacloud.com/help/doc-detail/63138.htm for a detailed overview of the performance characteristics.
 
 ### OSS
-- Cross-region replication over internal network with no dedicated bandwidth, however.
-- OSS (also focus on migration scenarios -> ossimport and https://www.alibabacloud.com/help/product/94157.htm)
+The storage options in the previous section where all members of the so-called block-level storage which supports random read/write patterns making it suitable for any kind of computing where you need fast and efficient access. Alibaba Cloud Object Storage Service (OSS) in contrast is a so-called Object Storage. Files are not split into evenly sized blocks of data but organized in a flat object hierarchy that is composed of the content, meta data, and a globally unique identifier. Random read / write patterns are not supported. It scales very well, though, is much cheaper than block-level storage and particulary suited to store large amounts (PB-level) amounts of data for batch analyses in the area of AI and Big Data.
+
+Data is organized in so called buckets which is a FQDN and globally unique. A bucket has unlimited capacity. A single object can be at most 48,8 TB in size.
+OSS provides strong consistency per default. That is after you have created or updated an object every read operation will *always* get the most recent version.
+
+It also supports asynchronous cross-region replication. It uses our own internal network. So data is not replicated across the public internet. There is no dedicated bandwidth, however. If you need dedicated bandwidth and predictable data copy duration we recommend to use Cloud Enterprise Network (https://www.alibabacloud.com/help/product/59006.htm) which lets you configure a dedicated bandwidth between 2 Mbits and 10Gbits. 
+
+For migration scenarios where you need to copy over data from other Object Storage vendors such as AWS S3, or Azure Blob Storage, Alibaba Cloud offers the fully managed service *Data Online Migration* (https://www.alibabacloud.com/help/product/94157.htm). It supports a wide array of different third-party object storage services including self-hosted solutions that offer a public HTTPS endpoint.
+
 
 ## Network Performance 
 Let's quickly define *outbound* and *inbound* traffic:

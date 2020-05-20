@@ -71,7 +71,7 @@ Generally speaking, there exist two kinds of storage options you can use in comb
 1. Persistent Storage
 2. Ephemeral Storage
 
-Persistent Storage keeps your data stored independently from the lifecycle of the ECS instance whereas Ephemeral Storage is closely bound to the lifecycle of your ECS instance. That is, data stored on persistent storage won't get lost in cases of ECS restarts or hot migration, or when you delete an ECS instance. It exists independently and can be also mounted easily between different ECS instances. Ephemeral Storage on the other hand will get lost in case of ECS reboots, hot migration (to be more precise it is not guaranteed to be kept) and ECS deletion. Usually, it is a lot faster since this kind of storage is directly attached to the physical host system whereas persistent storage lives in a different dedicated cluster. So every access needs to cross the network. 
+Persistent Storage keeps your data stored independently from the lifecycle of the ECS instance whereas Ephemeral Storage is closely bound to the lifecycle of your ECS instance. That is, data stored on persistent storage won't get lost in cases of ECS restarts or hot migration, or when you delete an ECS instance. It exists independently and can be also mounted easily between different ECS instances. Ephemeral Storage on the other hand will get lost in case of ECS reboots, hot migration (to be more precise it is not guaranteed to be kept) and ECS deletion. Don't use it for long-term storage. Usually, it is a lot faster since this kind of storage is directly attached to the physical host system whereas persistent storage lives in a different dedicated cluster. So every access needs to cross the network. 
 
 For *Persistent Storage* Alibaba Cloud offers the following options:
 **Cloud Disk**
@@ -95,6 +95,13 @@ NAS is a distributed file system that features shared access, scalability, high 
 NAS supports standard protocols, such as NFS V3.0 and NFS v4.0. and SMB 2.1 and later versions, with corresponding support for Windows 7, Windows Server 2008 R2 and all later versions of Windows, but does not support Windows Vista, Windows Server 2008 and earlier versions. NAS provides data consistency and file locking based on POSIX file APIs.
 
 NAS comes in three different service-tiers: *NAS Capacity*, *NAS Performance*, and *NAS Extreme*. They are suited for different workloads and differ in terms of IOPS, latency, and throughput. While *NAS Capacity* supports volume sizes as big as 10PB with a relatively high latency of 10ms, *NAS Performance* optimizes for throughput and latency but has a reduced volume size of 1 PB at max. See https://www.alibabacloud.com/help/doc-detail/61136.htm for details.
+
+
+For *Ephemeral Storage* Alibaba Cloud offers **Local Disks**.
+
+Local disks are disks that are attached to the same physical machine that hosts their ECS instance. Local disks provide local storage and access for ECS instances. Local disks are cost-effective and provide high random IOPS, high throughput, and low latency. As discussed previously it is not suited for long-term storage since in case of reboots or hardware failures data may get lost. Data redundancy must be implemented at the application layer by yourself, as well as any encryption.
+
+Note that local disks are only available with certain instance families. These include `i2, i2g, i2ne, i2gne, gn5`, and `ga1`. Please consult https://www.alibabacloud.com/help/doc-detail/63138.htm for a detailed overview of the performance characteristics.
 
 ### OSS
 - Cross-region replication over internal network with no dedicated bandwidth, however.

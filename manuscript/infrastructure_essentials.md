@@ -90,7 +90,11 @@ In a traditional cluster architecture, multiple computing nodes access the same 
 Note that a single Shared Block Storage device can be attached to a maximum of eight ECS instances in the same zone and region at the same time. Cross-AZ Shared Cloud Disks are not supported.
 
 **Network Attached Storage (NAS)**
+NAS is a distributed file system that features shared access, scalability, high availability, and high performance. Based on POSIX file APIs, NAS is compatible with native operating systems. This ensures data consistency and exclusive locks during shared access. It provides data reliability of 99.999999999% (eleven nines).
 
+NAS supports standard protocols, such as NFS V3.0 and NFS v4.0. and SMB 2.1 and later versions, with corresponding support for Windows 7, Windows Server 2008 R2 and all later versions of Windows, but does not support Windows Vista, Windows Server 2008 and earlier versions. NAS provides data consistency and file locking based on POSIX file APIs.
+
+NAS comes in three different service-tiers: *NAS Capacity*, *NAS Performance*, and *NAS Extreme*. They are suited for different workloads and differ in terms of IOPS, latency, and throughput. While *NAS Capacity* supports volume sizes as big as 10PB with a relatively high latency of 10ms, *NAS Performance* optimizes for throughput and latency but has a reduced volume size of 1 PB at max. See https://www.alibabacloud.com/help/doc-detail/61136.htm for details.
 
 ### OSS
 - Cross-region replication over internal network with no dedicated bandwidth, however.

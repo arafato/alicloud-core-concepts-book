@@ -20,7 +20,7 @@ CEN can also be used for intra-region (i.e. VPCs are all in the same cloud regio
 
 An interesting feature of CEN bandwidth packages are that they can be scaled up and down dynamically anytime to account for changing bandwidth requirements. This can also be automated based on time or different network metrics such as the average usage of bandwidth over a certain timespan. Please refer to the open-source CEN-Scaler at https://github.com/arafato/CEN-Scaler which enables to automatically scale Cloud Enterprise Network (CEN) bandwidth packages based on different metrics and timing events. It ships together with Alibaba Cloud Function code and Terraform templates that set up all neccessary configurations and services to get you going fast.
 
-Keep in mind, however, that downscaling a bandwidth packet during a subscription period is only supported in INTL Portal. It is not supported in Domestic Portal (only upscale!).
+Keep in mind, however, that downscaling a bandwidth packet during a subscription period is only supported in INTL Portal. It is not supported in Domestic Portal (only upscale).
     
 ### Quick Facts Bandwidth Scaling
 - The change of the bandwidth is effective immediately. Meaning, the updated bandwidth can be used immediately by your applications, and it takes immediate effect on your bill.

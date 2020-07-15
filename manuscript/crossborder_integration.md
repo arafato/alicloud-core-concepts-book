@@ -14,7 +14,7 @@ The pricing model works on a subscription basis where you buy one or multiple ba
 - Asia Pacific
 - Australia
 
-Especially for connections to Mainland China we usually see latencies of nor more than 150ms and almost zeor packet loss.
+Especially for connections to Mainland China we usually see latencies of no more than 150ms and almost zeor packet loss.
 
 CEN can also be used for intra-region (i.e. VPCs are all in the same cloud region) peering where no bandwidth package is needed and hence is for free as traffic is not charged separately. 
 
@@ -48,7 +48,12 @@ Frankfurt, Dubai, Hongkong, Jakarta, London, Singapur, Sydney, Tokio, Chicago, D
 All of these solutions for last-mile connectivity can be used in combination with CEN which allows you to connect on-premises networks with each other that may be in Mainland China and overseas regions in a reliable and performant way. While the last mile is for example IPSec, the rest is being transmitted over Alibaba Cloud's private backbone network. This allows for fully automatable and and quick cross-border network integrations world-wide.
 
 ## Global Accelerator
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+Global Accelerator (GA) can provide access points worldwide and accelerate transmission of public network traffic. The GA service guarantees high-quality Border Gateway Protocol (BGP) bandwidth and high service reliability and helps businesses accelerate global connections to Internet-facing services. Backed by the reliable and congestion-free global network of Alibaba Cloud, GA provides high-speed networking experience and ultra-low transmission latency for users across regions.
+GA assigns an accelerated IP address to each acceleration region in an acceleration area. Clients from an acceleration region can connect to the access point nearest to the clients through the accelerated IP address. The access point receives client requests and forwards the requests over the Alibaba Cloud global network. GA then automatically selects routes and distributes client requests to the optimal endpoints to avoid network congestion and reduce network latency. Endpoints can be IP addresses or domain names of origin servers.
+
+Let's quickly discuss the bandwidth package options in more detail. Below figure gives an overview about the current options. For accelerating areas and/or endpoints to and from Mainland China, Alibaba Cloud provides two options:
+1) *Cross-Border Plan + Standard or Enhanced Plan*. By choosing this option traffic is routed over Alibaba Cloud's private backbone network once the request arrives at the nearest access point. Access points for accelerated regions are located in Mainland China. Thus companies using this configuration need a valid ICP filing or license.
+2) *Premium Plan*. With this configuration the access points are located in Hong Kong which does not require an ICP filing or license. Traffic to and from Mainland China is routed via the public CN2 network operated by China Telecom with only minimal additional latency while still offering exceptional and reliable network connection quality. This is especially useful in scenarios where companies need more time to get an ICP license but already want to deliver their digital services or websites to Mainland China via an optimized network connection. Still, we recommend this as a temporary solution. For serious business intentions we recommend to acquire an ICP license.   
 
 ![Global Accelerator - Bandwidth Packages](09/ga_bwpackages.png) 
 
@@ -88,8 +93,7 @@ Theoretically, yes. This can be done through so called ICP-Proxy Providers. This
 -	If the original owner of the ICP-License violates Chinese law, all domains and IPs associated with this ICP License will be put on the blacklist
 
 ## Serving Content from outside China
-Can I serve web-content to Chinese customers from servers outside of Mainland China and thus avoiding the need for an ICP-License?
-Generally speaking, yes. By doing this over public internet you will usually suffer high latency and packet loss, and very unreliable connections. Your website may also be blocked temporarily (e.g. maybe you are running your website on a shared IP-address which gets blocked for reasons out of your control).
+Can I serve web-content to Chinese customers from servers outside of Mainland China and thus avoiding the need for an ICP-License? Generally speaking, yes. By doing this over public internet you will usually suffer high latency and packet loss, and very unreliable connections. Your website may also be blocked temporarily (e.g. maybe you are running your website on a shared IP-address which gets blocked for reasons out of your control).
 
 There are currently two offerings to the knowledge of this authors which claim to provide reliable and fast connections to Chinese customers despite being hosted outside of Mainland China:
 

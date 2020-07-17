@@ -15,7 +15,8 @@ Your workload distribution across availability zones directly influences the Ava
 ## Deployment Sets
 A deployment set is a policy that controls the distribution of ECS instances. As of now, it supports the so-called *High-Availability* policy. If it used, all the ECS instances within your deployment set are strictly distributed across different physical servers within the specified region. The high availability policy applies to application architectures where several ECS instances must be isolated from each other. The policy significantly reduces the chances of service being unavailable. When you create ECS instances in a deployment set, you can create up to seven ECS instances in each zone. This limit varies with your ECS usage. You can use the following formula to calculate the number of ECS instances that can be created in an Alibaba Cloud region: *7 × Number of availability zones*. Deployment sets do not incur any additional costs. For more details please consult: https://www.alibabacloud.com/help/doc-detail/91258.htm
 
-## Built-in High Availability of Alibaba Cloud Services 
+## Built-in Redundancy of Alibaba Cloud Services 
+
 SLB, VPNGW, RDS, etc
 https://www.alibabacloud.com/help/doc-detail/67915.htm
 

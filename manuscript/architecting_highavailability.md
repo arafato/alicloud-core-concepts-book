@@ -33,12 +33,19 @@ VPN Gateway is an Internet-based service that securely and reliably connects ent
 
 For configuring redundant IPSec connections with both an *Active* and a *Standby* tunnel the local gatewy needs two public IP addresses. Be sure to configure the healthcheck on the VPN-Gateway as well and then define according weight values. 100 for the active tunnel and 0 for the standby tunnel. When the active tunnel is unavailable all traffic between the on-premises data center and the VPC is then automatically directed to the standby tunnel. 
 
-### RDS
+### RDS and PolarDB
+For relational databases workloads Alibaba Cloud provides two types of services:
+- RDS for MySQL, Postgresql, SQL Server, MariaDB, PPAS (Oracle/EnterpriseDB)
+
+
+
+- PolarDB for for MySQL, Postgresql, Oracle
 
 
 ### Object Storage Service (OSS)
-### Cloud Enterprise Network (CEN)
 
+
+### Cloud Enterprise Network (CEN)
 
 
 

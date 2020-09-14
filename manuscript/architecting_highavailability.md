@@ -71,6 +71,8 @@ A standard SSD is an elastic block storage device that is designed based on a di
 - High-Performance Distributed Storage (available for High-Performance) <br>
 Sharing the same group of data copies among multiple DB servers, rather than storing a separate copy of data for each DB server, significantly reduces your storage cost. The distributed storage and file system allows automatically scaling up database storage capacity, regardless of the storage capacity of each single database server. This enables your database to handle up to 100 TB of data at max. Storage capacity is bound by an instance-specific soft-limit which can be increased via ticket, however. See https://www.alibabacloud.com/help/doc-detail/68498.htm for details.
 
+For every storage option except *Local SSD*, backups are done as snapshots including the binary log to guarantee consistency.
+
 ### Object Storage Service (OSS)
 
 

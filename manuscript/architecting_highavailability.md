@@ -34,13 +34,42 @@ VPN Gateway is an Internet-based service that securely and reliably connects ent
 For configuring redundant IPSec connections with both an *Active* and a *Standby* tunnel the local gatewy needs two public IP addresses. Be sure to configure the healthcheck on the VPN-Gateway as well and then define according weight values. 100 for the active tunnel and 0 for the standby tunnel. When the active tunnel is unavailable all traffic between the on-premises data center and the VPC is then automatically directed to the standby tunnel. 
 
 ### RDS and PolarDB
-For relational databases workloads Alibaba Cloud provides two types of services:
-- RDS for MySQL, Postgresql, SQL Server, MariaDB, PPAS (Oracle/EnterpriseDB)
+*RDS* is short for *Relational Database Service* and it supports different relational database engines such as MySQL, Postgresql, SQL Server, MariaDB, PPAS (Oracle/EnterpriseDB). 
+Below is a quick break-down and discussion of the available editions and configurations and how it may impact your availability Recovery Point Objective (RPO). 
 
+RDS comes in four different editions:
+- Enterprise <br>
+The Enterprise Edition offers enterprise-level reliability with a Recovery Point Object (RPO) of 0, and supports the database engines MySQL 5.7 and 8.0.
+It consists of one primary instance and two secondary instances. Your primary and secondary instances can be deployed in three different data centers in the same city to support cross-zone disaster recovery which makes it suitable for finance, securities, and insurance industries that require high data security. It comes with an availability SLA of 99,99% monthly uptime on dedicated instances. If deployed on general purpose instances the monthly availability SLA is 99,95%.
+- High-Availability <br>
+Your database system consists of one primary instance and one secondary instance. Data is synchronously replicated from the primary instance to the secondary instance. If the primary instance breaks down unexpectedly, your database system automatically fails over to the secondary instance. Secondary instance cannot be accessed. To scale horizontally for read operations you can add up to 10 read-replicas. It comes with an availability SLA of 99,99% monthly uptime on dedicated instances. If deployed on general purpose instances the monthly availability SLA is 99,95%.
+- High-Performance (aka PolarDB) <br>
+This edition is also known as PolarDB. A cloud-native database service which separates the compute and storage layer. It supports high scalability, large auto-incrementing storage space, low primary/secondary latency, and fault recovery wihtin several seconds. It allows you to expand the storage to up to 100 TB and scale out an individual cluster to up to 16 nodes. You can create a snapshot on a database of 2 TB in size within 60 seconds. The monthly availability SLA is 99,99%.
+- Basic <br>
+The edition only provides a single master node and is not designed for high-availability. Its use-case is mainly for personal learning, small-sized websites, and development and test environments for small- and medium-sized enterprises. 
 
+RDS supports two different instance types:
+- General Purpose
+A general-purpose instance exclusively occupies the memory resources allocated to it, but shares CPU and storage resources with the other general-purpose instances that are deployed on the same server.
+CPU resources are moderately reused among general-purpose instances that are deployed on the same server to increase CPU cost-effectiveness. The same configuration might lead to higher compute and storage performance compared to a dedicated instance. It is not, however, consistent over a longer period of time.
+- Dedicated
+A dedicated instance exclusively occupies the CPU and memory resources allocated to it. Its performance remains stable for a long term and is not affected by the other instances that are deployed on the same server.
 
-- PolarDB for for MySQL, Postgresql, Oracle
+RDS supports two different deployment methods:
+- Single-Zone Deployment <br>
+Indicates that the primary and secondary instances are located in the same zone. Replication may be faster, but zone faults will have a serious impact on the entire database setup.
+- Multi-Zone Deplyoment <br>
+Indicates that the primary and secondary instances are located in different zones for cross-zone disaster recovery. Replication is slower, but the database setup is resilient against individual zone faults. Note that this mode is currently not supported by all regions.
 
+RDS supports different storage types:
+- Local SSD (available for Enterprise Edition and High Availability only) <br>
+This is the recommended storage type. A local SSD resides on the same server as the database engine and therefore reduces I/O latency. The maximum possible size is directly related to the RDS instance being used. Upgrades of instance types may take very long time, however, since data might be needed to get copied over to a new physical database server in case the original one does not have enough capacity. Both logical and physical backups are supported.
+- Enhanced SSD (available for High-Availability) <br>
+It is also a recommended storage type. This new SSD product is designed by Alibaba Cloud based on next-generation distributed block storage architecture. It integrates 25 Gigabit Ethernet and remote direct memory access (RDMA) technologies to provide super high performance at low latency. An enhanced SSD can process up to 1 million random read/write requests per second. Depending on the DB engine and instance type is suports up to 32 TB storage capacity.
+- Standard SSD (available for High-Availability and Basic) <br>
+A standard SSD is an elastic block storage device that is designed based on a distributed storage architecture. You can store data on a standard SSD to separate computing from storage. It is cheaper than ESSD but does not provide the high performance characteristics.
+- High-Performance Distributed Storage (available for High-Performance) <br>
+Sharing the same group of data copies among multiple DB servers, rather than storing a separate copy of data for each DB server, significantly reduces your storage cost. The distributed storage and file system allows automatically scaling up database storage capacity, regardless of the storage capacity of each single database server. This enables your database to handle up to 100 TB of data at max. Storage capacity is bound by an instance-specific soft-limit which can be increased via ticket, however. See https://www.alibabacloud.com/help/doc-detail/68498.htm for details.
 
 ### Object Storage Service (OSS)
 

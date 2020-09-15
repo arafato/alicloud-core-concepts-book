@@ -74,7 +74,13 @@ Sharing the same group of data copies among multiple DB servers, rather than sto
 For every storage option except *Local SSD*, backups are done as snapshots including the binary log to guarantee consistency.
 
 ### Object Storage Service (OSS)
+OSS uses the data redundancy mechanism that is based on erasure coding and multiple replicas to store copies of each object in multiple devices across different facilities within the same region. This way, data durability and availability are ensured in case of hardware failures. Object operations in OSS are highly consistent. For example, when a user receives an upload or a copy success response, the uploaded object can be read immediately, and the copies of the object have been written to multiple devices for redundancy.
+To ensure complete data transmission, OSS checks for errors when packets are transmitted between the client and the server by calculating the checksum of the network traffic packets.
+The data redundancy mechanism of OSS can prevent data loss when two storage devices are damaged at the same time.
+After data is stored in OSS, OSS regularly checks whether copies of the data are lost and recovers the lost copies to ensure the durability and availability of data.
+OSS periodically verifies the integrity of data to detect data corruption caused by errors such as hardware failures. If data is partially corrupted or lost, OSS reconstructs and repairs the corrupted data by using the other copies.
 
+OSS is designed for an availability of at least 99,995% and a durability of 99,9999999999% (12 nines). The SLAs depend on the storage tier (*Standard*, *Infrequent Access*, *Archive* in combination with *Locally redundant (LRS)* or *Zone Redundant (ZRS)*) and are documented on our SLA page at: https://www.alibabacloud.com/help/doc-detail/42438.htm
 
 ### Cloud Enterprise Network (CEN)
 

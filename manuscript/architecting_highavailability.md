@@ -80,29 +80,55 @@ The data redundancy mechanism of OSS can prevent data loss when two storage devi
 After data is stored in OSS, OSS regularly checks whether copies of the data are lost and recovers the lost copies to ensure the durability and availability of data.
 OSS periodically verifies the integrity of data to detect data corruption caused by errors such as hardware failures. If data is partially corrupted or lost, OSS reconstructs and repairs the corrupted data by using the other copies.
 
+In order to account for desaster recovery scenarios OSS also provides Cross-Region Replication (CRR). It allows you to asynchronously replicate each object written to a bucket in region A to another bucket in region B. Replication traffic is being transmitted over Alibaba Cloud's private backbone network. There are no bandwidth guarantees, though.
+
 OSS is designed for an availability of at least 99,995% and a durability of 99,9999999999% (12 nines). The SLAs depend on the storage tier (*Standard*, *Infrequent Access*, *Archive* in combination with *Locally redundant (LRS)* or *Zone Redundant (ZRS)*) and are documented on our SLA page at: https://www.alibabacloud.com/help/doc-detail/42438.htm
 
 ### Cloud Enterprise Network (CEN)
+Alibaba Cloud provides a high-performance and low-latency private network. This private network provides a secure cloud computing environment to meet your network needs. The loss of network packets during the network transmission may be caused by many factors, including the network stream collision, underlying network (Layer-2) errors, and other network malfunctions. The Alibaba Cloud transmission network is optimized and maintained to ensure that data can be transmitted across regions with a 99th percentile (P99) of per-hour packet loss lower than 0.0001%.
 
+In addition, it has a minimum of four sets of independent redundant links between two network instances to ensure uninterrupted service should some links be disconnected. This is backed by a monthly availability SLA of 99,95%.
 
+### Global Accelerator
+Global Accelerator (GA) provides access points worldwide. It is designed to accelerate transmission of network traffic. The GA service ensures high-quality Border Gateway Protocol (BGP) bandwidth and high service reliability. This allows businesses to accelerate global connections to Internet-facing services. Backed by the reliable and congestion-free global network of Alibaba Cloud, GA provides a high-speed network experience and ultra-low transmission latency for users across different regions. It is redundantly setup across at least two availability zones of a service and accelerated region.
+It is also backed by a monthly availability SLA of 99,95%.
 
-SLB, VPNGW, RDS, etc
-https://www.alibabacloud.com/help/doc-detail/67915.htm
+## Multi-Site High Availability
 
+### Global Traffic Manager
+Global Traffic Manager（GTM）allows to route user access traffic of an application service to different IP addresses. GTM supports access addresses of both Alibaba Cloud products and non-Alibaba Cloud products, and helps you build a hybrid cloud application quickly and conveniently.
 
-## Multi-Site High Availability and Cross-Region Load Balancing
-https://www.alibabacloud.com/help/doc-detail/87478.htm
-https://www.alibabacloud.com/help/doc-detail/87477.htm
+GTM uses the DNS smart resolution and the application service’s running status health check to direct the user access request to the most appropriate IP address. GTM provides smart resolution based on the network area and health check based on ping, TCP, or HTTP(S). It can be used to build same-city multi-active and remote disaster recovery services flexibly and quickly.
 
-(Cross-Region, Cross-DataCenter) Data Synchronization and Replication with DTS
-https://www.alibabacloud.com/help/doc-detail/26598.htm
+GTM can be used for architecting high-available and resilient globally distributed applications related to the following scenarios:
+- IP disaster recovery using a primary-standby architecture
+- Multiple active IP addresses of an application service
+- Cross-region load balancing
+- Geo-regional IP Resolution 
 
+Multiple IP addresses of an enterprise application service may be distributed in data centers of different carriers or manufacturers in different regions. In this case, a single IP address cannot bear all users’ access requests and it is very hard to build a load balancing architecture for the application service. There is no other service than DNS that can simply and efficiently organize IP addresses of multiple data centers to provide service for customers.
+However, DNS itself cannot sense the availability of IP addresses. Thus, it cannot route the access traffic of a user to the available IP address of the application service quickly and efficiently in case of faults or disasters. GTM allows you to define health checks from different monitoring nodes of Alibaba Cloud, and different balancing policies such as Weighted Round Robin to load balance your application on a network layer 3 level. In addition, it also allows for routing traffic to different regions based on the client's ISP in use.
 
-## Disaster Recovery
-In addition to before-mentioned services such as DTS we also do provide dedicated services for disaster recovery strategies of VM-based workloads (hybrid, cloud-to-cloud, account-to-account) such as HBR, and are supported by dedicated 3rd party offerings such as Hystax for example.
+Please check the following links for a detailed discussion on the neccessary configurations and step by step instructions: https://www.alibabacloud.com/help/doc-detail/87478.htm and https://www.alibabacloud.com/help/doc-detail/87477.htm
 
-## Hybrid Backup Recovery (HBR)
-https://www.alibabacloud.com/help/doc-detail/62362.htm
+### Data Transmission Service
+In cases where you also need to synchronize, replicate or change track data between different databases and stores in potentially different regions (both on and off cloud) we strongly suggest to use Data Transmission Service (DTS). In particluar, it suited for the following scenarios:
+- Database migration with minimized downtime <br>
+DTS can migrate your data with minimized downtime. Your applications remain operational during migration. The only downtime is when you switch your application to the new target database.
+- Geo-redundant read replicas <br>
+In this case, you can build a secondary deployment in a different region to increase the availability of your application. DTS continuously replicates changes between these two geo-redundant deployments and keep the regional replicas in sync. If a failure occurs in the primary region, you can switch user requests to the secondary region.
+- Active geo-redundancy
+DTS performs two-way real-time data replication between business units to keep the regional replicas in sync.
+- Simple cache updating <br>
+With the change tracking mode of DTS, you can implement a simple cache updating mechanism by subscribing to the changes committed to the primary database and updating the cache in near real time.
 
-## 3rd party Integration
-https://hystax.com/disaster-recovery-to-alibaba/
+For a more detailed discussion on the architectural setup of DTS please refer to https://www.alibabacloud.com/help/doc-detail/26598.htm
+
+## Desaster Recovery
+### Hybrid Backup Recovery (HBR)
+Elastic Compute Service (ECS) Disaster Recovery is a scheme provided by Alibaba Cloud Hybrid Backup Recovery (HBR) to serve the needs of key enterprise applications and guarantee business continuity. It features disaster recovery with a second-level or minute-level recovery point objective (RPO) and recovery time objective (RTO). It can be used to reliably backup different storage services including OSS, NAS, CSG, and also ECS.
+
+For ECS, HBR also provides ECS Disaster Recovery which lets you continously backup and replicate application data of ECS instances into another region. In case the region goes offline or you want to be able to quickly start your application in another region additionaly you can failover and launch the new environment respectively. More details can be found here: https://www.alibabacloud.com/help/doc-detail/62362.htm
+
+### 3rd party Integration
+Alibaba Cloud is also well integrated into 3rd-party offerings such as Hystax which allows for Disaster Recovery, Cloud Backup, and Continuous Data Protection from multipl sources including Bare metal, KVM, VMWare, and other cloud providers. More information on this offering can be found on the company's website: https://hystax.com/disaster-recovery-to-alibaba/

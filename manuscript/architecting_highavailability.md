@@ -131,6 +131,7 @@ With the change tracking mode of DTS, you can implement a simple cache updating 
 For a more detailed discussion on the architectural setup of DTS please refer to https://www.alibabacloud.com/help/doc-detail/26598.htm
 
 For MySQL migrations scenarios make sure that the source database has the following parameters set as follows:
+
 ```
 log_bin = ON
 binlog_format = ROW

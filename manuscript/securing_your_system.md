@@ -102,3 +102,13 @@ The price model for the latter two is subscription-based (1 month minimum), that
     This is the clean bandwidth your Anti-DDoS service needs to be able to handle (excluding attack traffic). If your regular bandwidth demands gets higher packet drops may occur.
 
 The fourth offering is called **Anti-DDoS Origin**. It works differently from Anti-DDoS Pro and Premium in that traffic is always routed directly to the origin. Only in case of attacks is the traffic redirected to our global scrubbing centers. This works by announcing according BGP routes to redirect the traffic. For customers outside of Mainland China this is also supported for origins off Alibaba Cloud. For this scenarios customers need to have a BGP network and AS, however. In the event of an attack traffic is then routed either through a GRE tunnel or a cross connect to the origin.
+
+### Web Application Firewall
+Alibaba Cloud WAF is a web application firewall that monitors, filters, and blocks HTTP traffic to and from web applications. Based on the big data capacity of Alibaba Cloud Security, Alibaba Cloud WAF helps you to defend against common web attacks such as SQL injections, Cross-site scripting (XSS), web shell, Trojan, and unauthorized access, and to filter out massive HTTP flood requests. It protects your web resources from being exposed and guarantees your website security and availability.
+
+WAF comes into different editions (Pro, Business, Enterprise, Exclusive) whcih support different scales and features. A detailed description can be found at https://www.alibabacloud.com/help/doc-detail/58487.htm
+
+After a website is connected to WAF, it uses the default protection policies to protect the website against common Web attacks (such as SQL injections and XSS) and HTTP flood attacks. You can enable more WAF features and adjust the protection policies based on your actual business needs.
+A complete list of the protection policies are listed at https://www.alibabacloud.com/help/doc-detail/96868.htm
+
+If you want to deploy WAF together with CDN and Anti-DDoS Pro or Anti-DDoS Premium, we recommend that you deploy components in the following sequence: client, Anti-DDoS Pro or Anti-DDoS Premium, CDN, WAF, SLB, and origin server.

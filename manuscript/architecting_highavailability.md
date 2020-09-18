@@ -38,37 +38,37 @@ For configuring redundant IPSec connections with both an *Active* and a *Standby
 Below is a quick break-down and discussion of the available editions and configurations and how it may impact your availability Recovery Point Objective (RPO). 
 
 RDS comes in four different editions:
-- Enterprise <br>
+#### Enterprise 
 The Enterprise Edition offers enterprise-level reliability with a Recovery Point Object (RPO) of 0, and supports the database engines MySQL 5.7 and 8.0.
 It consists of one primary instance and two secondary instances. Your primary and secondary instances can be deployed in three different data centers in the same city to support cross-zone disaster recovery which makes it suitable for finance, securities, and insurance industries that require high data security. It comes with an availability SLA of 99,99% monthly uptime on dedicated instances. If deployed on general purpose instances the monthly availability SLA is 99,95%.
-- High-Availability <br>
+#### High-Availability
 Your database system consists of one primary instance and one secondary instance. Data is synchronously replicated from the primary instance to the secondary instance. If the primary instance breaks down unexpectedly, your database system automatically fails over to the secondary instance. Secondary instance cannot be accessed. To scale horizontally for read operations you can add up to 10 read-replicas. It comes with an availability SLA of 99,99% monthly uptime on dedicated instances. If deployed on general purpose instances the monthly availability SLA is 99,95%.
-- High-Performance (aka PolarDB) <br>
+#### High-Performance (aka PolarDB)
 This edition is also known as PolarDB. A cloud-native database service which separates the compute and storage layer. It supports high scalability, large auto-incrementing storage space, low primary/secondary latency, and fault recovery wihtin several seconds. It allows you to expand the storage to up to 100 TB and scale out an individual cluster to up to 16 nodes. You can create a snapshot on a database of 2 TB in size within 60 seconds. The monthly availability SLA is 99,99%. It also comes with Global Database Replication feature that allows you to replicate data to read-only nodes in other regions including Mainland China over Alibaba Cloud's private backbone network.
-- Basic <br>
+#### Basic
 The edition only provides a single master node and is not designed for high-availability. Its use-case is mainly for personal learning, small-sized websites, and development and test environments for small- and medium-sized enterprises. 
 
 RDS supports two different instance types:
-- General Purpose
+#### General Purpose
 A general-purpose instance exclusively occupies the memory resources allocated to it, but shares CPU and storage resources with the other general-purpose instances that are deployed on the same server.
 CPU resources are moderately reused among general-purpose instances that are deployed on the same server to increase CPU cost-effectiveness. The same configuration might lead to higher compute and storage performance compared to a dedicated instance. It is not, however, consistent over a longer period of time.
-- Dedicated
+#### Dedicated
 A dedicated instance exclusively occupies the CPU and memory resources allocated to it. Its performance remains stable for a long term and is not affected by the other instances that are deployed on the same server.
 
 RDS supports two different deployment methods:
-- Single-Zone Deployment <br>
+#### Single-Zone Deployment
 Indicates that the primary and secondary instances are located in the same zone. Replication may be faster, but zone faults will have a serious impact on the entire database setup.
-- Multi-Zone Deplyoment <br>
+#### Multi-Zone Deplyoment
 Indicates that the primary and secondary instances are located in different zones for cross-zone disaster recovery. Replication is slower, but the database setup is resilient against individual zone faults. Note that this mode is currently not supported by all regions.
 
 RDS supports different storage types:
-- Local SSD (available for Enterprise Edition and High Availability only) <br>
+#### Local SSD (available for Enterprise Edition and High Availability only)
 This is the recommended storage type. A local SSD resides on the same server as the database engine and therefore reduces I/O latency. The maximum possible size is directly related to the RDS instance being used. Upgrades of instance types may take very long time, however, since data might be needed to get copied over to a new physical database server in case the original one does not have enough capacity. Both logical and physical backups are supported.
-- Enhanced SSD (available for High-Availability) <br>
+#### Enhanced SSD (available for High-Availability)
 It is also a recommended storage type. This new SSD product is designed by Alibaba Cloud based on next-generation distributed block storage architecture. It integrates 25 Gigabit Ethernet and remote direct memory access (RDMA) technologies to provide super high performance at low latency. An enhanced SSD can process up to 1 million random read/write requests per second. Depending on the DB engine and instance type is suports up to 32 TB storage capacity.
-- Standard SSD (available for High-Availability and Basic) <br>
+#### Standard SSD (available for High-Availability and Basic)
 A standard SSD is an elastic block storage device that is designed based on a distributed storage architecture. You can store data on a standard SSD to separate computing from storage. It is cheaper than ESSD but does not provide the high performance characteristics.
-- High-Performance Distributed Storage (available for High-Performance) <br>
+#### High-Performance Distributed Storage (available for High-Performance) 
 Sharing the same group of data copies among multiple DB servers, rather than storing a separate copy of data for each DB server, significantly reduces your storage cost. The distributed storage and file system allows automatically scaling up database storage capacity, regardless of the storage capacity of each single database server. This enables your database to handle up to 100 TB of data at max. Storage capacity is bound by an instance-specific soft-limit which can be increased via ticket, however. See https://www.alibabacloud.com/help/doc-detail/68498.htm for details.
 
 For every storage option except *Local SSD*, backups are done as snapshots including the binary log to guarantee consistency.
@@ -113,13 +113,19 @@ Please check the following links for a detailed discussion on the neccessary con
 
 ### Data Transmission Service
 In cases where you also need to synchronize, replicate or change track data between different databases and stores in potentially different regions (both on and off cloud) we strongly suggest to use Data Transmission Service (DTS). In particluar, it suited for the following scenarios:
-- Database migration with minimized downtime <br>
+
+**Database migration with minimized downtime** 
+
 DTS can migrate your data with minimized downtime. Your applications remain operational during migration. The only downtime is when you switch your application to the new target database.
-- Geo-redundant read replicas <br>
+
+**Geo-redundant read replicas** 
+
 In this case, you can build a secondary deployment in a different region to increase the availability of your application. DTS continuously replicates changes between these two geo-redundant deployments and keep the regional replicas in sync. If a failure occurs in the primary region, you can switch user requests to the secondary region.
-- Active geo-redundancy
+
+**Active geo-redundancy**
+
 DTS performs two-way real-time data replication between business units to keep the regional replicas in sync.
-- Simple cache updating <br>
+Simple cache updating
 With the change tracking mode of DTS, you can implement a simple cache updating mechanism by subscribing to the changes committed to the primary database and updating the cache in near real time.
 
 For a more detailed discussion on the architectural setup of DTS please refer to https://www.alibabacloud.com/help/doc-detail/26598.htm

@@ -132,11 +132,6 @@ For a more detailed discussion on the architectural setup of DTS please refer to
 
 For MySQL migrations scenarios make sure that the source database has the following parameters set as follows:
 
-```
-log_bin = ON
-binlog_format = ROW
-```
-
 ## Desaster Recovery
 ### Hybrid Backup Recovery (HBR)
 Elastic Compute Service (ECS) Disaster Recovery is a scheme provided by Alibaba Cloud Hybrid Backup Recovery (HBR) to serve the needs of key enterprise applications and guarantee business continuity. It features disaster recovery with a second-level or minute-level recovery point objective (RPO) and recovery time objective (RTO). It can be used to reliably backup different storage services including OSS, NAS, CSG, and also ECS.

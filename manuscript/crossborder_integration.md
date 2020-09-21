@@ -170,6 +170,10 @@ Also do the same configuration on the second ECS instance. After that restart th
 In order to distribute requests equally on both proxy machines you also need to setup an internal SLB in the same region as the proxy machines. It will not be exposed to the public internet. Then add the two ECS instances with the nginx proxy running to the standard server group and create a TCP listener that forwards any request to the proxies on ports 80 and 443. For DNS requests we recommend to use a UDP listener which is listening and forwarding on port 53.
 The web-based wizard will guide you through the entire process. If not sure which values to choose just go with the default values for now and adapt later for specific requirements.
 
+3. Private Zone
+Now it is time to configure the Private Zone which is part of the Alibaba Cloud DNS service.
+![Solution architecture for a private global internet accelerator](09/private_zone.png)
+Simply add the zones you want to forward, add according entries that point to the internal proxy IP (or in case of a redundant setup to the internal IP of the SLB). Then bind the VPC where the client machines are deployed to this Private Zone. The configuration is then effective immediately.
 
 
 ### Conclusion

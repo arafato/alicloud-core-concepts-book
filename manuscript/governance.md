@@ -209,7 +209,7 @@ Alibaba Cloud RAM service comes with a set of pre-defined policies which are cal
 Usually, for each service there are two policies defined: One that gives full access, and one that only gives read access to any resource in any region. While this may work for some scenarios you might need more fine-granular access policies that are specific to certain resource, to a certain region, or to some specific actions. For these scenarios you can define a so-called *Custom Policy*.
 Some built-in system policies you might want to consider (in potentially modified versions) for your account governance are: 
     - `AliyunSupportFullAccess` which grants access to Support Center via Management Console which includes filing support tickets. 
-    - `AliyunBSSFullAccess which grants full access to Billing System via Management Console.
+    - `AliyunBSSFullAccess` which grants full access to Billing System via Management Console.
     - `AliyunBSSReadOnlyAccess` read-only access to Billing System via Management Console.
     - `AliyunBSSOrderAccess` which grants permission to view, pay, and cancel orders on Billing System.
     - `AliyunSTSAssumeRoleAccess` which grants access to the API AssumeRole of Security Token Service(STS).

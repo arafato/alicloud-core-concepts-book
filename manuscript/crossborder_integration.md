@@ -197,7 +197,9 @@ We discussed how to setup each one of these components, what to keep in mind whe
 
 
 ## ICP License Quick Facts
-### When is an ICP-License needed?
+This section gives a quick rundown of the most frequently asked questions and scenarios.
+
+### When is an ICP-License neded?
 An ICP Filing License is needed if
 -	You host a server or running a service in mainland Chinese that has a public IP and distributes web-content. The origin of the data does not matter.
 -	You are using a domain name (e.g. mydomain.com) associated to an IP address or a CDN network that is located in mainland China

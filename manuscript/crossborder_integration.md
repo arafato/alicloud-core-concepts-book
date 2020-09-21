@@ -166,26 +166,7 @@ You can modify this more specific to your requirements, of course.
 Also do the same configuration on the second ECS instance. After that restart the nginx-server to make the new configuration effective. Depending on your distribution this can be done for example via 
 `$ systemctl restart nginx` 
 
-2. Load Distribution with SLB
-In order to distribute requests equally on both proxy machines you also need to setup an internal SLB in the same region as the proxy machines. It will not be exposed to the public internet. Then add the two ECS instances with the nginx proxy running to the standard server group and create a TCP listener that forwards any request to the proxies on ports 80 and 443. For DNS requests we recommend to use a UDP listener which is listening and forwarding on port 53.
-The web-based wizard will guide you through the entire process. If not sure which values to choose just go with the default values for now and adapt later for specific requirements.
 
-3. Private Zone
-Now it is time to configure the Private Zone which is part of the Alibaba Cloud DNS service.
-![Solution architecture for a private global internet accelerator](09/private_zone.png)
-Simply add the zones you want to forward, add according entries that point to the internal proxy IP (or in case of a redundant setup to the internal IP of the SLB). Then bind the VPC where the client machines are deployed to this Private Zone. The configuration is then effective immediately.
-
-4. Security Groups Configuration
-Once this has been done, there is one last thing left to configure. You have to grant the client machines explicitly access to the proxy machines. You do that by defining a so-called security group which is associated to the proxy machines.
-
-Obviously, this needs to be adapted with your specific configuration. But the point is, you need to explicitly grant the client machines (aka “Authorization Object”) access to the proxy machines over all required ports which are usually 80, 443 for http(s) and 53 for DNS.
-
-If all of this set up you can check if the setup is working by doing a ping-request against a public endpoint like so
-
-`$ ping my.endpoint.com`
-
-Which should resolve into the internal IP-address of the proxy or SLB IP.
-You can then send requests over the proxy to the according public endpoints of yours.
 
 ### Conclusion
 In this section we looked at how to build a private internet accelerator based on Alibaba Cloud Enterprise Network service and nginx to accelerate DNS and http(s) requests over Alibaba Cloud’s private high-performance, low-latency network to external endpoints. 

@@ -166,6 +166,10 @@ You can modify this more specific to your requirements, of course.
 Also do the same configuration on the second ECS instance. After that restart the nginx-server to make the new configuration effective. Depending on your distribution this can be done for example via 
 `$ systemctl restart nginx` 
 
+2. Load Distribution with SLB
+In order to distribute requests equally on both proxy machines you also need to setup an internal SLB in the same region as the proxy machines. It will not be exposed to the public internet. Then add the two ECS instances with the nginx proxy running to the standard server group and create a TCP listener that forwards any request to the proxies on ports 80 and 443. For DNS requests we recommend to use a UDP listener which is listening and forwarding on port 53.
+The web-based wizard will guide you through the entire process. If not sure which values to choose just go with the default values for now and adapt later for specific requirements.
+
 
 
 ### Conclusion

@@ -83,6 +83,34 @@ While this seems not utterly complex and easy to implement at first glance some 
 -	Dedicated private lines and bandwidth are expensive and are usually hard to easily scale up and down with your demands
 -	Networking operators, services and data design need to adhere the respective local legislations and laws such as GDRP, Cyber Security Law (CSL) and MPLS 2.0
 
+### Solution Design
+Alibaba Cloud makes it simple to address these challenges and to quickly setup an environment where our applications and workloads can reliably communicate with these public services by building on top of Alibaba Cloud’s world-class and battle-proven networking services. At the same time Alibaba Cloud ensures that its cloud platform meets the MLPS 2.0 baseline and GDPR.
+
+The three major building blocks will be Alibaba Cloud Enterprise Network (CEN), a DNS Private Zone configuration, and a redundant pair of reverse proxies (nginx) which are run on our Elastic Compute Service (ECS) across two availability zones and exposed to the application over an internal load balancer (SLB). Throughout the remainder of this section we will focus on only one networking direction for the sake of simplicity. The other networking direction can be setup analogously.
+
+![Solution architecture for a private global internet accelerator](09/solution.png)
+
+The solution works by defining the domain names you like to have DNS-resolved and forwarded by the proxy in a Private Zone and have them pointed to the proxy or internal SLB IP address respectively. In our example this would be *.mydomain.com (be sure to turn off recursive proxy resolution in PrivateZone if you are using wildcards). Every other domain will be resolved locally and be forwarded. So any http-request against such a domain will be forwarded to the proxy. DNS resolution and subsequent http-forwarding will then be handled by nginx. We will look at the required configuration files for nginx later in this article.
+
+Let’s briefly look at Cloud Enterprise Network (CEN). It is a highly-available network built on the high-performance and low-latency global private network provided by Alibaba Cloud. By using CEN, you can establish private network connections between Virtual Private Cloud (VPC) networks in different regions, or between VPC networks and on-premises data centers which is routed over Alibaba Cloud’s private backbone network. CEN supports automatic route distribution and learning, which speeds up network convergence, improves the quality and security of cross-network communications, and interconnects all network resources. The Alibaba Cloud transmission network is optimized and maintained to ensure that data can be transmitted across regions with a 99th percentile (P99) of per-hour packet loss lower than 0.0001%. 
+Bandwidth of CEN can be scaled up and down anytime from 2Mbps up to 10Gbps and will be charged on a second-granularity. It can also be automated based on different metrics via scripts. For a detailed discussion and solution on this please refer to https://github.com/arafato/CEN-Scaler
+Once we attach both VPCs to the CEN instance traffic is automatically routed between these two VPCs. Be sure to not use overlapping IP-ranges, otherwise there might be routing issues and errors.
+
+The second building block will be NGINX (https://www.nginx.com/) which will act as our reverse proxy. It will proxy any request from the client application in Frankfurt region to the destination which also includes DNS requests. We will set up a redundant pair of NGINX servers across two availability zones and distribute traffic between the two using a Service Load Balancer (SLB) in front of them.
+
+Before we look at detail at the configuration let’s think about the necessary configuration of the ECS instances in more detail with a specific focus on the Outbound and Inbound internet bandwidth which is important for our scenario. Let's quickly define inbound and outbound traffic:
+-	Inbound refers to network traffic that is sent from the public internet to any Alibaba Cloud service (i.e. traffic flows into the cloud)
+-	Outbound refers to network traffic that is sent from any Alibaba Cloud service to the public internet (i.e. traffic leaving the cloud)
+
+Inbound traffic is at minimum 100MBits. It will be at most as high as EIP Bandwidth. 
+Outbound traffic is capped by the EIP bandwidth. Bandwidths greater or equal 1Gbits can only be saturated by multiple threads. Note that the maximum default EIP bandwidth is 200 Mbits, the maximum instance-bound public IP bandwidth is 100 Mbits.
+
+In order to increase that you have to add your EIPs (no instance-bound public IPs are supported) to a shared internet bandwidth package which can be as high a 1Gbits (see https://www.alibabacloud.com/help/doc-detail/55784.htm for details). There are no additional costs for a shared bandwidth internet package. This way you can increase you outbound bandwidth to up to 1 Gbits. This bandwidth can only be saturated by multiple threads, though. You can also create multiple bandwidth packages of course.
+
+To further increase the external network performance you can also use mutliple ENIs (Elastic Network Interfaces) and bind up to 10 EIPs to up to 10 private ip addresses of a single ENI in NAT mode. By assigning multiple bandwidth packages to these EIPs you can further increase the network throughput of a single instance. Please check https://www.alibabacloud.com/help/doc-detail/88991.htm for further details on ENI and the different supported modes such as Cut-Through mode and Multi-EIP to ENI mode.
+
+Let’s go through step by step through the configuration:
+
 
 
 ### Conclusion

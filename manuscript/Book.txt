@@ -3,8 +3,5 @@ governance.md
 interacting_alicloud.md
 infrastructure_essentials.md
 securing_your_system.md
-automation.md
 architecting_highavailability.md
-observability.md
 crossborder_integration.md
-migration_paths.md

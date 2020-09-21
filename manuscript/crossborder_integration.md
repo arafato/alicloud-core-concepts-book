@@ -116,6 +116,7 @@ Depending on your Linux distribution you are using commands may vary. Please con
 
 After it has been installed add the following configuration to `/etc/nginx/nginx.conf`
 Make sure to make a backup of the file prior to the modification.
+
 ```
 # Configure stream forwarding of https protocol stream {
   map $ssl_preread_server_name $backend_pool {
@@ -133,6 +134,7 @@ Make sure to make a backup of the file prior to the modification.
   }
 }
 ```
+
 This will allow to resolve and forward the explicitly specified domain names (e.g. *.mydomain.com) to be resolved by any DNS name server you may want to use. In our case, it is the Google DNS name servers which is available under 8.8.8.8, but could be any other DNS name servers which are reachable by the proxy of course.
 Often you also need more control over the HTTP headers and possibly error codes you would like to return as a result of any http-call to your proxy. In order to do this you can modify the server.location block in your nginx configuration-file as follows:
 
@@ -186,12 +188,12 @@ Which should resolve into the internal IP-address of the proxy or SLB IP.
 You can then send requests over the proxy to the according public endpoints of yours.
 
 ### Conclusion
-In this article we looked at how to build a private internet accelerator based on Alibaba Cloud Enterprise Network service and nginx to accelerate DNS and http(s) requests over Alibaba Cloud’s private high-performance, low-latency network to external endpoints. 
+In this section we looked at how to build a private internet accelerator based on Alibaba Cloud Enterprise Network service and nginx to accelerate DNS and http(s) requests over Alibaba Cloud’s private high-performance, low-latency network to external endpoints. 
 We discussed how to setup each one of these components, what to keep in mind when selecting the according ECS instances in terms of networking bandwidth and what kind of challenges can be easily addressed, both from a technical point of view and a compliance point of view.
 
 
-# ICP License Quick Facts
-## When is an ICP-License needed?
+## ICP License Quick Facts
+### When is an ICP-License needed?
 An ICP Filing License is needed if
 -	You host a server or running a service in mainland Chinese that has a public IP and distributes web-content. The origin of the data does not matter.
 -	You are using a domain name (e.g. mydomain.com) associated to an IP address or a CDN network that is located in mainland China
@@ -208,7 +210,7 @@ Application Duration:
 -	ICP Filing: 2-4 weeks
 -	ICP Commercial: 4-8 weeks
 
-## Are there any requirements a domain name has to satisfy?
+### Are there any requirements a domain name has to satisfy?
 Yes, there are two main requirements:
 -	The domain needs to be registered at a Chinese registrar. Domains registered at our INTL site are not considered a Chinese registrar and thus not eligible for ICP license! Either guide the customer to a third-party Chinese registrar such as GoDaddy (or any other registrar verified by CNNIC (China Internet Network Information Center) (https://cnnic.com.cn/syjszc1/List/201210/t20121011_36680.htm), or refer to our Domestic Portal which is also verified by CNNIC.
 
@@ -225,23 +227,15 @@ Theoretically, yes. This can be done through so called ICP-Proxy Providers. This
 -	You need to sign over your domain name to the ICP-Proxy provider meaning you are losing your claims under public law on this domain
 -	If the original owner of the ICP-License violates Chinese law, all domains and IPs associated with this ICP License will be put on the blacklist
 
-## Serving Content from outside China
+### Serving Content from outside China
 Can I serve web-content to Chinese customers from servers outside of Mainland China and thus avoiding the need for an ICP-License? Generally speaking, yes. By doing this over public internet you will usually suffer high latency and packet loss, and very unreliable connections. Your website may also be blocked temporarily (e.g. maybe you are running your website on a shared IP-address which gets blocked for reasons out of your control).
 
-There are currently two offerings to the knowledge of this authors which claim to provide reliable and fast connections to Chinese customers despite being hosted outside of Mainland China:
+**Alibaba Cloud Global Accelerator Premium Bandwidth Plan**
 
-### WeberCloud (https://www.webercloud-china.de/)
-This company is cooperating directly with China Telecom which allows them to have your specific IP-Addresses or domain names requested from mainland China routed through a dedicated tunnel to the data-centre of Weber Cloud in Germany.
-Specifics:
--	Website must be hosted in WeberCloud DC
--	Traffic is routed through a dedicated network line
--	Routing is based on IP / Domain name and realized directly by China Telecom
--	Standard bandwidth is 10Mbit/s, but can also be increased
-Price-Points
--	Around €150 / month for 10 Mbit/s bandwidth
--	Around €50 / month for website hosting
+This offering uses Global Accelerator with public IPs located in HongKong. The traffic from Mainland China to HongKong is routed via via the public CN2 network of China Telecom. From there the private backbone network of Alibaba Cloud is being used. As an implication, no ICP Filing is needed since IPs are not located in Mainland China. This is useful if you need to start as quickly as possible with a project and cannot wait for an ICP license or your legal business entity in Mainland China, respectively. We recommend, however, for any serious production services to acquire an ICP license later.
 
-### Alibaba Cloud Anti DDoS-Premium “Mainland China Acceleration”
+**Alibaba Cloud Anti DDoS-Premium “Mainland China Acceleration”**
+
 This offering creates a public IP hosted in HongKong (which can connect to your website no matter if it is hosted on Alicloud or somewhere else). The connection is then routed to Mainland China internet through China Telecoms CN2 network (https://www.cteurope.net/products-services/internet/global-ip-transit/) 
 Specifics:
 -	Website can be hosted anywhere (as long as it has a public endpoint)

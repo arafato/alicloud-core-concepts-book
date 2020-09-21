@@ -135,7 +135,7 @@ For MySQL migrations scenarios make sure that the source database has the follow
 ```
 log_bin = ON
 binlog_format = ROW
-````
+```
 
 ## Desaster Recovery
 ### Hybrid Backup Recovery (HBR)

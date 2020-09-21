@@ -4,4 +4,3 @@ interacting_alicloud.md
 infrastructure_essentials.md
 securing_your_system.md
 architecting_highavailability.md
-crossborder_integration.md

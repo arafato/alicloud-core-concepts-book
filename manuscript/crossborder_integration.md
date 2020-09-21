@@ -117,6 +117,50 @@ Depending on your Linux distribution you are using commands may vary. Please con
 After it has been installed add the following configuration to `/etc/nginx/nginx.conf`
 Make sure to make a backup of the file prior to the modification.
 
+```
+# Configure stream forwarding of https protocol stream {
+  map $ssl_preread_server_name $backend_pool {
+      # Explicitly configure allowed domain names
+      ~.*\.mydomain\.com $ssl_preread_server_name:$server_port; 
+     default "";
+
+  }
+
+  server {
+    listen 443;
+    ssl_preread on;
+    resolver 8.8.8.8;
+    proxy_pass $backend_pool;
+  }
+}
+```
+
+This will allow to resolve and forward the explicitly specified domain names (e.g. *.mydomain.com) to be resolved by any DNS name server you may want to use. In our case, it is the Google DNS name servers which is available under 8.8.8.8, but could be any other DNS name servers which are reachable by the proxy of course.
+Often you also need more control over the HTTP headers and possibly error codes you would like to return as a result of any http-call to your proxy. In order to do this you can modify the server.location block in your nginx configuration-file as follows:
+
+```
+server {
+…
+    location / {
+     	set $is_allowed 0;
+if ($host ~ '.*\.mydomain\.com') {
+            set $is_allowed 1;
+}
+if ($is_allowed = 0) {
+            return 404;
+}
+
+      proxy_set_header Host $host;
+      proxy_set_header Accept-Encoding "";
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header Cookie $http_cookie;
+
+      resolver 8.8.8.8;
+      proxy_pass http://$host:$server_port$request_uri;
+    }
+}
+```
 
 You can modify this more specific to your requirements, of course. 
 Also do the same configuration on the second ECS instance. After that restart the nginx-server to make the new configuration effective. Depending on your distribution this can be done for example via 
@@ -200,7 +244,7 @@ Specifics:
 Price-Points:
 -	Comparatively expensive since you need to buy an Anti-DDoS Premium Subscription which starts at around USD 2600 / month
 
-## Who can (and cannot) apply for an ICP-License?
+### Who can (and cannot) apply for an ICP-License?
 -	Chinese-owned businesses with a Chinese business license can apply for a Business ICP (企业备案)
 -	Partially or wholly foreign-owned (non-Chinese) businesses with any type of Chinese business license (Joint-Venture or WOFE, for example), can apply for a Business ICP
 -	Chinese nationals, using their state-issued ID, can apply for an Individual ICP (个人备案)
@@ -210,7 +254,7 @@ The following entities may not apply for an ICP:
 -	Foreign businesses with no legal business presence in China
 -	Foreign individuals without a passport (and who are therefore ideally not residing in China)
 
-## What does the application process look like?
+### What does the application process look like?
 1)	You submit your ICP application form and documents to Alibaba Cloud. We check them and submit them to the provincial government branch of the Ministry of Industry and Information Technology (MIIT - gong ye he xin xi hua bu - 工业和信息化部), the Chinese government agency responsible for issuing ICP licenses. 
 
 This process is fully supported by our web portal at https://beian.aliyun.com/order/selfBaIndex.htm 

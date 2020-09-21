@@ -22,7 +22,16 @@ An interesting feature of CEN bandwidth packages are that they can be scaled up 
 
 Keep in mind, however, that downscaling a bandwidth packet during a subscription period is only supported in INTL Portal. It is not supported in Domestic Portal (only upscale).
     
+### Quick Facts Bandwidth Scaling
+- The change of the bandwidth is effective immediately. Meaning, the updated bandwidth can be used immediately by your applications, and it takes immediate effect on your bill.
+- The billing granularity is in seconds. The length of the billing period depends on the subscription type:
+    - For monthly subscription it is always exactly 30 days independent from the calendarian length of a particular month.
+    - For a yearly subscription it is always 12 months each 30 days
+- The effective billing in both up- and downscale scenarios is always based on the remaining time of the billing period, and will result in a dedicated item on the bill. So, in case of a monthly subscription this is the time in seconds until the end of the month, in case of a yearly subscription this is the time in seconds until the end of the year.
+- Be aware that an upscale might result in very large billing items since the price is calculated upfront until end of the month (monthly subscription) or even until end of year (yearly subscription). Thus, make sure that the customer has a large enough credit limit on his Alibaba Cloud account, even though he might never actually spend it.
+- Every up- and downscale action results in an additional item on the customer’s bill. In case of an upscale it is a billing item, in case of a downscale it is a refund. In below picture you can see an according excerpt from a real billing where the customer scaled up the bandwidth for roughly 2 days and then downscaled the bandwidth again.
 
+See https://www.alibabacloud.com/help/doc-detail/130927.htm for details and please consult the ![CEN-Pricing Document](09/cen_price_doc.pdf) that provides in-depth examples of CEN bandwidth pricing calculations.
 
 ## Hybrid Networks
 Alibaba Cloud provides and supports multiple ways to connect your on-premises or any other cloud-vendor network to Alibaba Cloud:

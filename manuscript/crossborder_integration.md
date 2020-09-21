@@ -73,6 +73,16 @@ Maintaining a reliable Quality of Service (QoS) for globally distributed workloa
 
 Every point can be easily a blocker or at least a reason to reduce speed for any project that includes multi-national interconnected IT-workloads. 
 
+### Scenario
+In the remainder of this article we would like to focus on a running example that we often find with many of our customers. As depicted in figure 1, workloads deployed on Alibaba Cloud need to communicate with external public services that are located in a different geographic region of the world. In our example, an application in the German region of Alibaba Cloud needs to communicate with an external public server (or service) which is located in Beijing. The other way round is of course also possible which is depicted at the lower side of this picture where an application deployed in Shanghai region needs to communicate with a public service in the United Kingdom (UK).
+
+![Example Scenario - Cross-Border Access to External Public Services](09/scenario.png)
+
+While this seems not utterly complex and easy to implement at first glance some important considerations have to be taken into account:
+-	Public internet bandwidth to Mainland China is limited and not reliable often resulting in packet loss and high latency
+-	Dedicated private lines and bandwidth are expensive and are usually hard to easily scale up and down with your demands
+-	Networking operators, services and data design need to adhere the respective local legislations and laws such as GDRP, Cyber Security Law (CSL) and MPLS 2.0
+
 
 
 ### Conclusion

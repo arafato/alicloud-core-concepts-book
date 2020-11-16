@@ -62,7 +62,7 @@ Let's quickly discuss the bandwidth package options in more detail. Below figure
 
 ![Global Accelerator - Bandwidth Packages](09/ga_bwpackages.png) 
 
-## Solution CAse Study: Private Global Internet Accelerator
+## Solution Case Study: Private Global Internet Accelerator
 This chapter describes how to accelerate http(s)-requests to any SaaS application and public service from workloads running on Alibaba Cloud by using Cloud Enterprise Network and a redundant setup of an nginx-based reverse proxy that will also do DNS resolution locally to mitigate any DNS spoofing attacks.
 
 ### Introduction

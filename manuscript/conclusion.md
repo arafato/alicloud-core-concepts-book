@@ -5,10 +5,13 @@ Also, we did not cover cloud-native technologies on our cloud platform. For exam
 
 Thus, we would like to conclude this chapter with a list of recommend links to the topics that were not or only partly covered to enable our readers to efficiently ramp-up on these fields via self-study. 
 
-In general, we recommend our technical documentation as the best source for learning about our cloud services in detail. The international documentation is available at https://www.alibabacloud.com/help while the domestic documentation can be found at https://help.aliyun.com. At the time of this writing, the domestic documentation is more comprehensive, up to date, and covers the entire service portfolio. It is, however, only available in Chinese. The state of the international documentation is catching up quickly, though.
+In general, we recommend our technical documentation as the best source for learning about our cloud services in detail. 
 
-Another great source for self study is the Alibaba Cloud Akademy which can be found here: https://edu.alibabacloud.com/
-It provides free e-learning courses and also so-called *Clouder* courses which lets you quickly understand an Alibaba Cloud product function or solution architecture while earning a digital certification. The free e-learning courses include a course focuses exclusively on cloud-native. It was jointly developed by CNCF and Alibaba Cloud and is completely free of charge. It is available here: https://edu.alibabacloud.com/certification/university-cloudnative
+The international documentation is available at https://www.alibabacloud.com/help while the domestic documentation can be found at https://help.aliyun.com.
+At the time of this writing, the domestic documentation is more comprehensive, up to date, and covers the entire service portfolio. It is, however, only available in Chinese. The state of the international documentation is catching up quickly, though.
+
+Another great source for self study is the Alibaba Cloud Academy which can be found here: https://edu.alibabacloud.com/
+It provides free e-learning courses and also so-called *Clouder* courses which lets you quickly understand an Alibaba Cloud product or solution architecture while earning a digital certification. The free e-learning courses feature a broad selection from infrastructure Big Data and Analytics, and Internet of Things. It also includes an elaborate course that focuses exclusively on cloud-native. It was jointly developed by CNCF and Alibaba Cloud and is completely free of charge. It is available here: https://edu.alibabacloud.com/certification/university-cloudnative
 
 Last but not least we also recommend our official Alibaba Cloud blog at https://www.alibabacloud.com/blog. It is constantly updated with technical articles that feature great insight into the technology landscape of Alibaba Group in general, and also hands-on articles on common solution architectures and their respective implementation on Alibaba Cloud. Be sure to check this blog out for the latest updates on Alibaba Cloud technology and announcements.
 

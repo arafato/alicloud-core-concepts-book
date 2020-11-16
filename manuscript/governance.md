@@ -55,10 +55,10 @@ Below screenshot shows the options of the *Security Settings* administration pag
 
 ![Account Management - Security Settings](02/am_security_settings.png)   
 
-On this page you can easily change the login password and your mobile phone number. The mobile number is important as it is used as a second authentication factor for changing the password, and also for setting up 2FA for your root user. Last but not least you can also define a login mask that lets you explicitly whitelist IP ranges from which (SSO) login is allowed. Per default, all IP ranges are allowed.
+On this page you can easily change the login password and your mobile phone number. The mobile number is important as it is used as a second authentication factor for changing the password, and also for setting up MFA for your root user. Last but not least you can also define a login mask that lets you explicitly whitelist IP ranges from which (SSO) login is allowed. Per default, all IP ranges are allowed.
 
 #### Best Practices
-1) Enable *Account Protection*, that is 2FA, which currently supports Time-based One-time Password (TOTP) and SMS verification
+1) Enable *Account Protection*, that is MFA, which currently supports Time-based One-time Password (TOTP) and SMS verification
 2) Define a *Login Mask* that only allows login from a specific IP range, e.g. the outbound IP range of your corporate network, thus blocking illegal login attempts from unknown IP ranges.
 3) Choose a password that is sufficient in both complexity and length, make sure to activate password rotation, and restrict session duration. Consult your security advisor on your company's password and security guidelines. 
 4) Never activate *Access Key ID* and *Access Key Secret* for your root user. You can check at [https://usercenter.console.aliyun.com](https://usercenter.console.aliyun.com) whether according keys have been defined. Deactivate them immediately since the root account is not recommended for any programmatic use. Think of it as the root user on Linux systems which has universal access rights to each and everything and whose rights cannot be restricted. For the day to day work the root account should never be used at all!
@@ -128,7 +128,7 @@ After you attach this policy to your RAM user, the user only has those TableStor
 - Any explicit *Deny* overrides any allows. 
 
 There are two access modes you can define: *Console Password Logon* and *Programmatic Access*
-The first one is used for web-based login where each actions are being done from the Alibaba Cloud portal. In terms of account protection it follows the same recommended guidelines regarding password security and rotation,  and 2FA. The latter one is meant for being used in combination with our command line interface (CLI) tools such as `aliyun`[^aliyun] or `ossutil`[^ossutil] or with our various SDKs[^sdk]. As such it does not provide 2FA but relies on long-term credentials (Access Key ID and Access Key Secret) to programmatically sign requests to the CLI tools or the OpenAPI.
+The first one is used for web-based login where each actions are being done from the Alibaba Cloud portal. In terms of account protection it follows the same recommended guidelines regarding password security and rotation,  and MFA. The latter one is meant for being used in combination with our command line interface (CLI) tools such as `aliyun`[^aliyun] or `ossutil`[^ossutil] or with our various SDKs[^sdk]. As such it does not provide MFA but relies on long-term credentials (Access Key ID and Access Key Secret) to programmatically sign requests to the CLI tools or the OpenAPI.
 
 ### Roles
 A RAM role is an RAM identity that you can create in your account that has specific permissions. An RAM role is similar to an RAM user, in that it is an Alibaba cloud identity with permission policies that determine what the identity can and cannot do in the cloud account. However, instead of being uniquely associated with one person, a role is intended to be assumable by anyone who needs it and is defined as an authorized principal to assume it. Also, a role does not have standard long-term credentials such as a password or access keys associated with it. Instead, when you assume a role, it provides you with temporary security credentials for your role session which consist of an *AccessKeySecret*, and *AccessKeyId*, and a *SecurityToken*. In thi case, the *AccessKeyId* is always prefixed with `STS.`.
@@ -142,7 +142,7 @@ Below is an example role definition that allows *every* RAM user (yes, this is a
             "Effect": "Allow",
             "Principal": {
                 "RAM": [
-                    "acs:ram::5509671837805201:root"
+                    "acs:ram::<UID>:root"
                 ]
             }
             "Condition": {
@@ -159,19 +159,19 @@ Below is an example role definition that allows *every* RAM user (yes, this is a
 ```
 For example the user can manually invoke `sts:AssumeRole` with the CLI just like that:
 
-`aliyun sts AssumeRole --RoleArn acs:ram::5509671837805201:role/myrole --RoleSessionName service` 
+`aliyun sts AssumeRole --RoleArn acs:ram::<UID>:role/myrole --RoleSessionName service` 
 
 As you can see you can also specify a role session name which is used as the caller id which is logged in ActionTrail for example.
-Usually, you should restrict access to a specific group of users. An individual user can be specified as `acs:ram::5509671837805201:user/myuser`.
+Usually, you should restrict access to a specific group of users. An individual user can be specified as `acs:ram::<UID>:user/myuser`.
 
 There are three principal types we currently support: 
-- RAM user from a trusted Alibaba Cloud account. This what we have just discussed. Note that you can also specify RAM users from other accounts by simply changing the account id accordingly. This enables you to implement cross-account access permissions.
+- RAM user from a trusted Alibaba Cloud account. This is what we have just discussed. Note that you can also specify RAM users from other accounts by simply changing the account id accordingly. This enables you to implement cross-account access permissions.
 - Cloud services such as ECS, RDS, Function Compute, etc. This enables these services to automatically assume roles and thereby getting according permission when they are configured to access other cloud resources. 
 - Identities from other Identity Providers such as Active Directory that are being used in Single Sign-On scenarios.  
 
 ### Resources
 We have already briefly touched what a cloud resource is previously but let's recap: a cloud resource is any instance of a particular cloud service. For example, an ECS instance is a resource of the ECS service. Likewise, an OSS bucket and an OSS object is a resource of the OSS service.
-Each resource on Alibaba cloud has a unique identified that you can use to define very fine granular permissions. Instead of granting full access to each and every ECS instance in your account you can only grant access to a particular ECS instance. This is where the `Resource`field of a RAM policy comes into play as already shown section [RAM Users and Policies](#ch-gov-users-and-policies). The identifier of an Alibaba cloud resource is always structured like this:
+Each resource on Alibaba cloud has a unique identity that you can use to define very fine granular permissions. Instead of granting full access to each and every ECS instance in your account you can only grant access to a particular ECS instance. This is where the `Resource`field of a RAM policy comes into play as already shown section [RAM Users and Policies](#ch-gov-users-and-policies). The identifier of an Alibaba cloud resource is always structured like this:
 ```
 acs:<service-name>:<region-id>:<account-id>:<resource-name>
 ```
@@ -203,7 +203,7 @@ By creating individual RAM users for people accessing your account, you can give
 Instead of defining permissions for individual RAM users, it's usually more convenient to create groups that relate to job functions (administrators, developers, accounting, etc.). Next, define the relevant permissions for each group. Finally, assign RAM users to those groups. All the users in an RAM group inherit the permissions assigned to the group. That way, you can make changes for everyone in a group in just one place. As people move around in your company, you can simply change what RAM group their RAM user belongs to.
 
 - **Grant Least Privilege:**
-When you create IAM policies, follow the standard security advice of granting least privilege, or granting only the permissions required to perform a task. Determine what users (and roles) need to do and then craft policies that allow them to perform only those tasks.
+When you create RAM policies, follow the standard security advice of granting least privilege, or granting only the permissions required to perform a task. Determine what users (and roles) need to do and then craft policies that allow them to perform only those tasks.
 Start with a minimum set of permissions and grant additional permissions as necessary. Doing so is more secure than starting with permissions that are too lenient and then trying to tighten them later.
 Alibaba Cloud RAM service comes with a set of pre-defined policies which are called *System Policies*. You can find them in your cloud account portal here: https://ram.console.aliyun.com/policies
 Usually, for each service there are two policies defined: One that gives full access, and one that only gives read access to any resource in any region. While this may work for some scenarios you might need more fine-granular access policies that are specific to certain resource, to a certain region, or to some specific actions. For these scenarios you can define a so-called *Custom Policy*.
@@ -244,7 +244,7 @@ To the extent that it's practical, define the conditions under which your RAM po
 Please see https://www.alibabacloud.com/help/doc-detail/100680.htm#h2-url-8 for details on the syntax of the `Condition` field of an according RAM policy.
 
 - **Enable ActionTrail:**
-You can use the Alibaba Cloud service *ActionTrail* to determine the actions users have taken in your account and the resources that were used. The log files show the time and date of actions, the source IP for an action, which actions failed due to inadequate permissions, and more. Keep in mind that these logs are exclusively from the OpenAPI, i.e., the management APIs of Alibaba Cloud. Application specific logs can be recorded and analyzed with *Log Service*, for example. 
+You can use the Alibaba Cloud service *ActionTrail* to determine the actions users have taken in your account and the resources that were used. The log files show the time and date of actions, the source IP for an action, which actions failed due to inadequate permissions, and more. Keep in mind that these logs are based exclusively on OpenAPI calls, i.e., the management APIs of Alibaba Cloud. Application specific logs can be recorded and analyzed with *Log Service*, for example. 
 
 
 ## Links
@@ -259,7 +259,7 @@ You can use the Alibaba Cloud service *ActionTrail* to determine the actions use
 ## Billing Management
 Alibaba Cloud Billing Management is the service that you use to pay your Alibaba Cloud bill, monitor your usage, and budget your costs.
 
-Alibaba Cloud automatically charges the credit card you provided when you signed up for a new account with Alibaba Cloud. Charges appear on your credit card bill monthly. You can view or update credit card information, and designate a different credit card for Alibaba Cloud to charge, on the Payment Methods page in the Billing Management console.
+Alibaba Cloud automatically charges the credit card you provided when you signed up for a new account with Alibaba Cloud. Charges appear on your credit card bill monthly. You can view or update credit card information, and designate a different credit card for Alibaba Cloud to charge, on the Payment Methods page in the Billing Management console. Alibaba Cloud also supports the payment ia credit lines which is a common option for enterprise customers.
 
 Depending on the region you choose during initial account creation, you are contracting with a different legal identity of Alibaba Cloud. Outside of Mainland China we are providing the following legal entities for contracting:
 - Alibaba.com (Europe) Limited
@@ -273,7 +273,7 @@ Be careful in choosing the region. It cannot be changed afterwards and your cont
 ![Billing Management - Billing Address](02/billing_address.png)   
 
 ### Payment Methods
-If you choose U.S. Dollars as payment currency, we support payment by credit card, debit card, or PayPal. If you choose Indian Rupee as payment currency, we support payment by Paytm Wallet. If you choose Malaysian Ringgit as payment currency, we support payment by credit card or debit card. Each account may have multiple payment methods registered at the same time, but there can only be one default payment method to be used for all your payments. For example, if you have used a credit card to pay for a prepaid service, this credit card will be your default payment method and you can only use it to make other purchases. You can only use another registered payment method to make payments if you do not have any other existing products or services currently being billed to another payment method in effect.
+If you choose U.S. Dollars as payment currency, we support payment by credit card, debit card, or PayPal. In addition, we also support payment by invoice which needs to be explicitly activated by your responsible Alibaba Cloud business manager. If you choose Indian Rupee as payment currency, we support payment by Paytm Wallet. If you choose Malaysian Ringgit as payment currency, we support payment by credit card or debit card. Each account may have multiple payment methods registered at the same time, but there can only be one default payment method to be used for all your payments. For example, if you have used a credit card to pay for a prepaid service, this credit card will be your default payment method and you can only use it to make other purchases. You can only use another registered payment method to make payments if you do not have any other existing products or services currently being billed to another payment method in effect.
 
 ### Payment Failure
 If, for reasons attributed to you or your registered payment method, we cannot bill you or otherwise process your payment, we will notify you by email to your registered email address and request you to resolve the problem. In this case, you will be able to continue to use your products for another 15 days. After this 15-day period, if the issue has not been resolved and payment has not been made, Alibaba Cloud shall have the right, to suspend your service until payment has been processed or to terminate your services without any liability to you. Prior to any service suspension or termination, an email will be sent to your registered email address.

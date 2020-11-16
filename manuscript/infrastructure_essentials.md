@@ -3,7 +3,7 @@ This chapter gives a focused and very condensed rundown on the very essentials o
 
 ## Elastic Compute Service (ECS)
 ECS is the IaaS-service by Alibaba Cloud that provides customers compute power as virtual machines. The security and compliance is a shared responsibility between Alibaba Cloud and the customers.
-Alibaba Cloud is responsible for "Security of the Cloud". That is, it is responsible for protecting the infrastructure that runs all of the services offered in the Alibaba Cloud. This infrastructure is composed of the hardware, software, networking, and facilities that run Alibaba Cloud services. For ECS, Alibaba Cloud's responsibility includes everything up to the hypervisor of the host machines that powers the ECS service. Everything above is the customer's responsibility which includes the guest operating system and all security configuration tasks such as configuration of Alibaba Cloud provided firewall (called a security group) on each network interface of an ECS instance. 
+Alibaba Cloud is responsible for "Security of the Cloud". That is, it is responsible for protecting the infrastructure that runs all of the services offered in the Alibaba Cloud. This infrastructure is composed of the hardware, software, networking, and facilities that run Alibaba Cloud services. For ECS, Alibaba Cloud's responsibility includes everything up to the hypervisor of the host machines that powers the ECS service. Everything above is the customer's responsibility which includes the guest operating system and all security configuration tasks such as configuration of Alibaba Cloud provided firewall (called a security group) on each network interface of an ECS instance. We recommend to consult our Security Whitepaper for a detailed discussion on this topic. It is freely available at https://www.alibabacloud.com/help/doc-detail/42435.htm 
 
 ### Availability Service Level Agreement (SLA)
 ECS comes with a Monthly Single-Instance Availability SLA of 99,975%, and provides a Monthly Multi-Zone Availability SLa of 99,995% if your application is deployed on at least 2 ECS instances spread across two different Availability Zones.
@@ -34,9 +34,6 @@ As of this writing there exist 13 different instance families on Alibaba Cloud (
 
 The new generations of Alibaba Cloud x86-based ECS instances are equipped 2.5 GHz Intel ® Xeon ® Platinum 8269CY (Cascade Lake) processors with Turbo Boost up to 3.2 GHz. The newest generation of the General Purpose G family now also support burstable network bandwidth. Also note that the 6th generations of g, c, r families are now running on Alibaba Cloud X-Dragon hypervisor architecture which provides predictable and consistent high performance and reduces virtualization overheads.
 
-For our GPU-based instance types, we currently provide the NVIDIA® Tesla® P4 with the 1/8, 1/4, 1/2, and 1/1 computing capacity support, and the NVIDIA T4 GPU with 16 GB memory capacity (320 GB/s bandwidth),
-2,560 CUDA Cores, up to 320 Turing Tensor Cores, and mixed-precision Tensor Cores support for 65 FP16 TFLOPS, 130 INT8 TOPS, and 260 INT4 TOPS. 
-
 Deployment Sets (https://www.alibabacloud.com/help/doc-detail/91258.htm) gives you control on the distribution strategy. You can use a deployment set to distribute your ECS instances to different physical servers to guarantee high availability and set up underlying disaster discovery. When you create ECS instances in a deployment set, Alibaba Cloud will start the instances on different physical servers within the specified region based on your configured deployment strategy. Right now, Alibaba Cloud only provides "High Availability" strategy. As an effect all the ECS instances within your deployment set are strictly distributed across different physical servers within the specified region. The high availability strategy applies to application architectures where several ECS instances need to be isolated from each other. The strategy significantly reduces the chances of services becoming unavailable.
 
 Each and every ECS instance has one operating system disk and can have up to 16 data disks each 32TB in size at max.  
@@ -44,7 +41,7 @@ Each and every ECS instance has one operating system disk and can have up to 16 
 ### Dedicated Hosts (DDH)
 ECS instances as discussed in the previous section share the underlying physical servers with different tenants. For scenarios that require strict isolation of the underlying resources DDH is a specialized solution for enterprise customers. DDH provides a dedicated hosting environment for a single tenant based on the virtualization technology of Alibaba Cloud. It offers flexible and scalable services that enable you to enjoy exclusive use of all resources provided by a physical server. 
 
-A very useful feature for cost-efficiency is the ability to over-provision a DDH. This is only possible with certain DDH instance types such as the `ddh.v5`. It allows you to provision 336 vCPUS on a 48 core machine. This way you can fully utilize your compute capacity in case your workloads have a lot of idle time. See https://www.alibabacloud.com/help/doc-detail/68564.htm for a complete list of all DDH instance types and their respective specifications.
+A very useful feature for cost-efficiency is the ability to over-provision a DDH. This is only possible with certain DDH instance types such as the `ddh.c6s`, `ddh.g6s`, or `ddh.r6s`. The memory-optimized type `ddh.r6s` allows you to provision 416 vCPUS on a 52 core machine for example. This way you can fully utilize your compute capacity in case your workloads have a lot of idle time. See https://www.alibabacloud.com/help/doc-detail/68564.htm for a complete list of all DDH instance types and their respective specifications.
 
 In case the physical machine is malfunctioning failover to a healthy instance is managed automatically by Alibaba Cloud. A new healthy DDH will be assigned automatically from the shared pool to the your account, and after the migration is done, the crashed DDH will be removed from your account. The DDH ID will remain the same after the migration, the machine ID will be different, though. Note that automatic failover is not supported for DDHs with local storage (i.e. `ddh.i2`).
 
@@ -77,7 +74,7 @@ For *Persistent Storage* Alibaba Cloud offers the following options:
 **Cloud Disk**
 Cloud Disk is a high-performance, low latency block storage service for Alibaba Cloud ECS. It supports random or sequential read and write operations. Block Storage is similar to a physical disk. You can format a Block Storage device and create a file system on it to meet the data storage needs of your business. One Cloud Disk can be mounted to *at most* one ECS instance. The ECS instance and the Cloud Disk need to be in the same availability zone. Cross-AZ communication is not supported.
 
-The disks come in three tiers: *Enhanced SSD*, *Standard SSD*, and *Ultra Disk*. *Basic Disks* are no longer for purchase but only exist for backwards compatibility reasons. Each of these tiers share the same maximum capacity of 32.768 GB and data reliability of 99.9999999% (see below paragraph). They differ, however, in maximum IOPS, maximum throughput, and single-channel random write access latency. The maximum IOPS of *Enhanced SSD* is 1 million and the maximum throughput 4000 MB/s with an access latency of around 0,2 ms making it one of the most performant persistent disk options out of every cloud provider. Please consult https://www.alibabacloud.com/help/doc-detail/25382.htm for details.
+The disks come in three tiers: *Enhanced SSD*, *Standard SSD*, and *Ultra Disk*. *Basic Disks* are no longer for purchase but only exist for backwards compatibility reasons. Each of these tiers share the same maximum capacity of 32.768 GB and data reliability of 99.9999999%. They differ, however, in maximum IOPS, maximum throughput, and single-channel random write access latency. The maximum IOPS of *Enhanced SSD* is 1 million and the maximum throughput 4000 MB/s with an access latency of around 0.2 ms making it one of the most performant persistent disk options out of every cloud provider. Please consult https://www.alibabacloud.com/help/doc-detail/25382.htm for details.
 
 Each piece of data is also replicated three times across the block storage cluster in the same availability zone to ensure a data reliability of 99.9999999% during read and write operations. Thus, any extra redundancy mechanism such as RAID 1 is not recommended.
 
@@ -85,7 +82,7 @@ Cloud Disk also supports encryption based on the industry standard AES-256 and d
 
 **Shared Cloud Disk**
 Shared Block Storage is a block-level data storage service that features high concurrency, high performance, and high reliability. It supports concurrent reads and writes on multiple ECS instances, and provides data reliability of up to 99.9999999%.
-In a traditional cluster architecture, multiple computing nodes access the same copy of data to provide services. To prevent service disruptions due to single point of failures, you can use Shared Block Storage to ensure access to the data, achieving high availability. We recommend that you store business data in Shared Block Storage devices and use a cluster file system such as Google File System (GFS) and General Parallel File System (GPFS) to manage these devices. Data consistency can be guaranteed between multiple front-end computing nodes during concurrent read/write operations.
+In a traditional cluster architecture, multiple computing nodes access the same copy of data to provide services. To prevent service disruptions due to single point of failures, you can use Shared Block Storage to ensure access to the data, achieving high availability. We recommend that you store business data in Shared Block Storage devices and use a cluster file system such as General Parallel File System (GPFS) to manage these devices. Data consistency can be guaranteed between multiple front-end computing nodes during concurrent read/write operations.
 
 Note that a single Shared Block Storage device can be attached to a maximum of eight ECS instances in the same zone and region at the same time. Cross-AZ Shared Cloud Disks are not supported.
 
@@ -113,6 +110,12 @@ It also supports asynchronous cross-region replication. It uses our own internal
 
 For migration scenarios where you need to copy over data from other Object Storage vendors such as AWS S3, or Azure Blob Storage, Alibaba Cloud offers the fully managed service *Data Online Migration* (https://www.alibabacloud.com/help/product/94157.htm). It supports a wide array of different third-party object storage services including self-hosted solutions that offer a public HTTPS endpoint.
 
+There are two performance limits which need to be taken into consideration when designing your system based on OSS. The capacities described below are reserved at account level, meaning they are shared between your individual buckets.
+
+- **Bandwidth**: Per default, 10 Gbit/s are reserved for both inbound and outbound in Mainland China regions, whereas 5 Gibt/s are reserved outside of Mainland China regions. These limits are soft-limits. That is they can be increased by opening an according ticket. For the public endpoint the bandwidth is mainly limited by the local bandwidth of the client and the quality of the network provided by operators. So if possible it is recommended to use the internal endpoint if possible.
+- **Operations**: OSS can sustain 2000 operations per second per partition (downloading, uploading, deleting, copying, and obtaining metadata are each counted as one operation, while deleting or enumerating more than one files in batch is considered as multiple operations). OSS automatically and constantly partitions your data into up to 65,536 partitions based on the prefix of your filename. So make sure to follow according best-practices outlined at https://www.alibabacloud.com/help/doc-detail/64945.htm when defining a naming schema for your object names.
+
+So if you are experiencing performance bottlenecks make sure to look at both aspects when troubleshooting your system.
 
 ## Network Performance 
 Let's quickly define *outbound* and *inbound* traffic:
@@ -125,7 +128,7 @@ Outbound traffic is capped by the EIP bandwidth. Bandwidths greater or equal 1Gb
 
 Note that the maximum default EIP bandwidth is 200 Mbits, the maximum instance-bound public IP bandwidth is 100 Mbits.
 
-In order to increase that you have to add your EIPs (no instance-bound public IPs are supported) to a shared internet bandwidth package which can be as high a 1Gbits (see https://www.alibabacloud.com/help/doc-detail/55784.htm for details). There are not additional costs for a shared bandwidth internet package. This way you can increase you outbound bandwidth to up to 1 Gbits. This bandwidth can only be saturated by multiple threads, though. 
+In order to increase that you have to add your EIPs (no instance-bound public IPs are supported) to a shared internet bandwidth package which can be as high as 1Gbits (see https://www.alibabacloud.com/help/doc-detail/55784.htm for details). There are no additional costs for a shared bandwidth internet package. This way you can increase you outbound bandwidth to up to 1 Gbits. This bandwidth can only be saturated by multiple threads, though. 
 You can also create multiple bandwidth packages of course.
 
 To further increase the external network performance you can also use mutliple ENIs (Elastic Network Interfaces) and bind up to 10 EIPs to up to 10 private ip addresses of a single ENI in NAT mode. By assigning multiple bandwidth packages to these EIPs you can further increase the network throughput of a single instance. Please check https://www.alibabacloud.com/help/doc-detail/88991.htm for further details on ENI and the different supported modes such as *Cut-Through mode* and *Multi-EIP to ENI mode*.
@@ -143,11 +146,3 @@ Super Compute Cluster (SCC) types instances can achieve 2x25 Gbits via RDMA over
 The outbound (SLB to Internet) network performance depends on the region the SLB is created. It ranges from 1Gbit/s up to 5 Gbit/s. You can get a detailed breakdown by region at https://www.alibabacloud.com/help/doc-detail/85966.htm
 
 For intranet network performance the limit is always 5 Gbit/s, independently from the region the SLB is running in.
-
-### Object Storage Service (OSS)
-There are two performance limits which need to be taken into consideration when designing your system based on OSS. The capacities described below are reserved at account level, meaning they are shared between your individual buckets.
-
-- **Bandwidth**: Per default, 10 Gbit/s are reserved for both inbound and outbound in Mainland China regions, whereas 5 Gibt/s are reserved outside of Mainland China regions. These limits are soft-limits. That is they can be increased by opening an according ticket. For the public endpoint the bandwidth is mainly limited by the local bandwidth of the client and the quality of the network provided by operators. So if possible it is recommended to use the internal endpoint if possible.
-- **Operations**: OSS can sustain 2000 operations per second per partition (downloading, uploading, deleting, copying, and obtaining metadata are each counted as one operation, while deleting or enumerating more than one files in batch is considered as multiple operations). OSS automatically and constantly partitions your data into up to 65,536 partitions based on the prefix of your filename. So make sure to follow according best-practices outlined at https://www.alibabacloud.com/help/doc-detail/64945.htm when defining a naming schema for your object names.
-
-So if you are experiencing performance bottlenecks make sure to look at both aspects when troubleshooting your system.

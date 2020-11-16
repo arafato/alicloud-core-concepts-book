@@ -21,7 +21,7 @@ Last but not least, Security Center also comes with an anti-virus protection fea
 
 Note that only a subset of these features is available in the Basic edition which is free for all Alibaba Cloud assets. Security Center comes in three tiers: Basic, Advanced, and the Enterprise Edition. The pricing model works on a monthly subscription basis charged by the number of protected assets. It can also be used with any kind of external workloads given that they have access to the public internet to be able to communicate with the public Security Center endpoints. For both internal and external workloads a small agent called 'AliyunDun` needs to be installed on the machines. For detailed installation instructions please refer to https://www.alibabacloud.com/help/doc-detail/68611.htm
 
-Please note that there is a kernel bug in combination with KVM: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1858760Our which is exploited by `AliyunDun` (and basically any process that uses loops in combination with process suspension by using usleep() for example.)
+Please note that there is a kernel bug in combination with KVM: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1858760 which is exploited by `AliyunDun` (and basically any process that uses loops in combination with process suspension by using usleep() for example.)
 
 Older instance types are affected since they are running on KVM. Our most recent instance types do not run on KVM anymore but on our own hypervisor technology. Thus, they are not affected by this bug.
 
@@ -36,10 +36,10 @@ Below screenshot shows the options of the *Security Settings* administration pag
 
 ![Account Management - Security Settings](02/am_security_settings.png)   
 
-On this page you can easily change the login password and your mobile phone number. The mobile number is important as it is used as a second authentication factor for changing the password, and also for setting up 2FA for your root user. Last but not least you can also define a login mask that lets you explicitly whitelist IP ranges from which (SSO) login is allowed. Per default, all IP ranges are allowed.
+On this page you can easily change the login password and your mobile phone number. The mobile number is important as it is used as a second authentication factor for changing the password, and also for setting up MFA for your root user. Last but not least you can also define a login mask that lets you explicitly whitelist IP ranges from which (SSO) login is allowed. Per default, all IP ranges are allowed.
 
 #### Best Practices
-1) Enable *Account Protection*, that is 2FA, which currently supports Time-based One-time Password (TOTP) and SMS verification
+1) Enable *Account Protection*, that is MFA, which currently supports Time-based One-time Password (TOTP) and SMS verification
 2) Define a *Login Mask* that only allows login from a specific IP range, e.g. the outbound IP range of your corporate network, thus blocking illegal login attempts from unknown IP ranges.
 3) Choose a password that is sufficient in both complexity and length, make sure to activate password rotation, and restrict session duration. Consult your security advisor on your company's password and security guidelines. 
 4) Never activate *Access Key ID* and *Access Key Secret* for your root user. You can check at [https://usercenter.console.aliyun.com](https://usercenter.console.aliyun.com) whether according keys have been defined. Deactivate them immediately since the root account is not recommended for any programmatic use. Think of it as the root user on Linux systems which has universal access rights to each and everything and whose rights cannot be restricted. For the day to day work the root account should never be used at all!
@@ -57,7 +57,7 @@ Per default, ActionTrail stores any such event for up to 90 days. By defining so
 In this section we will briefly discuss the fundamental serviced and features that allow you to secure your applications network-wise. This includes network isolation, firewall rules, flow logs, but also defense mechanisms against Level-4 and Level-7 attacks such as malformed packet attacks, SYN flooding, DNS request flooding, onnection exhaustion attack, but also SQL injections, XSS attacks, etc. by using Alibaba Cloud Anti-DDoS and Web Application Firewall. Let's first look at network isolation and protection with Virtual Private Cloud (VPC) and according best-practices.
 
 ### Virtual Private Cloud (VPC)
-A VPC allows you to define a private logically isolated network on Alibaba Cloud. It defines network range, routing tables, subnets (which are bound to availability zones), and also security groups that define inbound and outbound communication rules for your VPC-resources such as ECS instances.
+A VPC allows you to define a private logically isolated network on Alibaba Cloud. It defines network range, routing tables, subnets (aka VSwitch in Alibaba Cloud) which are bound to an according availability zone, and also security groups that define inbound and outbound communication rules for your VPC-resources such as ECS instances.
 
 Ideally, you should design your subnets according to your architecture tiers, such as the database tier, the application tier, the business tier, and so on, based on their routing needs, such as public subnets needing a route to the internet gateway. You should also create multiple subnets in as many availability zones as possible to improve your fault-tolerance. Each availability zone should have identically sized subnets, and each of these subnets should use a routing table designed for them depending on their routing need. Distribute your address space evenly across availability zones and keep the reserved space for future expansion.
 
@@ -69,7 +69,7 @@ Be sure to connect these logs and rules with Alibaba Cloud CloudMonitor to notif
 
 For every resource you provision or configure in your VPC, follow the least privilege principle. So, if a subnet has resources that do not need to access the internet, it should be a private subnet and should have routing based on this requirement. Similarly, security groups should have rules based on this principle. They should allow access only for traffic required.
 
-In order to keep your VPC and resources in your VPC secure, ensure that most of the resources are inside a private subnet by default. If you have instances that need to communicate with the internet, then you should add an Server Load Balancer (SLB) to a VPC and add all instances behind this SLB in the private subnet.
+In order to keep your VPC and resources in your VPC secure, ensure that most of the resources are inside a private subnet (aka VSwitch) by default. If you have instances that need to communicate with the internet, then you should add an Server Load Balancer (SLB) to a VPC and add all instances behind this SLB in the private subnet.
 Also, use NAT Gateway to access public networks from your private subnet. Alibaba Cloud NAT gateway is a fully managed, highly available, and redundant component.
 
 ### Anti-DDoS

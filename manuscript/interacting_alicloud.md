@@ -9,7 +9,7 @@ In addition there is also the service specific endpoint which let you use the ac
 Alibaba Cloud performs authentication on each access request. Therefore, each request, whether being sent by HTTP or HTTPS, must contain signature information. Every service performs symmetric encryption using the `Access Key ID` and `Access Key Secret` to authenticate the client's request. Both keys are issued by the service *Resource Access Management Service (RAM)*. The `Access Key ID` indicates the identity of the client. The `Access Key Secret` is the secret key used to both encrypt and verify the signature string on the client side and on the server, respectively. 
 A detailed example based on RDS can be found here: https://www.alibabacloud.com/help/doc-detail/26225.htm
 
-Alibaba Cloud APIs are either exposed as RPC-style endpoints or REST-based endpoints. Which style is used depends on the service and can be looked up at the API documentation of the particular service. 
+At the time of this writing, Alibaba Cloud APIs are either exposed as RPC-style endpoints or REST-based endpoints. Which style is used depends on the service and can be looked up at the API documentation of the particular service. 
 ECS for example uses RPC-style, while Container Registry uses REST-based style.
 
 - RPC-based APIs have the following format: https://Endpoint/?Action=xx&Parameters
@@ -110,7 +110,7 @@ Aliyun CLI take the following precende
 
 {id: ch_interacting_vault}
 ## Alicloud-Vault
-Alicloud-Vault is another handy tool for many development scenarios. It is open-source and developed at https://github.com/arafato/alicloud-vault.
+Alicloud-Vault is another handy tool for many development scenarios. It is open-source and developed at https://github.com/alibabacloud-de/alicloud-vault.
 Its is a vault for securely storing and accessing Alibaba Cloud credentials in development environments and takes many inspirations from https://github.com/99designs/aws-vault. 
 
 Alicloud-Vault stores RAM credentials in your operating system's secure keystore and then generates temporary credentials from those to expose to your shell and applications. It's designed to be complementary to the Aliyun CLI tools, and is aware of your config file and profiles in `~/.aliyun/config`.
@@ -129,7 +129,7 @@ ALICLOUD_STS_TOKEN=%%%
 ALICLOUD_SESSION_EXPIRATION=2020-03-06T10:02:33Z
 ```
 
-Please refer to the official site at https://github.com/arafato/alicloud-vault for detailed information on how to use it and configure it properly.
+Please refer to the official site at https://github.com/alibabacloud-de/alicloud-vault for detailed information on how to use it and configure it properly.
 
 ## Using the OSSUtil CLI
 While `Aliyun CLI` gives you great control over a wide array of services for OSS Alibaba Cloud is providing a dedicated command line utility called `ossutil` which is hosted on Github at https://github.com/aliyun/ossutil.
@@ -195,7 +195,7 @@ By employing infrastructure as code, you can deploy your infrastructure architec
 You could have programmers using IaC to create and launch sandbox environments, allowing them to develop in isolation safely. The same would be true for QA professionals, who can have perfect copies of the production environments in which to run their tests. Finally, when it’s deployment time, you can push both infrastructure and code to production in one step.
 
 - **Lower Cost**
-One of the main benefits of IaC is, without a doubt, lowering the costs of infrastructure management. By employing cloud computing along with IaC, you dramatically reduce your costs. That’s because you won’t have to spend money on hardware, hire people to operate it, and build or rent physical space to store it. But IaC also lowers your costs in another, subtler way, and that is what we call “opportunity cost.”
+One of the main benefits of IaC is, without a doubt, lowering the costs of infrastructure management. By employing cloud computing along with IaC, you dramatically reduce your costs. That’s because you won’t have to spend money on hardware and build or rent physical space to store it. But IaC also lowers your costs in another, subtler way, and that is what we call “opportunity cost.”
 
 Every time you have smart, high-paid professionals performing tasks that you could automate, you’re wasting money. All of their focus should be on tasks that bring more value to the organization. And that’s where automation strategies—infrastructure as code among them—come in handy. By employing them, you free engineers from performing manual, slow, error-prone tasks so they can focus on what matters the most.
 

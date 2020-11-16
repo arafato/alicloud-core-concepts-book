@@ -1,4 +1,4 @@
-# Architecting for High-Availability on Alibaba Cloud
+# Architecting for High-Availability and Fault-Tolerance on Alibaba Cloud
 Highly available systems are reliable in the sense that they continue operating even when critical components fail. They are also resilient, meaning that they are able to simply handle failure without service disruption or data loss, and seamlessly recover from such failure. High availability is commonly measured as a percentage of uptime. The number of “nines” is commonly used to indicate the degree of high availability. For example, “four nines” is indicative of a system that is up 99.99% of the time, meaning it is down for only 52.6 minutes during an entire year.
 
 High-Avalability is a qualitative measure which is affected by every component of a system, and by the way how this component is setup and how it is integrated with other components. As such, it is a broad topic that needs to be looked at at many different levels of abstractions and also has a great overlap with disaster recovery.
@@ -104,7 +104,7 @@ The data redundancy mechanism of OSS can prevent data loss when two storage devi
 After data is stored in OSS, OSS regularly checks whether copies of the data are lost and recovers the lost copies to ensure the durability and availability of data.
 OSS periodically verifies the integrity of data to detect data corruption caused by errors such as hardware failures. If data is partially corrupted or lost, OSS reconstructs and repairs the corrupted data by using the other copies.
 
-In order to account for desaster recovery scenarios OSS also provides Cross-Region Replication (CRR). It allows you to asynchronously replicate each object written to a bucket in region A to another bucket in region B. Replication traffic is being transmitted over Alibaba Cloud's private backbone network. There are no bandwidth guarantees, though.
+In order to account for disaster recovery scenarios OSS also provides Cross-Region Replication (CRR). It allows you to asynchronously replicate each object written to a bucket in region A to another bucket in region B. Replication traffic is being transmitted over Alibaba Cloud's private backbone network. There are no bandwidth guarantees, though.
 
 OSS is designed for an availability of at least 99,995% and a durability of 99,9999999999% (12 nines). The SLAs depend on the storage tier (*Standard*, *Infrequent Access*, *Archive* in combination with *Locally redundant (LRS)* or *Zone Redundant (ZRS)*) and are documented on our SLA page at: https://www.alibabacloud.com/help/doc-detail/42438.htm
 
@@ -120,7 +120,7 @@ It is also backed by a monthly availability SLA of 99,95%.
 ## Multi-Site High Availability
 
 ### Global Traffic Manager
-Global Traffic Manager（GTM）allows to route user access traffic of an application service to different IP addresses. GTM supports access addresses of both Alibaba Cloud products and non-Alibaba Cloud products, and helps you build a hybrid cloud application quickly and conveniently.
+Global Traffic Manager (GTM) allows to route user access traffic of an application service to different IP addresses. GTM supports access addresses of both Alibaba Cloud products and non-Alibaba Cloud products, and helps you build a hybrid cloud application quickly and conveniently.
 
 GTM uses the DNS smart resolution and the application service’s running status health check to direct the user access request to the most appropriate IP address. GTM provides smart resolution based on the network area and health check based on ping, TCP, or HTTP(S). It can be used to build same-city multi-active and remote disaster recovery services flexibly and quickly.
 
@@ -161,7 +161,9 @@ log_bin = ON
 binlog_format = ROW
 ```
 
-## Desaster Recovery
+## Disaster Recovery
+A short overview over the available services and 3rd party support for implementing disaster recovery strategies and requirements.
+
 ### Hybrid Backup Recovery (HBR)
 Elastic Compute Service (ECS) Disaster Recovery is a scheme provided by Alibaba Cloud Hybrid Backup Recovery (HBR) to serve the needs of key enterprise applications and guarantee business continuity. It features disaster recovery with a second-level or minute-level recovery point objective (RPO) and recovery time objective (RTO). It can be used to reliably backup different storage services including OSS, NAS, CSG, and also ECS.
 

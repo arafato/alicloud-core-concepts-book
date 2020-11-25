@@ -34,6 +34,20 @@ While *Cloud Accounts* have all the characteristics of a regular Alibaba Cloud a
 
 It should be noted that you can also invite existing Alibaba Cloud accounts. As of this writing, the invited accounts need to have the same legal business entity as the master account. Support for inviting accounts with different legal entities is coming soon. The master of account has full control over the invited accounts.
 
+### Single-Sign On
+Alibaba Cloud supports SAML 2.0-based single sign-on (SSO), which is also known as identity federation.
+You can implement SSO between Alibaba Cloud and your Identity Provider (IdP), such as Microsoft Azure Active Directory, based on SAML 2.0. Alibaba Cloud provides the following two SAML 2.0-based SSO methods:
+
+- **User-based SSO** The RAM user identity that you can use to log on to the Alibaba Cloud Management Console is determined based on an SAML assertion. After you log on to the Alibaba Cloud Management Console, you can access Alibaba Cloud resources as a RAM user. For more information, see [Overview of user-based SSO](https://www.alibabacloud.com/help/doc-detail/110499.htm).
+- **Role-based SSO** The RAM role that you can use to log on to the Alibaba Cloud Management Console is determined based on an SAML assertion. After you log on to the Alibaba Cloud Management Console, you can use the RAM role that is specified in the SAML assertion to access Alibaba Cloud resources. For more information, see [Overview of role-based SSO](https://www.alibabacloud.com/help/doc-detail/109791.htm?spm=a2c63.p38356.879954.8.687c36505J2IL8#task-zrv-2ny-zgb).
+
+For integrating with Azure AD hosted in Mainland China please be aware that of this writing 3rd-party Enterprise application feature is not available yet. This means that you cannot use the Azure AD Enterprise application for directly configuring Alibaba Cloud role-based SSO in Azure AD.
+
+A common setup for managing a multi-account setup with SSO we recommend the following approach as depicted in below figure:
+![Role-based SSO Setup with Resource Directory](02/sso.jpg)
+
+The root account can serve as the identity account but they can also be separated if needed. This account serves as the landing page for each identity. From there a subsequent role can be assumed that grants according rights in a member account.  
+
 **Billing Settlement** is quite flexibel. For any member account you can choose between three options:
 1) Master Account: Consolidate bill to the master account
 2) Other Account: Consolidate bill to another account within the resource Directory

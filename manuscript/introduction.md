@@ -23,13 +23,13 @@ Alibaba Cloud is the technology backbone of a Group and as such constantly pushi
 
 ### Second to None Business and Technology Partner for China
 Alibaba Group and its cloud division is an international company with Chinese roots. As such we are second to none as a technology and business partner for your IT and innovation projects in South East Asia and China in particular. Alibaba Cloud is the clear market leader with almost 20% market-share in Asia Pacific well ahead any of its cloud competitors such as AWS, Microsoft Azure, or Google Cloud as depicted in below graphic which is the Market Share for IT Services report by Gartner from 2018.  
-![](01/market_share.png)
+![](01/market_share.jpg)
 For Mainland China the market-share proportions are even more drastic. Alibaba Cloud took over 43% in the first half of 2018 which is larger than the next seven cloud competitors combined. Forrester Wave also recognizes Alibaba Cloud as the leader in product offerings and market performance in its *Full-stack public cloud developments platforms  in China* report which is depicted below.  
-![](01/fw_recognition.png)
+![](01/fw_recognition.jpg)
 
 With its strong presence in the Asia Pacific region with (as of this writing) 16 regions, 10 of which are in Mainland China, and one additional region in Hong Kong, Alibaba Cloud is the number one choice for global, scalable, and secure application platforms that empower your digital innovation strategy in the APAC regions.
 In total, Alibaba Cloud has 22 regions world-wide which also includes North-America (2) and Europe (2) which let's you also benefit from the innovation capabilities of Alibaba Cloud in your local regions while fully complying to the local law and regulation such as GDPR. Below figure gives you an overview about our global footprint of 22 region and 65 availability zones as of now. 
-![](01/regions.png)
+![](01/regions.jpg)
 
 Note that all of these 20 regions can be managed from one single account. Many services also provide cross-region integration capabilities that let you easily replicate and copy data to and from any of our regions. We will look in depth at the different cross-regional services and features in chapter [Global Cross-Border Integration](#ch-cross-border).
 

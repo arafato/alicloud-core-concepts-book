@@ -15,4 +15,4 @@ It provides free e-learning courses and also so-called *Clouder* courses which l
 
 Last but not least we also recommend our official Alibaba Cloud blog at https://www.alibabacloud.com/blog. It is constantly updated with technical articles that feature great insight into the technology landscape of Alibaba Group in general, and also hands-on articles on common solution architectures and their respective implementation on Alibaba Cloud. Be sure to check this blog out for the latest updates on Alibaba Cloud technology and announcements.
 
-We hope that this book will be valuable to you by helping you to get the most out of Alibaba Cloud and to be successful with your technical endeavours and digital business. If you spot any typos, erros, or have feedback in general please do not hesitate to contact us at https://www.alibabacloud.com/about/contact-us
+We hope that this book will be valuable to you by helping you to get the most out of Alibaba Cloud and to be successful with your technical endeavours and digital business. For any kind of feedback please do not hesitate to contact us at https://www.alibabacloud.com/about/contact-us

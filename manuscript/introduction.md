@@ -23,11 +23,9 @@ Alibaba Cloud is the technology backbone of a Group and as such constantly pushi
 
 ### Second to None Business and Technology Partner for China
 Alibaba Group and its cloud division is an international company with Chinese roots. As such we are second to none as a technology and business partner for your IT and innovation projects in South East Asia and China in particular. Alibaba Cloud is the clear market leader with 28.2% market-share in Asia Pacific well ahead any of its cloud competitors such as AWS, Microsoft Azure, or Google Cloud as depicted in below graphic which is the Market Share for IT Services report by Gartner from 2019.  
-{width=25%} 
-![](01/marketshare_apac.jpg)
 For Mainland China the market-share proportions are even more drastic. Alibaba Cloud took over 41.7% in Q3 of 2019 which is larger than the next five cloud competitors combined. 
-{width=25%} 
-![](01/marketshare_china.jpg)
+![](01/marketshare.jpg)
+
 Forrester Wave also recognizes Alibaba Cloud as the leader in product offerings and market performance in its *Full-stack public cloud developments platforms in China* report which is depicted below.  
 ![](01/fw_recognition.jpg)
 

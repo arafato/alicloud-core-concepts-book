@@ -38,14 +38,19 @@ Every up- and downscale action results in an additional item on the customer’s
 See https://www.alibabacloud.com/help/doc-detail/130927.htm for details and please consult the [CEN-Pricing Document](https://github.com/arafato/alicloud-core-concepts-book/blob/master/manuscript/resources/09/cen_price_doc.pdf) that provides in-depth examples of CEN bandwidth pricing calculations.
 
 ## Hybrid Networks
-Alibaba Cloud provides and supports multiple ways to connect your on-premises or any other cloud-vendor network to Alibaba Cloud:
+
+Alibaba Cloud provides and supports multiple ways to connect your on-premises or any other cloud-vendor network to Alibaba Cloud.
+
 ### Express Connect
 Alibaba Cloud Express Connect helps you build internal network communication channels that feature enhanced cross-network communication speed, quality, and security. Express Connect also helps you mitigate network instability and data breaches. It allows you to connect a leased line to any of the Alibaba Cloud access points. We recommend to contact any of our official network service providers NSP who will help you to establish one or more physical connections and connect your on-premises data center to an Alibaba Cloud VPC. A full list of NSPs access points can be found at https://www.alibabacloud.com/help/doc-detail/96019.htm 
+
 ### VPN Gateway
 Alibaba Cloud VPN Gateway is an Internet-based service that securely and reliably connects enterprise data centers, office networks, or Internet-facing terminals to Alibaba Cloud Virtual Private Cloud (VPC) networks through encrypted connections. VPN Gateway supports both IPsec-VPN connection and SSL-VPN connection. You must configure the Maximum Transmission Unit (MTU) limit of the local VPN Gateway (that is your premises) to not more than 1,400 bytes. We recommend that you set the MTU to 1,400 bytes. 
+
 ### Smart Access Gateway
 Smart Access Gateway (SAG) is a software-defined wide area network (SD-WAN) solution developed by Alibaba Cloud based on cloud-native technologies. SAG provides a more intelligent, reliable, and secure approach for enterprises to migrate their workloads to Alibaba Cloud.
 It comes with different available configurations of hardware devices and allows for zero touch provisioning and native integration into Alibaba Cloud.
+
 ### Equinix Platform and Equinix ECX Fabric 
 Equinix Platform and Equinix ECX Fabric enables an easy and private connection to Alibaba Cloud and supports among other locations
 Frankfurt, Dubai, Hongkong, Jakarta, London, Singapur, Sydney, Tokio, Chicago, Dallas und Denver. More information can be found here: https://www.equinix.com/platform-equinix/

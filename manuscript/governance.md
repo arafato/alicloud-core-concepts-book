@@ -1,5 +1,5 @@
 # Governance
-Cloud governance is the development and implementation of controls to manage access, budget, and policies for security, compliance, and even high-availability and resiliency across your workloads in the cloud. In this chapter we will focus on the core concepts and according best-practices to implement according controls and policies for most of the before mentioned aspects. 
+Cloud governance is the development and implementation of controls to manage access, budget, and policies for security, compliance, and even high-availability and resiliency across your workloads in the cloud. In this chapter, we will focus on the core concepts and according best-practices to implement according controls and policies for most of the before mentioned aspects. 
 
 ## Account Management
 There are currently two different types (or *memberships*) of Alibaba Cloud accounts: *Individual Account* and *Enterprise Account*. There is no difference in terms of functionality. They differ, however, in terms of real-name verification requirements, free tier offering, discount eligibility, and whether they can be added to an Resource Directory account. Let's quickly go through each of them. 
@@ -17,7 +17,7 @@ Managing resources in large-scale settings is very complex and needs to take int
 - How can enterprises enable their different branches or departments to implement different procurement, usage, and regulatory requirements in the cloud?
 - How can enterprises organize scattered cloud accounts according to the business structure for effective management?
 
-Alibaba Cloud Resource Management Service (https://www.alibabacloud.com/help/product/94362.htm) enables you to build an organizational structure for resources based on your business needs. It is comprised of different services that let's you hierarchically organize and manage accounts, billing and settlements, users and permissions, and resources and thus provides solutions to before mentioned questions. In particular, it consists of: 
+[Alibaba Cloud Resource Management Service](https://www.alibabacloud.com/help/product/94362.htm) enables you to build an organizational structure for resources based on your business needs. It is comprised of different services that let's you hierarchically organize and manage accounts, billing and settlements, users and permissions, and resources and thus provides solutions to before mentioned questions. In particular, it consists of: 
 - **Resource Directory** Enables you to quickly build a business structure according to the needs of the enterprise and to carry out overall management of resources on it.
 - **Resource Group** Helps you to group related services across different regions and assign dedicated permisions. Also allows you to view billing statements by resource group. 
 - **Resource Sharing** Allows you to share the resources under your account with other accounts. 
@@ -48,7 +48,7 @@ A common setup for managing a multi-account setup with SSO we recommend the foll
 
 The root account can serve as the identity account but they can also be separated if needed. This account serves as the landing page for each identity. From there a subsequent role can be assumed that grants according rights in a member account.  
 
-**Billing Settlement** is quite flexibel. For any member account you can choose between three options:
+**Billing Settlement** is quite flexible. For any member account you can choose between three options:
 1) Master Account: Consolidate bill to the master account
 2) Other Account: Consolidate bill to another account within the resource Directory
 3) Self-Pay: Account pays by itself with the payment method configured in this account 
@@ -106,13 +106,13 @@ While we believe that each notification is valuable for our customers we recomme
 
 {id: ch-governance-permission}
 ## User and Permission Management
-Resource Access Management (RAM) is the cloud service which provide means to create additional users (so-called RAM users), and roles with according policies (sometimes also referred to as permissions) that define the access rights on Alibaba Cloud services and specific resources. The interface (i.e. the set of APIs) which is used to manage your cloud resources is usually referred to as OpenAPI which you can interactively explore with the OpenAPI Explorer at [https://api.aliyun.com/](https://api.aliyun.com/). 
+[Resource Access Management (RAM)](https://www.alibabacloud.com/product/ram) is the cloud service which provide means to create additional users (so-called RAM users), and roles with according policies (sometimes also referred to as permissions) that define the access rights on Alibaba Cloud services and specific resources. The interface (i.e. the set of APIs) which is used to manage your cloud resources is usually referred to as OpenAPI which you can interactively explore with the OpenAPI Explorer at [https://api.aliyun.com/](https://api.aliyun.com/). 
 
 Let's break down the different terms we just mentioned and explain what they exactly mean.
 
 ### Root User
 The initial single sign-in identity that has complete access to all Alibaba Cloud services and resources in the account. This identity is called the Alibaba cloud account root user and is accessed by signing in with the email address and password that you used to create the account. 
-Follow the best-practice and use it only to create your first RAM user. Never use it for day to day tasks, and never use it to access your Alibaba cloud resources. 
+Follow the best-practice and use it only to create your first RAM user. Never use it for day to day tasks, and never use it to access your Alibaba Cloud resources. 
 
 There are, however, some tasks only the root user can do:
 - Modify root user details on the *Security Settings* administration page at [https://account-intl.console.aliyun.com](https://account-intl.console.aliyun.com)
@@ -184,8 +184,8 @@ There are three principal types we currently support:
 - Identities from other Identity Providers such as Active Directory that are being used in Single Sign-On scenarios.  
 
 ### Resources
-We have already briefly touched what a cloud resource is previously but let's recap: a cloud resource is any instance of a particular cloud service. For example, an ECS instance is a resource of the ECS service. Likewise, an OSS bucket and an OSS object is a resource of the OSS service.
-Each resource on Alibaba cloud has a unique identity that you can use to define very fine granular permissions. Instead of granting full access to each and every ECS instance in your account you can only grant access to a particular ECS instance. This is where the `Resource`field of a RAM policy comes into play as already shown section [RAM Users and Policies](#ch-gov-users-and-policies). The identifier of an Alibaba cloud resource is always structured like this:
+We have already briefly touched upon what a cloud resource is in the previous sections but let's recap: a cloud resource is any instance of a particular cloud service. For example, an ECS instance is a resource of the ECS service. Likewise, an OSS bucket and an OSS object is a resource of the OSS service.
+Each resource on Alibaba Cloud has a unique identity that you can use to define very fine granular permissions. Instead of granting full access to each and every ECS instance in your account you can only grant access to a particular ECS instance. This is where the `Resource`field of a RAM policy comes into play as already shown section [RAM Users and Policies](#ch-gov-users-and-policies). The identifier of an Alibaba cloud resource is always structured like this:
 ```
 acs:<service-name>:<region-id>:<account-id>:<resource-name>
 ```
@@ -275,7 +275,7 @@ Alibaba Cloud Billing Management is the service that you use to pay your Alibaba
 
 Alibaba Cloud automatically charges the credit card you provided when you signed up for a new account with Alibaba Cloud. Charges appear on your credit card bill monthly. You can view or update credit card information, and designate a different credit card for Alibaba Cloud to charge, on the Payment Methods page in the Billing Management console. Alibaba Cloud also supports the payment ia credit lines which is a common option for enterprise customers.
 
-Depending on the region you choose during initial account creation, you are contracting with a different legal identity of Alibaba Cloud. Outside of Mainland China we are providing the following legal entities for contracting:
+Depending on the region you choose during initial account creation, you are contracting with a different legal identity of Alibaba Cloud. Outside of Mainland China, we provide the following legal entities for contracting:
 - Alibaba.com (Europe) Limited
 - Alibaba Cloud (Singapore) Private Limited
 - Alibaba Cloud US LLC

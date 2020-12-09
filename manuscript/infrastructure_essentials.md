@@ -1,12 +1,12 @@
 # Infrastructure Essentials
-This chapter gives a focused and very condensed rundown on the very essentials on the Alibaba Cloud Infrastructure service concepts such as Compute, Network, and Storage. Almost like a cheat-sheet.
+This chapter gives a focused and  condensed rundown on the very essentials of the Alibaba Cloud Infrastructure service concepts such as Compute, Network, and Storage, almost like a cheat-sheet.
 
 ## Elastic Compute Service (ECS)
-ECS is the IaaS-service by Alibaba Cloud that provides customers compute power as virtual machines. The security and compliance is a shared responsibility between Alibaba Cloud and the customers.
+[ECS](https://www.alibabacloud.com/product/ecs) is the infrastucture service by Alibaba Cloud that provides customers compute power as virtual machines. The security and compliance is a shared responsibility between Alibaba Cloud and the customers.
 Alibaba Cloud is responsible for "Security of the Cloud". That is, it is responsible for protecting the infrastructure that runs all of the services offered in the Alibaba Cloud. This infrastructure is composed of the hardware, software, networking, and facilities that run Alibaba Cloud services. For ECS, Alibaba Cloud's responsibility includes everything up to the hypervisor of the host machines that powers the ECS service. Everything above is the customer's responsibility which includes the guest operating system and all security configuration tasks such as configuration of Alibaba Cloud provided firewall (called a security group) on each network interface of an ECS instance. We recommend to consult our Security Whitepaper for a detailed discussion on this topic. It is freely available at https://www.alibabacloud.com/help/doc-detail/42435.htm 
 
 ### Availability Service Level Agreement (SLA)
-ECS comes with a Monthly Single-Instance Availability SLA of 99,975%, and provides a Monthly Multi-Zone Availability SLa of 99,995% if your application is deployed on at least 2 ECS instances spread across two different Availability Zones.
+ECS comes with a Monthly Single-Instance Availability SLA of 99.975%, and provides a Monthly Multi-Zone Availability SLa of 99.995% if your application is deployed on at least 2 ECS instances spread across two different Availability Zones.
 
 An ECS instance is considered *Unavailable* if the disconnection between an ECS instance configured with access permitted rules and any IP address over TCP or UDP in the inbound and outbound directions lasts for more than one minute.  
 

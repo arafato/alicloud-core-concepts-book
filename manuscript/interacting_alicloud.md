@@ -30,7 +30,7 @@ Both HTTP and HTTPS are supported for all endpoints. We recommend to send reques
 
 Now that we have taken a look at how Alibaba Cloud Management APIs work let's discuss important technologies and methodologies that built upon that.
 
-## Using the command-line interface
+## Using the Command-Line Interface
 The Alibaba Cloud CLI is a tool to manage and use Alibaba Cloud resources through a command line interface. It is written in Go and built on the top of Alibaba Cloud OpenAPI. It is developed and hosted on Github at https://github.com/aliyun/aliyun-cli. CLI access the Alibaba Cloud services through OpenAPI (see previous section). Before using Alibaba Cloud CLI, make sure that you have activated the service (see chapter 2) to use and known how to use OpenAPI. Also make sure that your machine has public internet access (e.g. through a NAT-Gateway, Elastic IP/Instance-bound IP), otherwise OpenAPI cannot be called.
 
 Aliyun CLI provides an interactive configuration experience by running
@@ -223,9 +223,9 @@ resource "alicloud_vpc" "main" {
 The Terraform CLI then provides a huge set of options to manage the entire state and lifecycle of your resources and configurations which are described in your template code.
 
 ### Resource Orchestration Service
-Resource Orchestration Service (ROS) is Alibaba Cloud's native IoC offering. It provides support for the most important services and features of Alibaba Cloud and will extend support even further in the near future. 
+[Resource Orchestration Service (ROS)](https://www.alibabacloud.com/product/ros) is Alibaba Cloud's native IoC offering. It provides support for the most important services and features of Alibaba Cloud and will extend support even further in the near future. 
 Just like with Terraform you build a template and use it to create all of the necessary resources, collectively known as a ROS stack. This model removes opportunities for manual error, increases efficiency, and ensures consistent configurations over time.
-You can either store check out your ROS Templates locally to your machine or upload them to Alibaba Cloud Object Storage Service (OSS) and then use ROS via the browser console, *Aliyun CLI*, or APIs to create a stack based on your template code.
+You can either store check out your ROS Templates locally to your machine or upload them to [Alibaba Cloud Object Storage Service (OSS)](https://www.alibabacloud.com/product/oss) and then use ROS via the browser console, *Aliyun CLI*, or APIs to create a stack based on your template code.
 ROS aims to provide the best possible support for Alibaba Cloud services and features. Its application is, however, solely bound to Alibaba Cloud. Knowledge cannot be re-used across different cloud providers, albeit that it shares many concepts and its syntax with AWS Cloud Formation.
 
 The following ROS script defines the desired state of a VPC with a certain network range:
